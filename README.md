@@ -17,7 +17,8 @@ so its ofishal
 - debugger
 - print current thread
 - hosting python package over the internet
-
+- instead of Decorator, could do a Class that inherits from threading.Thread, like https://www.geeksforgeeks.org/writing-files-background-python/
+- 'background thread' concept, is that what it'll always be?
 
 # Interesting
 [import inspect](https://docs.python.org/3/library/inspect.html)
@@ -32,6 +33,9 @@ AttributeError: 'list' object has no attribute 'isclass'
 >>> inspect.isclass(test_for_class)
 False
 ```
+
+sounds brutal:
+https://stackoverflow.com/questions/11983938/python-appending-to-same-file-from-multiple-threads really need to do this?
 
 
 
@@ -54,3 +58,5 @@ False
 ```
 
 
+didnt work out  
+_thread.start_new_thread(create_file, (numLines, num))
