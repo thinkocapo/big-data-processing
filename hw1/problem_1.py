@@ -1,5 +1,4 @@
 import inspect
-import os #os.arg for command line args?
 from random import randint
 import threading
 
@@ -8,7 +7,9 @@ def text():
     output = '%s %s %s\n' % (randint(0,10), randint(0,10), randint(0,10))
     return output
 
+# wrap this (decorate?) in its own thread execution
 def create_file(numLines, num):
+    # wrap this part in its own thread execution
     file = open("william_capozzoli_{}.txt".format(num),"w+")
     for numLine in range(numLines):
         file.write(text())
