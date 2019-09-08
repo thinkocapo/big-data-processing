@@ -28,6 +28,7 @@ def run_the_threads():
     for thread in threads:
         thread.join()
 
+# Abstract away all the 'threading' talk, using a decorator
 def thread_decorator(func):
     def wrapper(numLines, num):
         thread = threading.Thread(target=func,args=(numLines, num))
