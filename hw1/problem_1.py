@@ -37,7 +37,9 @@ create_file = thread_decorator(create_file)
 
 
 if __name__ == '__main__':
-    generate_files(2, 3)
+    numFiles = 2
+    numLines = 3
+    generate_files(numFiles, numLines)
     run_the_threads()
 
 
