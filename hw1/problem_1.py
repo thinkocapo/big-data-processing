@@ -1,6 +1,5 @@
 import inspect
 from random import randint
-import _thread
 import threading
 
 threads = []
@@ -9,19 +8,21 @@ def text():
     output = '%s %s %s\n' % (randint(0,10), randint(0,10), randint(0,10))
     return output
 
+# this executes in its own thread, see thread_decorator
 def create_file(numLines, num):
     print('create_file %s' % (num))
     file = open("william_capozzoli_{}.txt".format(num),"w+")
     for numLine in range(numLines):
         file.write(text())
 
+# creates each file in a thread, see thread_decorator
 def generate_files(numFiles, numLines):
-    """numFiles to generate. numLines per file"""
     print('generate_file')
     for num in range(numFiles):
-        print('num %s' % (num))
+        print('file %s' % (num))
         create_file(numLines, num)
 
+# makes sure the threads finish creating files, or else problem_1.py will finish too soon
 def run_the_threads():
     for thread in threads:
         thread.start()
@@ -38,6 +39,7 @@ create_file = thread_decorator(create_file)
 
 
 if __name__ == '__main__':
+    # change these as need be, or pass in from command line by sys.argv
     numFiles = 2
     numLines = 3
     generate_files(numFiles, numLines)

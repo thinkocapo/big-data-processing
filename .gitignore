@@ -3,3 +3,7 @@
 /archives
 *.docx
 /playspace
+/screenshots
+*.odt
+*.odp
+*.pdf
