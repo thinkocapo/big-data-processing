@@ -20,16 +20,20 @@ def generate_files(numFiles, numLines):
     print('generate_file')
     for num in range(numFiles):
         print('num %s' % (num))
-        thread = threading.Thread(target=create_file,args=(numLines, num))
-        threads.append(thread)
+        create_file(numLines, num)
 
 def run_the_threads():
     for thread in threads:
         thread.start()
-
-    # Wait for all to complete
     for thread in threads:
         thread.join()
+
+def thread_decorator(func):
+    def wrapper(numLines, num):
+        thread = threading.Thread(target=func,args=(numLines, num))
+        threads.append(thread)
+    return wrapper
+create_file = thread_decorator(create_file)
 
 
 if __name__ == '__main__':
@@ -37,14 +41,7 @@ if __name__ == '__main__':
     run_the_threads()
 
 
-# experiment 1
-# def thread_decorator(func):
-#     def wrapper():
-#         print("OPEN A THREAD")
-#         func() # create_file inside of it
-#         print("THREAD CLOSED?")
-#     return wrapper
-# generate_file = thread_decorator(generate_file)
 
-# experiment 2
+
+# experiment
 # instead of Decorator, could do a Class that inherits from threading.Thread, like https://www.geeksforgeeks.org/writing-files-background-python/
