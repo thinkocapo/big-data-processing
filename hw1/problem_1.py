@@ -46,4 +46,5 @@ if __name__ == '__main__':
 
 
 # Experiment
+# ThreadPoolExecutor - https://docs.python.org/3/library/concurrent.futures.html#threadpoolexecutor
 # instead of a Decorator, could make a Class that inherits from Threading. example: https://www.geeksforgeeks.org/writing-files-background-python/
