@@ -1,16 +1,13 @@
 import inspect
 from random import randint
+import sys
 import threading
 
 threads = []
 
-def text():
-    output = '%s %s %s\n' % (randint(0,10), randint(0,10), randint(0,10))
-    return output
-
 # this executes in its own thread, see thread_decorator
 def create_file(numLines, num):
-    print('create_file %s' % (num))
+    print('create_file',num)
     file = open("william_capozzoli_{}.txt".format(num),"w+")
     for numLine in range(numLines):
         file.write(text())
@@ -29,7 +26,11 @@ def run_the_threads():
     for thread in threads:
         thread.join()
 
-# Abstract away all the 'threading' talk, using a decorator
+def text():
+    return '%s %s %s\n' % (randint(0,10), randint(0,10), randint(0,10))
+
+# decorator for abstracting away all the 'threading' talk
+# so app/business logic is separate from this threading/distributed/computer-sci stuff
 def thread_decorator(func):
     def wrapper(numLines, num):
         thread = threading.Thread(target=func,args=(numLines, num))
@@ -39,14 +40,11 @@ create_file = thread_decorator(create_file)
 
 
 if __name__ == '__main__':
-    # change these as need be, or pass in from command line by sys.argv
-    numFiles = 2
-    numLines = 3
+    numFiles = int(sys.argv[1])
+    numLines = int(sys.argv[2])
     generate_files(numFiles, numLines)
     run_the_threads()
 
 
-
-
-# experiment
-# instead of Decorator, could do a Class that inherits from threading.Thread, like https://www.geeksforgeeks.org/writing-files-background-python/
+# Experiment
+# instead of a Decorator, could make a Class that inherits from Threading. example: https://www.geeksforgeeks.org/writing-files-background-python/
