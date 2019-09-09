@@ -14,9 +14,8 @@ def create_file(numLines, num):
 
 # creates each file in a thread, see thread_decorator
 def generate_files(numFiles, numLines):
-    print('generate_file')
+    print('generate_files')
     for num in range(numFiles):
-        print('file %s' % (num))
         create_file(numLines, num)
 
 # makes sure the threads finish creating files, or else problem_1.py will finish too soon
