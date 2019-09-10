@@ -19,8 +19,12 @@ services:
   redis-client-1:
     image: redis
     network_mode: bridge
-    command: redis-cli -h 172.17.0.2
+    # command: redis-cli -h 172.17.0.2 <--- if I put this in, then the container won't stay running
+    depends_on:
+      - redis-server
   redis-client-2:
     image: redis
     network_mode: bridge
-    command: redis-cli -h 172.17.0.2
+    # command: redis-cli -h 172.17.0.2 <--- if I put this in, then the container won't stay running
+    depends_on:
+      - redis-server
