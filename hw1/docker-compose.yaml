@@ -1,9 +1,10 @@
 # HOW TO USE THIS docker-compose.yaml
 # https://docs.docker.com/compose/compose-file/
 
-# docker-compose up -d
-# docker exec <redix-client-1 id> -it bash
-# docker exec <redix-client-2 id> -it bash
+# `docker-compose up -d`
+# `docker exec <redix-client-1 id> -it bash`
+# `docker exec <redix-client-2 id> -it bash`
+# and then start redis-cli in each one, manually
 
 version: '3'
 
