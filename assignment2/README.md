@@ -190,3 +190,14 @@ how to install htop
 
 
 
+-------
+t2.xlarge
+
+sometimes need sudo:
+ wcap  ~/<some>/<where> ▶  
+ $ sudo ssh -i "the.pem" centos@ec2<params>.compute.amazonaws.com
+Last login: Tue Sep 10 20:15:13 2019 from 146.115.176.44
+
+
+need sudo:
+[centos@ip-<IPv4> ~]$ sudo iotop
