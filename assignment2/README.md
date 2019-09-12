@@ -9,11 +9,30 @@ $ FLASK_APP=flask-redis.py flask run -p 3001
 https://pypi.org/project/redis/ is redis-py
 
 
-docker run --name redis-server -d -p 6379:6379 redis
+
+-----------------------------------------------------------
+READING THROUGH ASSIGNMENTS FOR FIRST TIME...
+09/10
+
+For Problems 3-5, your programs have to keep the shared state in memory <-- write the URL counts of the csvs to Redis?
+i'm thinking, 1 python app w/ 4 threads using 1 redis client <--something GET's from Redis, to act as the 'Analytics' component?
+<--- or as each thread reads, is it supposed to be updating Redis? as in per-iteration?
+ 
+
+how adding more threads affect I/O (and CPU)  utilization of your server <-- which metric in htop shows I/O?
+
+Horizontal scaling means that you scale by adding more machines into your pool of resources whereas Vertical scaling means that you scale by adding more power (CPU, RAM) to an existing machine.
+
+
+PREDICTION:
+the '%CPU' will increase as you run on more threads
+the '%CPU' will decrease as you run on more CPU's
+"cpu usage" is % of total CPU in use by all processes? or the process's portion of the total CPU available?
+
 
 -------------------------------------------------------------------------------
 
-
+09/11 Lab
 
 WHAT ARE LIMITATIONS FROM PHYSICAL RESOURCE PERSPECTIVE - PHYSICAL SERVER
 
