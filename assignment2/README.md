@@ -205,3 +205,9 @@ need sudo:
 
 ---------------
 HOMEWORK 09/12
+
+'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
+
+
+
+TODO print the 'LOG ID'
