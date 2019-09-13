@@ -38,6 +38,7 @@ def thread_decorator(func):
 create_file = thread_decorator(create_file)
 
 
+# example usage - python3 problem_1.py 10 100
 if __name__ == '__main__':
     numFiles = int(sys.argv[1])
     numLines = int(sys.argv[2])
