@@ -22,8 +22,7 @@ def create_file():
         file.close()
         os.remove(fileName)
         
-
-
+# run a big fibonacci sequence
 def fibonacci():
     print('THREAD NAME: {}'.format(threading.currentThread().getName()))
     while True:
