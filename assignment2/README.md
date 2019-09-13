@@ -211,3 +211,5 @@ HOMEWORK 09/12
 
 
 TODO print the 'LOG ID'
+
+TODO Need the multiprocessor thing, maybe htop will show it across multiple Processes?

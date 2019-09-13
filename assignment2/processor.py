@@ -1,13 +1,24 @@
 import argparse
+import logging #TODO
+import os
 import time
 import threading
-import logging #TODO
+from random import randint
 logging.basicConfig(format="%(threadName)s:%(thread)s")
 
 threads = []
 
 def create_file():
-    print('THREAD NAME: {}'.format(threading.currentThread().getName()))
+    threadName = threading.currentThread().getName()
+    fileName = '{}.txt'.format(threadName)
+    print('THREAD NAME: {}'.format(threadName))
+    n = randint(0,10)
+    file = open(fileName,'w+')
+    for line in range(10000):
+        file.write("1")
+    file.close()
+    os.remove(fileName)
+
 
 def fibonacci():
     print('THREAD NAME: {}'.format(threading.currentThread().getName()))
@@ -20,14 +31,14 @@ def fibonacci():
 def io_intensive(numThreads):
     print('io_intensive %s threads' % (numThreads))
     for t in range(numThreads):
-        thread = threading.Thread(target=create_file, name='Mrs. Creat_File IO')
+        thread = threading.Thread(target=create_file)
         thread.start()
         threads.append(thread)
 
 def cpu_intensive(numThreads):
     print('cpu_intensive %s threads' % (numThreads))
     for t in range(numThreads):
-        thread = threading.Thread(target=fibonacci, name="Mr. Fibonacci CPU")
+        thread = threading.Thread(target=fibonacci, name="MrFibonacciCPU")
         thread.start()
         threads.append(thread)
 
