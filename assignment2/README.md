@@ -206,10 +206,25 @@ need sudo:
 ---------------
 HOMEWORK 09/12
 
-'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
-
-
+UPDATED FONT'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
 
 TODO print the 'LOG ID'
-
 TODO Need the multiprocessor thing, maybe htop will show it across multiple Processes?
+TODO Figure out what those bars in htop are for
+
+1 TODO Implement multiprocessor https://docs.python.org/3/library/multiprocessing.html
+2 TODO SCP to EC2's and run it
+
+## Scp this to 4 CPU and 8 CPU EC2 Instances
+#### don't forget to ctrl+c. I used to be able to ctrl+c to kill it, but now it hangs, ctrl+c fails, and swp space goes up to 2.87G/4.00G 
+python3 processor.py 2 cpu_intensive
+python3 processor.py 4 cpu_intensive
+python3 processor.py 16 cpu_intensive
+
+## Scp this to 4 CPU and 8 CPU EC2 Instances
+#### I ran it at 500 threads and bars went up to 30%, all 12 of them
+python3 processor.py 2 io_intensive
+python3 processor.py 4 io_intensive
+python3 processor.py 16 io_intensive
+
+

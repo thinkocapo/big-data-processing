@@ -8,16 +8,20 @@ logging.basicConfig(format="%(threadName)s:%(thread)s")
 
 threads = []
 
+# create uniquely named files by using the thread name
 def create_file():
     threadName = threading.currentThread().getName()
-    fileName = '{}.txt'.format(threadName)
     print('THREAD NAME: {}'.format(threadName))
-    n = randint(0,10)
-    file = open(fileName,'w+')
-    for line in range(10000):
-        file.write("1")
-    file.close()
-    os.remove(fileName)
+    fileName = '{}.txt'.format(threadName)
+    #untested While loop
+    while True:
+        n = randint(0,10)
+        file = open(fileName,'w+')
+        for line in range(10000):
+            file.write("1")
+        file.close()
+        os.remove(fileName)
+        
 
 
 def fibonacci():
@@ -61,24 +65,14 @@ def main():
     program(numThreads)
 
 
-# invoke this after main method or else process.py will terminate before threads finish
+# no need to invoke this as while loops are occuring
 def wait_for_threads():
     for thread in threads:
         thread.join()
 
+# example usage - python3 processor.py 2 io_intensive
 if __name__ == '__main__':
     main()
     wait_for_threads()
 else:
     print('this is a main level package')
-
-
-
-
-# def thread_decorator(func):
-#     def wrapper(numLines, num):
-#         thread = threading.Thread(target=func)
-#         threads.append(thread)
-#     return wrapper
-# fibonacci = thread_decorator(fibonacci)
-# create_file = thread_decorator(create_file)
