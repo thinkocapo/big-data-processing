@@ -221,7 +221,7 @@ TODO Figure out what those bars in htop are for
 3 FOR_SUBMIT create_file w/ more columns, randomness, borrow from lab
 4 FOR_submit Colorized logging, sentry
 5 FOR_SUBMIT threadName printed but no threadId
-
+6 FOR_SUBMIT wait_for_threads or not at end?
 
 1 TODO SCP to EC2's and run it
 

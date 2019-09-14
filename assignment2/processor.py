@@ -9,7 +9,6 @@ from random import randint
 
 # Capture any exceptions and send to Sentry.io :)
 if 'DSN_DATA_PIPELINE' in os.environ:
-    print('~~~~~~~~~~~ RUN SENTRY ~~~~~~~~~~~~~')
     sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
 
 # Does not work consistently with threading, so not invoking this for now
@@ -28,7 +27,7 @@ processes = []
 # Create uniquely named files by using the thread name
 # With Multiprocessing, the thread used is always MainThread, so append PID to it to make filenames unique
 # With 'Python Multithreading', the thread names were Thread-1, Thread-2
-# example file name is PID-14848-MainThread.txt
+# an example file name is PID-14848-MainThread.txt
 def create_file():
     fileName = 'PID-%s-%s.txt' % (os.getpid(), threading.currentThread().getName())
     while True:
@@ -89,10 +88,12 @@ def wait_for_threads():
     for thread in processes:
         thread.join()
 
-# Example usage:
+# Example usages:
+# python3 process.py <num_threads> <name_program>
 # python3 processor.py 2 io_intensive
+# python3 process.py 4 cpu_intensive
 if __name__ == '__main__':
     main()
-    # wait_for_threads() # ?
+    wait_for_threads() # ?
 else:
     print('this is a main level package')
