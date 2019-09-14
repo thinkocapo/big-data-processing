@@ -2,14 +2,14 @@ import argparse
 import atexit
 import multiprocessing
 import os
-import sentry_sdk
 import time
 import threading
 from random import randint
 
 # Capture any exceptions and send to Sentry.io :)
-if 'DSN_DATA_PIPELINE' in os.environ:
-    sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
+# if 'DSN_DATA_PIPELINE' in os.environ:
+    # import sentry_sdk
+    # sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
 
 # Does not work consistently with threading, so not invoking this for now
 # by simply running wait_for_threads() after main(), this seems to have fixed the problem

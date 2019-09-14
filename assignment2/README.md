@@ -223,7 +223,10 @@ TODO Figure out what those bars in htop are for
 5 FOR_SUBMIT threadName printed but no threadId
 6 FOR_SUBMIT wait_for_threads or not at end?
 
-1 TODO SCP to EC2's and run it
+
+htop
+System76 Oryx Pro has:
+4.1 GHz i7-8750H (2.2 up to 4.1 GHz – 9MB Cache – 6 Cores – 12 Threads)
 
 ## Scp this to 4 CPU and 8 CPU EC2 Instances
 #### don't forget to ctrl+c. I used to be able to ctrl+c to kill it, but now it hangs, ctrl+c fails, and swp space goes jup to 2.87G/4.00G 
@@ -240,3 +243,27 @@ python3 processor.py 4 io_intensive
 python3 processor.py 16 io_intensive
 ```
 
+
+#### filenames for htop screensehots
+4 CPU
+cpu_intensive_cpu4thread2 9-19%
+cpu_intensive_cpu4thread4 9-19% on all four
+cpu_intensive_cpu4thread16 30-60% on all four
+
+cpu_intensive_cpu8thread2
+cpu_intensive_cpu8thread4
+cpu_intensive_cpu8thread16
+
+
+8 CPU
+io_intensive_cpu4thread2
+io_intensive_cpu4thread4
+io_intensive_cpu4thread16
+
+io_intensive_cpu4thread2
+io_intensive_cpu4thread4
+io_intensive_cpu4thread16
+
+
+often cycled like 18, 26, 34...
+or 9, 16 back and forth
