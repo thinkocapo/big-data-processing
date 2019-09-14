@@ -1,3 +1,7 @@
+
+
+virtualenv -p /usr/bin/python3 name_of_virtualenv  
+
 ```
 FLASK_APP=flask-redis.py
 FLASK_ENV=development
@@ -209,7 +213,7 @@ HOMEWORK 09/12
 UPDATED FONT'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
 
 TODO print the 'LOG ID'
-TODO Need the multiprocessor thing, maybe htop will show it across multiple Processes?
+TODO Need the multiprocessor thing, maybe htop will show it across multiple Processes? compare to 'multithreading' first attempted
 TODO Figure out what those bars in htop are for
 
 0 TODO Implement Sentry
@@ -218,7 +222,7 @@ TODO Figure out what those bars in htop are for
 2 TODO SCP to EC2's and run it
 
 ## Scp this to 4 CPU and 8 CPU EC2 Instances
-#### don't forget to ctrl+c. I used to be able to ctrl+c to kill it, but now it hangs, ctrl+c fails, and swp space goes up to 2.87G/4.00G 
+#### don't forget to ctrl+c. I used to be able to ctrl+c to kill it, but now it hangs, ctrl+c fails, and swp space goes jup to 2.87G/4.00G 
 ```
 python3 processor.py 2 cpu_intensive
 python3 processor.py 4 cpu_intensive
