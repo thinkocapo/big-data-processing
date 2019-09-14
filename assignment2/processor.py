@@ -1,5 +1,6 @@
 import argparse
 import atexit
+import multiprocessing
 import os
 import sentry_sdk
 import time
@@ -7,9 +8,12 @@ import threading
 from random import randint
 
 # Capture any exceptions and send to Sentry.io :)
-sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
+if 'DSN_DATA_PIPELINE' in os.environ:
+    print('~~~~~~~~~~~ RUN SENTRY ~~~~~~~~~~~~~')
+    sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
 
-# Does not work consistently, so not invoking this for now
+# Does not work consistently with threading, so not invoking this for now
+# by simply running wait_for_threads() after main(), this seems to have fixed the problem
 def cleanup_files():
         # wait_for_threads()
         dir_name = os.getcwd()
@@ -19,16 +23,18 @@ def cleanup_files():
                 os.remove(file)
 atexit.register(cleanup_files)
 
-threads = []
+processes = []
 
 # Create uniquely named files by using the thread name
+# With Multiprocessing, the thread used is always MainThread, so append PID to it to make filenames unique
+# With 'Python Multithreading', the thread names were Thread-1, Thread-2
+# example file name is PID-14848-MainThread.txt
 def create_file():
+    pid = os.getpid()
     threadName = threading.currentThread().getName()
-    print('THREAD NAME: {}'.format(threadName))
-    fileName = '{}.txt'.format(threadName)
-    
+    fileName = 'PID-%s-%s.txt' % (pid, threadName)
     while True:
-        print("making file")
+        print("making file - {}".format(fileName))
         file = open(fileName,'w+')
         for line in range(10000):
             file.write("I AM A LINE")
@@ -47,9 +53,9 @@ def fibonacci():
 def io_intensive(numThreads):
     print('io_intensive %s threads' % (numThreads))
     for t in range(numThreads):
-        thread = threading.Thread(target=create_file)
-        thread.start()
-        threads.append(thread)
+        process = multiprocessing.Process(target=create_file)
+        processes.append(process)
+        process.start()
 
 def cpu_intensive(numThreads):
     print('cpu_intensive %s threads' % (numThreads))
@@ -65,7 +71,6 @@ def main():
     parser.add_argument("numThreads", type=int, help="numThreads")
     parser.add_argument("program", type=str, help="io_intensive or cpu_intensive")
     args = parser.parse_args()
-    print(args)
 
     # Which program are we calling
     programs={'io_intensive': io_intensive, 'cpu_intensive': cpu_intensive}
@@ -80,13 +85,13 @@ def main():
 # No need to invoke this as while loops are occuring
 def wait_for_threads():
     print('wait_for_threads')
-    for thread in threads:
+    for thread in processes:
         thread.join()
 
 # Example usage
 # `python3 processor.py 2 io_intensive`
 if __name__ == '__main__':
     main()
-    wait_for_threads()
+    # wait_for_threads() # ?
 else:
     print('this is a main level package')

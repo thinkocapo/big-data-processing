@@ -212,14 +212,18 @@ HOMEWORK 09/12
 
 UPDATED FONT'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'
 
-TODO print the 'LOG ID'
+
 TODO Need the multiprocessor thing, maybe htop will show it across multiple Processes? compare to 'multithreading' first attempted
 TODO Figure out what those bars in htop are for
+0 FOR_SUBMIT Sentry environmental var name
+1 FOR_SUBMIT Cleanup Files not working
+2 FOR_SUBMIT Export the threading and cleanup_files functions? decorators for both? Class instantiation?
+3 FOR_SUBMIT create_file w/ more columns, randomness, borrow from lab
+4 FOR_submit Colorized logging, sentry
+5 FOR_SUBMIT threadName printed but no threadId
 
-0 TODO Implement Sentry
-1 TODO Implement multiprocessor https://docs.python.org/3/library/multiprocessing.html
-2 TODO Implement create_file w/ columns & numbers
-2 TODO SCP to EC2's and run it
+
+1 TODO SCP to EC2's and run it
 
 ## Scp this to 4 CPU and 8 CPU EC2 Instances
 #### don't forget to ctrl+c. I used to be able to ctrl+c to kill it, but now it hangs, ctrl+c fails, and swp space goes jup to 2.87G/4.00G 
