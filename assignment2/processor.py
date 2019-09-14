@@ -1,28 +1,41 @@
 import argparse
-import logging #TODO
+import atexit
 import os
+import sentry_sdk
 import time
 import threading
 from random import randint
-logging.basicConfig(format="%(threadName)s:%(thread)s")
+
+# Capture any exceptions and send to Sentry.io :)
+sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
+
+# Does not work consistently, so not invoking this for now
+def cleanup_files():
+        # wait_for_threads()
+        dir_name = os.getcwd()
+        files = os.listdir(dir_name)
+        for file in files:
+            if file.endswith(".txt"):
+                os.remove(file)
+atexit.register(cleanup_files)
 
 threads = []
 
-# create uniquely named files by using the thread name
+# Create uniquely named files by using the thread name
 def create_file():
     threadName = threading.currentThread().getName()
     print('THREAD NAME: {}'.format(threadName))
     fileName = '{}.txt'.format(threadName)
-    #untested While loop
+    
     while True:
-        n = randint(0,10)
+        print("making file")
         file = open(fileName,'w+')
         for line in range(10000):
-            file.write("1")
+            file.write("I AM A LINE")
         file.close()
         os.remove(fileName)
         
-# run a big fibonacci sequence
+# Run a big fibonacci sequence
 def fibonacci():
     print('THREAD NAME: {}'.format(threading.currentThread().getName()))
     while True:
@@ -47,29 +60,31 @@ def cpu_intensive(numThreads):
 
 def main():
 
-    # specify the number of threads and program from command-line
+    # Specify the number of threads and program from command-line
     parser = argparse.ArgumentParser()
     parser.add_argument("numThreads", type=int, help="numThreads")
     parser.add_argument("program", type=str, help="io_intensive or cpu_intensive")
     args = parser.parse_args()
     print(args)
 
-    # which program are we calling
+    # Which program are we calling
     programs={'io_intensive': io_intensive, 'cpu_intensive': cpu_intensive}
     program = programs[args.program]
 
-    # and with how many threads
+    # And with how many threads
     numThreads = args.numThreads
     
     program(numThreads)
 
 
-# no need to invoke this as while loops are occuring
+# No need to invoke this as while loops are occuring
 def wait_for_threads():
+    print('wait_for_threads')
     for thread in threads:
         thread.join()
 
-# example usage - python3 processor.py 2 io_intensive
+# Example usage
+# `python3 processor.py 2 io_intensive`
 if __name__ == '__main__':
     main()
     wait_for_threads()
