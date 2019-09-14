@@ -30,9 +30,7 @@ processes = []
 # With 'Python Multithreading', the thread names were Thread-1, Thread-2
 # example file name is PID-14848-MainThread.txt
 def create_file():
-    pid = os.getpid()
-    threadName = threading.currentThread().getName()
-    fileName = 'PID-%s-%s.txt' % (pid, threadName)
+    fileName = 'PID-%s-%s.txt' % (os.getpid(), threading.currentThread().getName())
     while True:
         print("making file - {}".format(fileName))
         file = open(fileName,'w+')
@@ -41,13 +39,16 @@ def create_file():
         file.close()
         os.remove(fileName)
         
-# Run a big fibonacci sequence
+# Run a big fibonacci sequence. running it to 100,000 iterations because a billion woudln't complete, or it would freeze
+# If I did 1million instead of 100,000 then CPU is at 99% for each
+# But for 100,000 the cpu stays at 6% for each
 def fibonacci():
-    print('THREAD NAME: {}'.format(threading.currentThread().getName()))
+    HUNDRED_THOUSAND = 100000
     while True:
+        print( 'PID %s %s' % (os.getpid(), threading.currentThread().getName()))
         time.sleep(1)
         a, b = 0, 1
-        for i in range(0, 1000000000):
+        for i in range(0, HUNDRED_THOUSAND):
             a, b = b, a + b
 
 def io_intensive(numThreads):
@@ -60,9 +61,9 @@ def io_intensive(numThreads):
 def cpu_intensive(numThreads):
     print('cpu_intensive %s threads' % (numThreads))
     for t in range(numThreads):
-        thread = threading.Thread(target=fibonacci, name="MrFibonacciCPU")
-        thread.start()
-        threads.append(thread)
+        process = multiprocessing.Process(target=fibonacci)
+        processes.append(process)
+        process.start()
 
 def main():
 
@@ -88,8 +89,8 @@ def wait_for_threads():
     for thread in processes:
         thread.join()
 
-# Example usage
-# `python3 processor.py 2 io_intensive`
+# Example usage:
+# python3 processor.py 2 io_intensive
 if __name__ == '__main__':
     main()
     # wait_for_threads() # ?
