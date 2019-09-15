@@ -225,6 +225,8 @@ TODO Figure out what those bars in htop are for
 7 FOR_SUBMIT README.md cleaned up!!!!!!
 8 FOR_SUBMIT module generator, main(), if __name__, sentry, 
 
+TODO iotop for io_intensive 4CPU, 8CPU
+
 htop
 System76 Oryx Pro has:
 4.1 GHz i7-8750H (2.2 up to 4.1 GHz – 9MB Cache – 6 Cores – 12 Threads)
