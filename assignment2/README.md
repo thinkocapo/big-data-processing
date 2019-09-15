@@ -222,7 +222,8 @@ TODO Figure out what those bars in htop are for
 4 FOR_submit Colorized logging, sentry
 5 FOR_SUBMIT threadName printed but no threadId
 6 FOR_SUBMIT wait_for_threads or not at end?
-
+7 FOR_SUBMIT README.md cleaned up!!!!!!
+8 FOR_SUBMIT module generator, main(), if __name__, sentry, 
 
 htop
 System76 Oryx Pro has:
