@@ -14,8 +14,8 @@ if 'DSN_DATA_PIPELINE' in os.environ:
 processes = []
 
 def query1(fileName):
-    spamReader = csv.reader(open(fileName, newline=''), delimiter=' ', quotechar='|')
-    for row in spamReader:
+    reader = csv.reader(open(fileName), delimiter=' ', quotechar='|')
+    for row in reader:
         print(', '.join(row))
 
 def query2(file):
