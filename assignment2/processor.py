@@ -1,32 +1,14 @@
 import argparse
-import atexit
 import multiprocessing
 import os
 import time
 import threading
 from random import randint
 
-# Capture any exceptions and send to Sentry.io :)
-# if 'DSN_DATA_PIPELINE' in os.environ:
-    # import sentry_sdk
-    # sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
-
-# Does not work consistently with threading, so not invoking this for now
-# by simply running wait_for_threads() after main(), this seems to have fixed the problem
-def cleanup_files():
-        # wait_for_threads()
-        dir_name = os.getcwd()
-        files = os.listdir(dir_name)
-        for file in files:
-            if file.endswith(".txt"):
-                os.remove(file)
-atexit.register(cleanup_files)
-
 processes = []
 
-# Create uniquely named files by using the thread name
-# With Multiprocessing, the thread used is always MainThread, so append PID to it to make filenames unique
-# With 'Python Multithreading', the thread names were Thread-1, Thread-2
+# Create uniquely named files by using <PID> and <ThreadName>
+# With Multiprocessing, the thread used is always MainThread of the new process
 # an example file name is PID-14848-MainThread.txt
 def create_file():
     fileName = 'PID-%s-%s.txt' % (os.getpid(), threading.currentThread().getName())
@@ -82,18 +64,38 @@ def main():
     program(numThreads)
 
 
-# No need to invoke this as while loops are occuring
+# We're using While Loops so this isn't as effective
+# Need to understand better what happens with suddent KeyboardInterrupts and these outstanding threads
 def wait_for_threads():
     print('wait_for_threads')
     for thread in processes:
         thread.join()
 
 # Example usages:
-# python3 process.py <num_threads> <name_program>
+# python3 processor.py <num_threads> <name_program>
 # python3 processor.py 2 io_intensive
-# python3 process.py 4 cpu_intensive
+# python3 processor.py 4 cpu_intensive
 if __name__ == '__main__':
     main()
-    wait_for_threads() # ?
+    wait_for_threads()
 else:
     print('this is a main level package')
+
+
+
+
+# Capture any exceptions and send to Sentry.io :)
+# if 'DSN_DATA_PIPELINE' in os.environ:
+    # import sentry_sdk
+    # sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
+
+# Does not work consistently with threading, so not invoking this for now
+# by simply running wait_for_threads() after main(), this seems to have fixed the problem
+# def cleanup_files():
+#         # wait_for_threads()
+#         dir_name = os.getcwd()
+#         files = os.listdir(dir_name)
+#         for file in files:
+#             if file.endswith(".txt"):
+#                 os.remove(file)
+# atexit.register(cleanup_files)
