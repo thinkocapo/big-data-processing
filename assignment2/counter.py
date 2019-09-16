@@ -18,23 +18,21 @@ processes = []
 field_names = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
 def query1(lock, fileName, server_process_dict):
-    print('\n ~~~~~~~~ query1 ~~~~~~~~~~ \n')
     input_file = csv.DictReader(open(fileName), fieldnames=field_names)
     for row in input_file:
         timestamp_str = row['timestamp']
         obj = datetime.time()
-        
         try:
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
         timestamp_output = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
 
-        # with lock:
-        if timestamp_output not in server_process_dict:
-            server_process_dict[timestamp_output] = 1
-        else:
-            server_process_dict[timestamp_output] += 1
+        with lock:
+            if timestamp_output not in server_process_dict:
+                server_process_dict[timestamp_output] = 1
+            else:
+                server_process_dict[timestamp_output] += 1
 
 def query2(file):
     print('query2')
@@ -47,7 +45,7 @@ def main():
     parser.add_argument("numThreads", type=int, help="numThreads")
     parser.add_argument("query", type=str, help="query1 query2 query3")
     args = parser.parse_args()
-    print('ARGS {}'.format(args))
+    
     # Which program are we calling
     queries={'query1': query1, 'query2': query2}
     query = queries[args.query]
@@ -67,7 +65,6 @@ def main():
         for curr_process in processes:
             curr_process.join()
 
-        print('server_process_dict:')
         for k,v in server_process_dict.items():
             print k,v
 
