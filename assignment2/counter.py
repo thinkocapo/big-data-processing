@@ -12,11 +12,13 @@ if 'DSN_DATA_PIPELINE' in os.environ:
     sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
 
 processes = []
+# <uuid> <timestamp> <url> <userId> <country> <ua_browser><ua_os> <response_status> <TTFB> 
+fieldNames = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
 def query1(fileName):
-    reader = csv.reader(open(fileName), delimiter=' ', quotechar='|')
-    for row in reader:
-        print(', '.join(row))
+    input_file = csv.DictReader(open(fileName), fieldnames=fieldNames)
+    for row in input_file:
+        print row
 
 def query2(file):
     print('query2')
@@ -53,7 +55,7 @@ def wait_for_threads():
         thread.join()
 
 # Example usages:
-# python3 countery.py 4 <?>
+# python3 countery.py 4 query1
 if __name__ == '__main__':
     main()
     wait_for_threads()
@@ -75,3 +77,10 @@ else:
 #             if file.endswith(".txt"):
 #                 os.remove(file)
 # atexit.register(cleanup_files)
+
+
+
+# not needed
+# reader = csv.reader(open(fileName), delimiter=' ', quotechar='|')
+# for row in reader:
+#     print(', '.join(row))
