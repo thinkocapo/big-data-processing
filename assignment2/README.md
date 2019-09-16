@@ -224,8 +224,7 @@ TODO Figure out what those bars in htop are for
 6 FOR_SUBMIT wait_for_threads or not at end?
 7 FOR_SUBMIT README.md cleaned up!!!!!!
 8 FOR_SUBMIT module generator, main(), if __name__, sentry, 
-
-TODO iotop for io_intensive 4CPU, 8CPU
+9 FOR_SUBMIT problem3 counter.py remove 'with lock'?
 
 htop
 System76 Oryx Pro has:
@@ -266,23 +265,3 @@ io_intensive_cpu4thread16
 io_intensive_cpu4thread2
 io_intensive_cpu4thread4
 io_intensive_cpu4thread16
-
-
-often cycled like 18, 26, 34...
-or 9, 16 back and forth
-
-
-TODO 8:51
-Problem3
-reads and outputs:
-```
-cadf21578f704c0f92a73a9e47888281,2019-09-14T23:56:58.560Z,http://example.com/?url=081,user-061,EH,Edge,Linux,501,0.9176
-65879e7f2243448a97fd9538ba21387f,2019-09-14T23:57:24.480Z,http://example.com/?url=179,user-050,ZW,Edge,Android,499,0.1753
-30ba9096104a47ef9af9f65d2b7e3822,2019-09-14T23:57:50.400Z,http://example.com/?url=023,user-029,SG,Opera,Mac,415,0.3504
-d8ea26e4706b48f79a7eecd0f4483f9f,2019-09-14T23:58:16.320Z,http://example.com/?url=105,user-074,EC,Opera,windows,507,0.4426
-24b893f93f4949509b8b4ba077a9743a,2019-09-14T23:58:42.240Z,http://example.com/?url=104,user-054,AU,IE,windows,226,0.9244
-ea5a9675f35d46b79fa07d41986776df,2019-09-14T23:59:08.160Z,http://example.com/?url=090,user-067,CU,IE,Android,511,0.2036
-4dc76bdc00ee4322b326ab6b19e44972,2019-09-14T23:59:34.080Z,http://example.com/?url=020,user-024,ER,Opera,Android,507,0.7050
-7aac76c8320347e5a33cf8b7ef86e241,2019-09-15T00:00:00Z,http://example.com/?url=008,user-001,MH,IE,windows,301,0.8516
-[centos@ip-172-31-14-99 ~]$ 
-```
