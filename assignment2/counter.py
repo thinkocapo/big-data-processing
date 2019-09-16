@@ -38,25 +38,22 @@ def query1(lock, fileName, server_process_dict):
             else:
                 server_process_dict[timestamp_key] = { url: 1 }
 
-
 def query2(file):
     print('query2')
 
-def main():
+# Example usage:
+# python3 countery.py query1
+if __name__ == '__main__':
     print('main')
 
     # Specify the number of threads and query from command-line
     parser = argparse.ArgumentParser()
-    parser.add_argument("numThreads", type=int, help="numThreads")
     parser.add_argument("query", type=str, help="query1 query2 query3")
     args = parser.parse_args()
     
     # Which program are we calling
     queries={'query1': query1, 'query2': query2}
     query = queries[args.query]
-
-    # And with how many threads
-    numThreads = args.numThreads
     
     fileNames = ('./input_files/file-input1.csv', 'input_files/file-input2.csv', 'input_files/file-input3.csv', 'input_files/file-input4.csv')
 
@@ -64,7 +61,7 @@ def main():
         server_process_dict = manager.dict()
         lock = Lock()
         processes = []
-        for i in range(1):
+        for i in range(4):
             process = multiprocessing.Process(target=query, args=(lock, fileNames[i], server_process_dict,))
             processes.append(process)
             process.start()
@@ -74,18 +71,6 @@ def main():
         # print(server_process_dict.items())
         for k,v in server_process_dict.items():
             print k,v
-
-
-def wait_for_threads():
-    print('wait_for_threads')
-    for thread in processes:
-        thread.join()
-
-# Example usages:
-# python3 countery.py 4 query1
-if __name__ == '__main__':
-    main()
-    # wait_for_threads()
 else:
     print('this is a main level package')
 
