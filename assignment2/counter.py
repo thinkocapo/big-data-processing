@@ -59,9 +59,9 @@ def main():
 
     with multiprocessing.Manager() as manager:
         server_process_dict = manager.dict()
-        for i in range(1):
+        for i in range(4):
             lock = multiprocessing.Lock()
-            process = multiprocessing.Process(target=query, args=(lock, fileNames[0], server_process_dict,))
+            process = multiprocessing.Process(target=query, args=(lock, fileNames[i], server_process_dict,))
             processes.append(process)
             process.start()
         for curr_process in processes:
@@ -69,7 +69,7 @@ def main():
 
         print('server_process_dict:')
         for k,v in server_process_dict.items():
-            print(k,v)
+            print k,v
 
 
 def wait_for_threads():
