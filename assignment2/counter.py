@@ -3,6 +3,7 @@ import csv
 import datetime
 import json
 import multiprocessing
+from multiprocessing import Process, Value, Lock
 import os
 import pprint
 import time
@@ -14,7 +15,6 @@ if 'DSN_DATA_PIPELINE' in os.environ:
     import sentry_sdk
     sentry_sdk.init(os.environ['DSN_DATA_PIPELINE'])
 
-processes = []
 field_names = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
 def query1(lock, fileName, server_process_dict):
@@ -27,17 +27,17 @@ def query1(lock, fileName, server_process_dict):
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
-        timestamp_output = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
-        # unique URL's per hour
+        timestamp_key = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
+    
         with lock:
-            if timestamp_output not in server_process_dict:
-                server_process_dict[timestamp_output] = { url: 1}
-            if url not in server_process_dict[timestamp_output]:
-                # print(server_process_dict[timestamp_output])
-                server_process_dict[timestamp_output][url] = 1
+            if timestamp_key in server_process_dict:
+                if url in server_process_dict[timestamp_key]:
+                    server_process_dict[timestamp_key][url] += 1
+                else:
+                    server_process_dict[timestamp_key][url] = 1
             else:
-                server_process_dict[timestamp_output][url] += 1
-                
+                server_process_dict[timestamp_key] = { url: 1 }
+
 
 def query2(file):
     print('query2')
@@ -62,14 +62,16 @@ def main():
 
     with multiprocessing.Manager() as manager:
         server_process_dict = manager.dict()
-        for i in range(4):
-            lock = multiprocessing.Lock()
+        lock = Lock()
+        processes = []
+        for i in range(1):
             process = multiprocessing.Process(target=query, args=(lock, fileNames[i], server_process_dict,))
             processes.append(process)
             process.start()
         for curr_process in processes:
             curr_process.join()
 
+        # print(server_process_dict.items())
         for k,v in server_process_dict.items():
             print k,v
 
@@ -86,3 +88,15 @@ if __name__ == '__main__':
     # wait_for_threads()
 else:
     print('this is a main level package')
+
+# if full_key in server_process_dict:
+#     server_process_dict[full_key] += 1    
+# else:
+#     server_process_dict[full_key] = 1   
+
+# if timestamp_key in server_process_dict:
+#     server_process_dict[timestamp_key].append(url)
+# else:
+#     server_process_dict[timestamp_key] = [url]
+
+# full_key = '%s %s' % (timestamp_key, url)
