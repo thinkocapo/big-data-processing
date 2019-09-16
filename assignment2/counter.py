@@ -21,18 +21,23 @@ def query1(lock, fileName, server_process_dict):
     input_file = csv.DictReader(open(fileName), fieldnames=field_names)
     for row in input_file:
         timestamp_str = row['timestamp']
+        url = row['url']
         obj = datetime.time()
         try:
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
         timestamp_output = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
-
+        # unique URL's per hour
         with lock:
             if timestamp_output not in server_process_dict:
-                server_process_dict[timestamp_output] = 1
+                server_process_dict[timestamp_output] = { url: 1}
+            if url not in server_process_dict[timestamp_output]:
+                # print(server_process_dict[timestamp_output])
+                server_process_dict[timestamp_output][url] = 1
             else:
-                server_process_dict[timestamp_output] += 1
+                server_process_dict[timestamp_output][url] += 1
+                
 
 def query2(file):
     print('query2')
