@@ -15,9 +15,13 @@ processes = []
 # <uuid> <timestamp> <url> <userId> <country> <ua_browser><ua_os> <response_status> <TTFB> 
 fieldNames = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
-def query1(fileName):
+
+
+def query1(fileName, output):
     input_file = csv.DictReader(open(fileName), fieldnames=fieldNames)
     for row in input_file:
+        if row['data
+        ']
         print row
 
 def query2(file):
@@ -41,11 +45,16 @@ def main():
     
     fileNames = ('./input_files/file-input1.csv', 'input_files/file-input2.csv', 'input_files/file-input3.csv', 'input_files/file-input4.csv')
 
-    for i in range(4):
-        process = multiprocessing.Process(target=query, args=(fileNames[0],))
-        processes.append(process)
-        process.start()
-
+    with multiprocessing.Manager() as manager:
+        output = manager.dict()
+        for i in range(4):
+            process = multiprocessing.Process(target=query, args=(fileNames[0], output,))
+            processes.append(process)
+            process.start()
+            # process.join()
+        for curr_process in processes:
+            curr_process.join()
+    print('output\n{}'.format(output))
 
 
 
