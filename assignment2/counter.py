@@ -28,13 +28,20 @@ def query1(lock, fileName, server_process_dict):
         except ValueError: 
             obj = datetime.datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
         timestamp_key = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
-    
+        # dict_copy = server_process_dict[timestamp_key]
+        # dict_copy[url] = dict_copy[url] + 1
+        # server_process_dict[timestamp_key] = dict_copy
         with lock:
             if timestamp_key in server_process_dict:
+                dict_copy = server_process_dict[timestamp_key]
                 if url in server_process_dict[timestamp_key]:
-                    server_process_dict[timestamp_key][url] += 1
+                    dict_copy[url] = dict_copy[url] + 1
+                    server_process_dict[timestamp_key] = dict_copy
+                    # server_process_dict[timestamp_key][url] += 1
                 else:
-                    server_process_dict[timestamp_key][url] = 1
+                    dict_copy[url] = 1
+                    server_process_dict[timestamp_key] = dict_copy
+                    # server_process_dict[timestamp_key][url] = 1
             else:
                 server_process_dict[timestamp_key] = { url: 1 }
 
@@ -70,9 +77,10 @@ if __name__ == '__main__':
 
         # print(server_process_dict.items())
         for k,v in server_process_dict.items():
-            print k,v
-else:
-    print('this is a main level package')
+            unique_urls = server_process_dict[k].items()
+            count_unique_urls = len(unique_urls)
+            print k, count_unique_urls
+
 
 # if full_key in server_process_dict:
 #     server_process_dict[full_key] += 1    
