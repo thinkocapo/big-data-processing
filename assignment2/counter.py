@@ -37,16 +37,21 @@ def query1(lock, fileName, server_process_dict):
                 if url in server_process_dict[timestamp_key]:
                     dict_copy[url] = dict_copy[url] + 1
                     server_process_dict[timestamp_key] = dict_copy
-                    # server_process_dict[timestamp_key][url] += 1
                 else:
                     dict_copy[url] = 1
                     server_process_dict[timestamp_key] = dict_copy
-                    # server_process_dict[timestamp_key][url] = 1
             else:
                 server_process_dict[timestamp_key] = { url: 1 }
 
 def query2(file):
     print('query2')
+
+def printer(query):
+    if query == query1:
+        for k,v in server_process_dict.items():
+            unique_urls = server_process_dict[k].items()
+            count_unique_urls = len(unique_urls)
+            print k, count_unique_urls
 
 # Example usage:
 # python3 countery.py query1
@@ -75,11 +80,12 @@ if __name__ == '__main__':
         for curr_process in processes:
             curr_process.join()
 
+        printer(query)
         # print(server_process_dict.items())
-        for k,v in server_process_dict.items():
-            unique_urls = server_process_dict[k].items()
-            count_unique_urls = len(unique_urls)
-            print k, count_unique_urls
+        # for k,v in server_process_dict.items():
+        #     unique_urls = server_process_dict[k].items()
+        #     count_unique_urls = len(unique_urls)
+        #     print k, count_unique_urls
 
 
 # if full_key in server_process_dict:
