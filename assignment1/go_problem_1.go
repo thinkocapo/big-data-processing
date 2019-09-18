@@ -4,11 +4,21 @@ import "fmt"
 import "flag"
 import "strconv"
 
-var ip = flag.Int("flagname", 1234, "help message for flagname")
+
+var flagvar int
 
 func main() {
 	fmt.Printf("hello, world\n")
-	ipstring := strconv.Itoa(*ip) // ip is int pointer
+	
+	// 1
+	// var ip = flag.Int("flagname", 1234, "help message for flagname") // integer pointer
+	flag.IntVar(&flagvar, "flagname", 1234, "help message for flagname") // &flagvar
 
-	fmt.Printf(ipstring)
+	// 2
+	flag.Parse()
+
+	// 3
+	// flagString := strconv.Itoa(*ip)
+	flagString := strconv.Itoa(flagvar)
+	fmt.Printf(flagString)
 }
