@@ -1,0 +1,85 @@
+REDIS REmote DIctionary Store
+~100k operations/second on entry-level hardware.
+
+1. start redis server in 1st docker container
+2. start redis client in 2nd docker container
+
+"sometimes i don't procrastinate"
+
+
+(install redis by 'brew' if you don't want to use docker. or 'npm')
+
+
+Redis-Keys
+binary save (can use any binary sequence)
+empty string is valid
+too long is bad
+too short is not good
+recommended to use a SCHEMA like "object-type:id:field" WOOOAAAHH
+
+
+"patter namtch on the Key(s)" but "data type for the Value"
+
+Key Naming is domainName:uniqueID
+
+
+
+"you can expire your keys" <--- useful for a Shopping Cart type application
+
+`type <keyname>` <--shows you type of the key
+
+
+
+
+Dynamic Arrays supported - `lpush`
+
+
+SET'S are supported
+
+
+COOL
+`lpop events` returns a, vs `rpop events` returns c, on [a,b,c]
+
+
+INTERESTING
+"Sorted Sets"
+zrangebyscore <myzset> 500 1000
+zrangebyscore <myset> 90 1000
+
+
+Hash:
+hget event:Judo capacity
+
+Redis supports Transactions
+`multi
+...
+exec
+`
+
+WATCH (redis command)??
+
+
+Redis Modules
+
+Bloom Filter - probablistic way of saying a certain value is definitely not there
+
+
+
+
+
+.strictRedis....
+
+
+GOOD
+***"load data into redis ahead of time" to make your website faster***
+^ load the sql data into Redis
+, tool for extracting from sql rdbms
+^ "redis for caching"
+
+
+
+
+
+
+
+
