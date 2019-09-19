@@ -1,0 +1,111 @@
+with immutable objects, don't need replication.
+"as objects become mutable, the consistency issues arise"
+
+TRULY SCALE PROCESSING HORIZONTALLY:
+'no mutable shared state' <--lecture2example1 was shared state between threads - click_counts
+'no shared data'
+'all operations have to be idempotent'
+Hadoop!?
+
+
+
+idempotent - result the same no matter how many times you call it with same input
+atomic - counter incrementation
+
+"EXAMPLE2 (LECTURE3)"
+
+idempotent - like hadoop worker node, input. its thread-scope operation is self-contained.
+idempotnent/hadoop - has form of data partitioning: each process/thread has separate set od data
+
+"use state within 1 thread/process, instead of a count state in each multiple threads/processes"
+"need to combine the threads later on, results of all the processes"
+^ hadoop
+
+
+
+reducer good at de-dup'ing keys
+
+3 Different Queries:
+different mappers but always same reducer
+can send it to multiple reducers too
+depends what the query is
+
+
+
+
+De-dup'ing can be for 100 events that have all same primary/parentKey, tallying up the results
+
+
+
+Job of your Collection Service to partition your data on-the-fly, e.g. by time, by hour as individual chunks, or jobId
+
+Is data immutable?
+'data still mutable inside the thread, but it's now
+Is processing algorith mincremental?
+Yes, It's incremental within thread scope but not across all apps/threads
+
+
+*FAAACCCCTTTT*
+In Lecture2 we could compute uniques because we had access to the entire data set at once!!!!!!!
+vertically scaled supported this.
+but if we had rea-ltime stream data then this would fail.
+State was recorded during the memory/lifetime of that thread.
+"use distributed cache with persistence to disk that allows re-loading of the previously stored state"
+^ but pre-processing from scratch can be expensive. so maybe work with intermediate results...
+"saving state + re-loading state" [as things fail] but you don't want partial results / re-processing.
+*don't want partial results sent to reducer..*
+^ practically gets you back into the shared state discrepancy!!
+
+
+can store raw as well as pre-calculated data...re-aggregate them later on [given you don't have to do de-duping based on the information that was not stored]
+
+*WOAH*
+use messaging system like RabbitMQ or Kafka to pass data to reducer...
+
+
+5 REQUIREMENTS OF DISTRIBUTED/SCALABLE/(PARALLEL?) SYSTEM
+1 Scalability
+2 Fault Tolerance
+3 Data Consistency
+4 Data Latency
+5 Query Performance
+
+*INTERESTING*REVIEW!!!!!!!
+Z-Scaling: Data decomposition
+Y-Scaling: Functional Decomposition (processing into chunks)
+
+***YEEHAW***
+TraditionalParallele CPU-Intensive was multiple tasks on 1 machine (threads?)
+then Data-INtensive came and need multiple Nodes (as better for I/O, which we saw in HW ---> needed more CPU's for efficiency!!)
+
+MAP - produces Key:Value pairs
+
+
+GOOD
+Sometimes just the mapper is enoguh, other times there's no combiner....but logical flow is still the same
+
+MR Execution FLow:
+1 Input splitting (big impact on how efficient your overall operation is) VERY IMPORTANT
+works diffferentl ybetween hadoop,spark, amazon. dividing data into chunks
+2 Task Allocation
+how many mapper jobs and assignment of chunk to which mapper
+3 Map Phase
+converting the data you get as input into key:value pairs.
+4 Combiner Phase (optional)
+(pre-optimization of the result)
+- is same memory space as the Mapper
+^ saves a lot on Network Traffic *GOOD*
+"want most compact footprint of the data being sent"
+5 Partition Phase
+6 Shuffle / Sort phase
+7 Reduce phase
+
+
+#1+2 both typically done by Master (Spark) but in Hadoop its 2 Different Nodes
+'think of mappers as done, they know why data they've been given and how to produce a result'
+
+
+LEFT OFF AT:
+1:05:31
+Scaling of Data Processing - Data decomposition
+and budget at $56.27 on 09/18
