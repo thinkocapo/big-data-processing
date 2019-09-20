@@ -1,6 +1,7 @@
 *.docx
 commands.txt
 *.odt
+*.odt#
 *.odp
 *.pdf
 /archives
