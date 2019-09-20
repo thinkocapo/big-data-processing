@@ -109,3 +109,74 @@ LEFT OFF AT:
 1:05:31
 Scaling of Data Processing - Data decomposition
 and budget at $56.27 on 09/18
+
+"Data Decomposition"
+can't afford to lose the chunk.
+latency 'the rate that you need' ingest as much as being sent to ingestion
+
+2 Kind of Master Nodes:
+NameNode - for data storage in the HDFS
+JobTracker - for parallel processing using MapReduce
+'it knows how to split your data based on format of your file....[next lecture], and how you serialize it'
+
+2 Kind of Slave Nodes
+DataNode
+TaskTracker
+
+NameNode->datanode (communicate via TCP)
+JobTracker->tasktracker
+
+or...
+MasterNode "CONTAINS" both JobTracker & NameNode
+
+****COOL
+DOes data flow from tasktracer to datanode?? and its in same 'slave' instance so can access each other like that????
+
+
+Master nodes have metadata
+*COOL
+namespace...."it's similar to nodes on filesystem Unix, which have sub-directories, more subdirectories in the tree, then eventually the File is there at the end"
+
+
+stroes each File as a Sequence of Block
+- can specify block size and replication factor
+
+'Blockerreport' namenode receives this, it's list of all blocks on a datanode. it gets sent to the Name node.
+'Heartbeat' sent as well
+
+'rack-aware' does that mean which Slave Node (Datanode+tasktracker)
+
+YESS
+Client request 1ST goes to the Namenode
+
+How Full Connection Works
+Hadoop - Driver (proxy) > (HDFS) Namemode/Blocks
+
+DataNode can perform CPU & I/O Intensive Jobs
+
+
+*HADDOP FS SHELL* of course ;)
+
+Haddop Master Node is the only one you can connect to for all commands / metadata. though you can SHELL connect to others
+
+
+*MAKES SENSE*
+hdfs dfs -ls <--- is a different physical system (hdfs/datanode?) than if you run `ls` from that command-line
+`hdfs dfsadmin -report`
+-printTopology
+hdfs -version
+
+"write-once-read-many-times" so in that sense many pieces of hdfs are immutable..? blocks, the chunks
+
+
+hadoop dfs -ls
+/apps
+/tmp
+/usr
+/var
+
+VS
+
+jdfs dfs -ls
+1item
+hadoop.../apps/tez
