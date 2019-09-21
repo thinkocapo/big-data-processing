@@ -40,7 +40,7 @@ def query1_unique_urls_per_hour(file_name):
         #     redisClient.hset(timestamp_hour, url, 'true')
         #     redisClient.hincrby(timestamp_hour, 'count' 1)
         
-        # redis-cli
+        # redis-cli monitor
         # HGET 2019-09-20:12 count
 
     return
@@ -65,6 +65,8 @@ def query2_unique_visitors_per_url_per_hour(file_name):
         if redisClient.hget(full_key, userId) == None:
             redisClient.hset(full_key, userId, 'true')
             redisClient.hincrby(full_key, 'count' 1)
+        # redis-cli monitor
+        # HGET 2019-09-14:14:http://example.com/?url=042
     return
     '''
     <date:hour:url>,  unique_user_count
@@ -77,8 +79,8 @@ def query2_unique_visitors_per_url_per_hour(file_name):
 
 
 def query3_unique_events_per_url_per_hour(file_name):
-    input_file = csv.DictReader(open(fileName), fieldnames=field_names)
-    for row in input_file:
+    input_file = csv.DictR# redisClient.saad(timestamp_hour, url)es=field_names)
+    for row in input_file:        # SMEMBERS for timestamp_hour gives you all the URL's
         timestamp = row['timestamp']
         url = row['url']
         date = datetime.time()
@@ -91,9 +93,8 @@ def query3_unique_events_per_url_per_hour(file_name):
         timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
         redisClient.hincrby(timestamp_hour, url, 1)
-        if redisClient.hget(timestamp_hour, url) == None:
-            redisClient.hset(timestamp_hour, url, 'true')
-            redisClient.hincrby(timestamp_hour, url, 1)
+        # redis-cli monitor
+        # HGET HGET 2019-09-14:14:http://example.com/?url=042
         '''
         <date:hour:url>,  event_count
         2019-09-14:14:http://example.com/?url=042, ??
@@ -131,46 +132,3 @@ redisClient = redis.StrictRedis(host='localhost',port=6379)
 query1_unique_urls_per_hour(file_name, url_info)
 print "Process Completed"
 
-
-# input_file = csv.DictReader(open(fileName), fieldnames=field_names)
-# for row in input_file:
-#     timestamp = row['timestamp']
-#     url = row['url']
-#     obj = datetime.time()
-#     try:
-#         obj = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-#     except ValueError: 
-#         obj = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-#     timestamp_hour = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
-
-
-
-# if redisClient.hsetnx(timestamp_hour,'urls',1) == 0:
-#         redisClient.hincrby(timestamp_hour,'urls')
-
-
-# redisClient.saad(timestamp_hour, url)
-        # SMEMBERS for timestamp_hour gives you all the URL's
-
-
-'''
-$ docker exec -it 0a1c3f190cdd bash
-root@0a1c3f190cdd:/data# redis-cli
-127.0.0.1:6379> HSET 2019-09-20:12 www.google.com/url1 true
-(integer) 1
-127.0.0.1:6379> HGET 2019-09-20:12 www.google.com/url1
-"true"
-127.0.0.1:6379> HINCRBY 2019-09-20:12 count
-(error) ERR wrong number of arguments for 'hincrby' command
-127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
-(integer) 1
-127.0.0.1:6379> HGET 2019-09-20:12 count
-"1"
-127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
-(integer) 2
-127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
-(integer) 3
-127.0.0.1:6379> HGET 2019-09-20:12 count
-"3"
-127.0.0.1:6379> 
-'''
