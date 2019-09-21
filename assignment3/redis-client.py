@@ -77,7 +77,32 @@ def query2_unique_visitors_per_url_per_hour(file_name):
 
 
 def query3_unique_events_per_url_per_hour(file_name):
-    print('query3')
+    input_file = csv.DictReader(open(fileName), fieldnames=field_names)
+    for row in input_file:
+        timestamp = row['timestamp']
+        url = row['url']
+        date = datetime.time()
+        userId = row['userId']
+        try:
+            date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+        except ValueError: 
+            date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
+        # Prepare a timestamp string that we want to write into Redis shared state
+        timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
+
+        redisClient.hincrby(timestamp_hour, url, 1)
+        if redisClient.hget(timestamp_hour, url) == None:
+            redisClient.hset(timestamp_hour, url, 'true')
+            redisClient.hincrby(timestamp_hour, url, 1)
+        '''
+        <date:hour:url>,  event_count
+        2019-09-14:14:http://example.com/?url=042, ??
+        2019-09-12:19:http://example.com/?url=013, ??
+        2019-09-14:03:http://example.com/?url=162, ??
+        2019-09-13:01:http://example.com/?url=035, ??
+        2019-09-14:10:http://example.com/?url=043, ??
+        '''
+    return
 
 
 parsed_args = parser.parse_args()
