@@ -8,6 +8,8 @@
 
 version: '3'
 
+# TODO need to add `link` `--link` commands to get redis-cli clients connecting to redis-server properly
+
 services:
   postgres-bdp:
     image: postgres

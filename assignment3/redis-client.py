@@ -15,6 +15,7 @@ parser.add_argument("query", type=str, , required=True, help="query1 query2 quer
 # https://redis.io/commands/smembers
 def query1_unique_urls_per_hour(file_name):
     input_file = csv.DictReader(open(fileName), fieldnames=field_names)
+    url_map = {}
     for row in input_file:
         timestamp = row['timestamp']
         url = row['url']
@@ -24,16 +25,18 @@ def query1_unique_urls_per_hour(file_name):
         except ValueError: 
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
         # Prepare a timestamp string that we want to write into Redis shared state
-        timestamp_key = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
+        timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
         # Write to Redis
-        # "key_name, score1, value"
-        # "key_name, score2, value"
-        # Insert a new key with initial value 1. If that key already exists, then the function returns 0
-        # Else, Atomically increment the value for key by 1 if the key already exists
-        # TODO if url not in dict ?
-        redisClient.saad(timestamp_key, url)
-        # TODO SERVER-SIDE: CLI COMMAND scard for getting cardinality (number of elements in the set), it's called smembers
+        # simplest...
+        if url not in url_map:
+            url_map[url] = True
+            redisClient.hincrby(timestamp_hour, 'count' 1)
+        
+        # less python, but much more redis, and a strange data structure?
+        if redisClient.hget(timestamp_hour, url) == None:
+            redisClient.hset(timestamp_hour, url, 'true')
+            redisClient.hincrby(timestamp_hour, 'count' 1)
         
     return
 
@@ -49,15 +52,15 @@ def query2_unique_visitors_per_url_per_hour(file_name):
         except ValueError: 
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
         # Prepare a timestamp string that we want to write into Redis shared state
-        timestamp_key = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
+        timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
         # Write to Redis
         # "key_name, score1, value"
         # "key_name, score2, value"
         # Insert a new key with initial value 1. If that key already exists, then the function returns 0
-        #if redisClient.hsetnx(timestamp_key,url,1) == 0:
+        #if redisClient.hsetnx(timestamp_hour,url,1) == 0:
             # Atomically increment the value for key by 1 if the key already exists
-            #redisClient.hincrby(timestamp_key,url)
+            #redisClient.hincrby(timestamp_hour,url)
 
 
 def query3_unique_events_per_url_per_hour(file_name):
@@ -100,9 +103,36 @@ print "Process Completed"
 #         obj = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
 #     except ValueError: 
 #         obj = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-#     timestamp_key = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
+#     timestamp_hour = '%s-%s-%s:%s' % (obj.year, obj.month, obj.day, obj.hour)
 
 
 
-# if redisClient.hsetnx(timestamp_key,'urls',1) == 0:
-#         redisClient.hincrby(timestamp_key,'urls')
+# if redisClient.hsetnx(timestamp_hour,'urls',1) == 0:
+#         redisClient.hincrby(timestamp_hour,'urls')
+
+
+# redisClient.saad(timestamp_hour, url)
+        # SMEMBERS for timestamp_hour gives you all the URL's
+
+
+'''
+$ docker exec -it 0a1c3f190cdd bash
+root@0a1c3f190cdd:/data# redis-cli
+127.0.0.1:6379> HSET 2019-09-20:12 www.google.com/url1 true
+(integer) 1
+127.0.0.1:6379> HGET 2019-09-20:12 www.google.com/url1
+"true"
+127.0.0.1:6379> HINCRBY 2019-09-20:12 count
+(error) ERR wrong number of arguments for 'hincrby' command
+127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
+(integer) 1
+127.0.0.1:6379> HGET 2019-09-20:12 count
+"1"
+127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
+(integer) 2
+127.0.0.1:6379> HINCRBY 2019-09-20:12 count 1
+(integer) 3
+127.0.0.1:6379> HGET 2019-09-20:12 count
+"3"
+127.0.0.1:6379> 
+'''
