@@ -128,7 +128,6 @@ query = queries[args.query]
 # Create a redis client
 redisClient = redis.StrictRedis(host='localhost',port=6379)
 
-
-query1_unique_urls_per_hour(file_name, url_info)
+query(file_name)
 print "Process Completed"
 
