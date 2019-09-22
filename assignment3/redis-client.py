@@ -93,14 +93,26 @@ def query4_unique_urls_by_country_by_hour_for_time_range(file_name):
         url = row['url']
         date = datetime.time()
         country = row['country']
+
+        # Format dates, make sure single-digits are pre-pended with a '0'
+        # Prepare a timestamp string that we want to write into Redis shared state
         try:
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-        # Prepare a timestamp string that we want to write into Redis shared state
+        if len(date.day) == 1:
+            date.day = '0{}'.format(date.day)
+        if len(date.month) == 1:
+            date.month = '0{}'.format(date.month)
+        if len(date.hour) == 1:
+            date.hour = '0{}'.format(date.hour)
         timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
         timestamp_hour_country = '%s:%s' % (timestamp_hour, country)
 
+        # make sure is within timerange
+        timestamp_hour_comparison = '%s%s%s%s' % (date.year, date.month, date.day, date.hour)
+        if timestamp_hour_comparison < 2019091305 or timestamp_hour_comparison > 2019091409:
+            continue
         if redisClient.hget(timestamp_hour_country, url) == None:
             redisClient.hset(timestamp_hour_country, url, 'true')
             redisClient.hincrby(timestamp_hour_country, 'count', 1)
