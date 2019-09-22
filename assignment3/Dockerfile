@@ -13,7 +13,7 @@ COPY ./file-input1.csv /app
 
 # COPY file-input1.csv /app
 
-EXPOSE 8080
+# EXPOSE 8080
 
 RUN pip install -r requirements.txt
 

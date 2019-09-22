@@ -8,9 +8,9 @@ services:
       # 6379: 6379
   python-redis-1:
     build: .
-    # ports:
-    #   - "8080:6379"
-    network_mode: bridge
+    ports:
+      - "8080:8080"
+    network_mode: host
     depends_on:
       - redis-server
     command: "python redis-client.py query1 --file file-input1.csv"
