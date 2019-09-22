@@ -17,15 +17,15 @@ services:
     depends_on:
       - redis-server
     command: "python redis-client.py query1 --file file-input2.csv"
-  # python-redis-3:
-  #   build: .
-  #   network_mode: host
-  #   depends_on:
-  #     - redis-server
-  #   command: "python redis-client.py query1 --file file-input3.csv"
-  # python-redis-4:
-  #   build: .
-  #   network_mode: host
-  #   depends_on:
-  #     - redis-server
-  #   command: "python redis-client.py query1 --file file-input4.csv"
+  python-redis-3:
+    build: .
+    network_mode: host
+    depends_on:
+      - redis-server
+    command: "python redis-client.py query1 --file file-input3.csv"
+  python-redis-4:
+    build: .
+    network_mode: host
+    depends_on:
+      - redis-server
+    command: "python redis-client.py query1 --file file-input4.csv"

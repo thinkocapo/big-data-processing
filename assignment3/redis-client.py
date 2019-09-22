@@ -15,10 +15,10 @@ field_names = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'u
 
 # Calculate the unique url's per hour - per hour of every yy/mm/dd/hh?
 def query1_unique_urls_per_hour(file_name):
+    print('\n~~~~~~~~~ query1_unique_urls_per_hour ~~~~~~~~~')
     input_file = csv.DictReader(open(file_name), fieldnames=field_names)
     url_map = {}
     for row in input_file:
-        print('\n++++++ query1 ++++++ \n')
         timestamp = row['timestamp']
         url = row['url']
         date = datetime.time()
@@ -28,6 +28,9 @@ def query1_unique_urls_per_hour(file_name):
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
         timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
+        if redisClient.hget(timestamp_hour, url) == None:
+            redisClient.hset(timestamp_hour, url, 'true')
+            redisClient.hincrby(timestamp_hour, 'count', 1)
         # NOT SURE WHY NONE OF THIS WOULD EXECUTE...
         # with redisClient.pipeline() as pipe:
         # pipe.watch(timestamp_hour)
@@ -38,12 +41,8 @@ def query1_unique_urls_per_hour(file_name):
         #     pipe.hset(timestamp_hour, url, 'true')
         #     pipe.hincrby(timestamp_hour, 'count', 1)
         # pipe.execute()
-
-        if redisClient.hget(timestamp_hour, url) == None:
-            print('\n timestamp_hour {}'.format(timestamp_hour))
-            redisClient.hset(timestamp_hour, url, 'true')
-            redisClient.hincrby(timestamp_hour, 'count', 1)
     return
+
 
 def query2_unique_visitors_per_url_per_hour(file_name):
     print('query2')
@@ -105,7 +104,6 @@ def query3_unique_events_per_url_per_hour(file_name):
         '''
     return
 
-print('\n1111111111111 \n')
 parsed_args = parser.parse_args()
 # Find the file in ec2 filesystem, based on parameter
 logs_dir = parsed_args.logs_directory
@@ -123,6 +121,7 @@ queries={
     'query3': query3_unique_events_per_url_per_hour}
 query = queries[parsed_args.query]
 
+print('\n~~~~~~~~~ Connecting to Redis Server ~~~~~~~~~~ \n')
 # Create a redis client
 redisClient = redis.StrictRedis(host='0.0.0.0',port=8081)
 
