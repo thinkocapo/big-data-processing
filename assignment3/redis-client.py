@@ -100,19 +100,27 @@ def query4_unique_urls_by_country_by_hour_for_time_range(file_name):
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-        if len(date.day) == 1:
-            date.day = '0{}'.format(date.day)
-        if len(date.month) == 1:
-            date.month = '0{}'.format(date.month)
-        if len(date.hour) == 1:
-            date.hour = '0{}'.format(date.hour)
-        timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
+        
+        day = date.day
+        if len(str(day)) == 1:
+            day = '0{}'.format(day)
+        month = date.month
+        if len(str(month)) == 1:
+            month = '0{}'.format(month)
+        hour = date.hour
+        if len(str(hour)) == 1:
+            hour = '0{}'.format(hour)
+
+        # this is the Hash to write into Redis
+        timestamp_hour = '%s-%s-%s:%s' % (date.year, month, day, hour)
         timestamp_hour_country = '%s:%s' % (timestamp_hour, country)
 
-        # make sure is within timerange
-        timestamp_hour_comparison = '%s%s%s%s' % (date.year, date.month, date.day, date.hour)
-        if timestamp_hour_comparison < 2019091305 or timestamp_hour_comparison > 2019091409:
+        # this is for making sure it's within time range
+        timestamp_hour_comparison = '%s%s%s%s' % (date.year, month, day, hour)
+        if int(timestamp_hour_comparison) < 2019091305 or int(timestamp_hour_comparison) > 2019091409:
             continue
+        
+        # write to Redis
         if redisClient.hget(timestamp_hour_country, url) == None:
             redisClient.hset(timestamp_hour_country, url, 'true')
             redisClient.hincrby(timestamp_hour_country, 'count', 1)
@@ -132,11 +140,13 @@ file_name = parsed_args.file
 queries={
     'query1': query1_unique_urls_per_hour, 
     'query2': query2_unique_visitors_per_url_per_hour, 
-    'query3': query3_unique_events_per_url_per_hour}
+    'query3': query3_unique_events_per_url_per_hour,
+    'query4': query4_unique_urls_by_country_by_hour_for_time_range}
 query = queries[parsed_args.query]
 
 print('\n~~~~~~~~~ Connecting to Redis Server ~~~~~~~~~~ \n')
-redisClient = redis.StrictRedis(host='0.0.0.0',port=8081)
+# couldn't get redis-server' to work in place of 0.0.0.0, using network_mode: 'bridge'
+redisClient = redis.StrictRedis(host='0.0.0.0',port=8081) 
 
 query(file_name)
 print("\nProcess Completed")
