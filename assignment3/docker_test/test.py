@@ -13,3 +13,8 @@ redisClient.set("myfoo", "yourbar")
 
 
 print('FINISHED LANDING OPERATIONS')
+
+
+# host='localhost' port=6379
+# host='172.17.0.2' port=6379 worked for running docker on host wcap
+# host='172.17.0.2',port=8081

@@ -7,16 +7,17 @@ import redis
 prog = "assignment3"
 desc = "Process data provided by log files and return query results"
 parser = argparse.ArgumentParser(prog=prog, description=desc)
+parser.add_argument("query", type=str, help="query1 | query2 | query3 | query4")
 parser.add_argument('--logs-directory', '-ld', required=False, help="Directory where the log files are stored.")
-parser.add_argument('--file_name', '-file', required=False, help="Name of the  log file are stored")
-parser.add_argument("query", type=str, , required=True, help="query1 query2 query3")
+parser.add_argument('--file', '-file', required=False, help="Name of the  log file are stored")
 
 field_names = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
 # Calculate the unique url's per hour - per hour of every yy/mm/dd/hh?
 # https://redis.io/commands/smembers
 def query1_unique_urls_per_hour(file_name):
-    input_file = csv.DictReader(open(fileName), fieldnames=field_names)
+    print('\n~~~~~~~~~ query1 ~~~~~~~~ \n')
+    input_file = csv.DictReader(open(file_name), fieldnames=field_names)
     url_map = {}
     for row in input_file:
         timestamp = row['timestamp']
@@ -33,7 +34,7 @@ def query1_unique_urls_per_hour(file_name):
         # 2 python perations (if..not..in and url_map), 1 redis operation
         if url not in url_map:
             url_map[url] = True
-            redisClient.hincrby(timestamp_hour, 'count' 1)
+            redisClient.hincrby(timestamp_hour, 'count', 1)
         
         # 0 python operations, but is 3 redis operations (get, set and increment), and a strange data structure?
         # if redisClient.hget(timestamp_hour, url) == None:
@@ -47,7 +48,7 @@ def query1_unique_urls_per_hour(file_name):
 
 def query2_unique_visitors_per_url_per_hour(file_name):
     print('query2')
-    input_file = csv.DictReader(open(fileName), fieldnames=field_names)
+    input_file = csv.DictReader(open(file_name), fieldnames=field_names)
     for row in input_file:
         timestamp = row['timestamp']
         url = row['url']
@@ -64,7 +65,7 @@ def query2_unique_visitors_per_url_per_hour(file_name):
         full_key = '%s:%s' % (timestamp_hour, url)
         if redisClient.hget(full_key, userId) == None:
             redisClient.hset(full_key, userId, 'true')
-            redisClient.hincrby(full_key, 'count' 1)
+            redisClient.hincrby(full_key, 'count', 1)
         # redis-cli monitor
         # HGET 2019-09-14:14:http://example.com/?url=042
     return
@@ -105,15 +106,16 @@ def query3_unique_events_per_url_per_hour(file_name):
         '''
     return
 
-
+print('\n1111111111111 \n')
 parsed_args = parser.parse_args()
 # Find the file in ec2 filesystem, based on parameter
 logs_dir = parsed_args.logs_directory
 if logs_dir is None:
-    logs_dir = "input_files/"
+    # logs_dir = "input_files/"
+    logs_dir = "./"
 elif not logs_dir.endswith("/"):
     logs_dir = logs_dir + "/"
-file_name = parsed_args.file_name
+file_name = parsed_args.file
 if file_name is None:
     file_name = "file-564899aad2264f9bbc97dabaa879a017.csv"
 file_name = logs_dir + file_name
@@ -123,11 +125,16 @@ queries={
     'query1': query1_unique_urls_per_hour, 
     'query2': query2_unique_visitors_per_url_per_hour, 
     'query3': query3_unique_events_per_url_per_hour}
-query = queries[args.query]
+query = queries[parsed_args.query]
 
+
+print('\n2222222222 \n')
 # Create a redis client
-redisClient = redis.StrictRedis(host='localhost',port=6379)
+redisClient = redis.StrictRedis(host='0.0.0.0',port=8081)
+# redisClient = redis.StrictRedis(host='172.17.0.2',port=6379)
+
+print('\n3333333333 \n')
 
 query(file_name)
-print "Process Completed"
+print("\nProcess Completed")
 
