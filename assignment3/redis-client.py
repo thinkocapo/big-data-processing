@@ -64,8 +64,6 @@ def query2_unique_visitors_per_url_per_hour(file_name):
         if redisClient.hget(full_key, userId) == None:
             redisClient.hset(full_key, userId, 'true')
             redisClient.hincrby(full_key, 'count', 1)
-        # redis-cli monitor
-        # HGET 2019-09-14:14:http://example.com/?url=042
     return
     '''
     <date:hour:url>,  unique_user_count
@@ -78,7 +76,8 @@ def query2_unique_visitors_per_url_per_hour(file_name):
 
 
 def query3_unique_events_per_url_per_hour(file_name):
-    input_file = csv.DictR# redisClient.saad(timestamp_hour, url)es=field_names)
+    print('query3')
+    input_file = csv.DictReader(open(file_name), fieldnames=field_names)
     for row in input_file:        # SMEMBERS for timestamp_hour gives you all the URL's
         timestamp = row['timestamp']
         url = row['url']
@@ -92,8 +91,6 @@ def query3_unique_events_per_url_per_hour(file_name):
         timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
         redisClient.hincrby(timestamp_hour, url, 1)
-        # redis-cli monitor
-        # HGET HGET 2019-09-14:14:http://example.com/?url=042
         '''
         <date:hour:url>,  event_count
         2019-09-14:14:http://example.com/?url=042, ??
