@@ -5,12 +5,27 @@ services:
     image: redis
     ports: 
       - 8081:6379
-      # 6379: 6379
   python-redis-1:
     build: .
-    ports:
-      - "8080:8080"
     network_mode: host
     depends_on:
       - redis-server
     command: "python redis-client.py query1 --file file-input1.csv"
+  python-redis-2:
+    build: .
+    network_mode: host
+    depends_on:
+      - redis-server
+    command: "python redis-client.py query1 --file file-input2.csv"
+  # python-redis-3:
+  #   build: .
+  #   network_mode: host
+  #   depends_on:
+  #     - redis-server
+  #   command: "python redis-client.py query1 --file file-input3.csv"
+  # python-redis-4:
+  #   build: .
+  #   network_mode: host
+  #   depends_on:
+  #     - redis-server
+  #   command: "python redis-client.py query1 --file file-input4.csv"

@@ -23,3 +23,29 @@ root@0a1c3f190cdd:/data# redis-cli
 "3"
 127.0.0.1:6379> 
 '''
+
+
+
+# Write to Redis
+# 2 python perations (if..not..in and url_map), 1 redis operation
+# if url not in url_map:
+#     url_map[url] = True
+#     redisClient.hincrby(timestamp_hour, 'count', 1)
+
+'''
+10:06p
+PROOF THAT IT WORKED
+ wcap  ~/thinkocapo/big-data-processing/assignment3 ▶  
+ $ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e0bad9f49ecd        redis               "docker-entrypoint.s…"   31 seconds ago      Up 30 seconds       0.0.0.0:8081->6379/tcp   assignment3_redis-server_1
+ wcap  ~/thinkocapo/big-data-processing/assignment3 ▶  
+ $ docker exec -it e0bad9f49ecd bash
+root@e0bad9f49ecd:/data# redis-cli
+127.0.0.1:6379> HGET 2019-9-14:23 count        94 (csv1) 101 (csv2)
+"96"
+127.0.0.1:6379> 
+'''
+
+
+# redis-cli monitor
