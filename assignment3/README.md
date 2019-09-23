@@ -1,4 +1,4 @@
-# Instructions
+## Problem 1, 2 Instructions
 1. `scp` the docker-compose.yaml, requirements, redis-clientpy, Dockerfile into ec2  
 2.  
 Terminal1 - `docker-compose build` and `docker-compose up` *  
@@ -26,6 +26,9 @@ HGET 2019-09-14:14 http://example.com/?url=042
 2019-09-14:03:http://example.com/?url=162, ??
 2019-09-13:01:http://example.com/?url=035, ??
 2019-09-14:10:http://example.com/?url=043, ??
+
+# query4
+HGET 2019-09-14:02:BW count
         
  
 ```  
@@ -35,3 +38,11 @@ HGET 2019-09-14:14 http://example.com/?url=042
 
 *ideally should end in a redis-cli monitor in the foreground, but I only saw `-d` detach option for sending all to background.  
 **need parameterize the selected query so it's like `docker-compose up <query1>`  
+
+## Problem 4 Instructions
+"security group is on the subnet and your ssh from your laptop is not allowed"
+1. ec2
+2. select Master node ec2
+3. view inbound rules > see your I.P. not in there. you'll see IP's of the subnet
+4. click SecurityGroup: ElasticMapReduce-master
+<!-- 5. Inbound Rules... -->

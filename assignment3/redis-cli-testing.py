@@ -49,3 +49,9 @@ root@e0bad9f49ecd:/data# redis-cli
 
 
 # redis-cli monitor
+
+
+
+
+# ElasticMapReduce
+ $ ssh -i ~/keypairs/assignment2.pem hadoop@ec2-18-216-238-231.us-east-2.compute.amazonaws.com
