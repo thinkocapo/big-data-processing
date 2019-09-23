@@ -1,0 +1,106 @@
+4 CPU
+sudo ssh -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com
+sudo scp -i ~/your.pem ./processor.py  centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem counter.py centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+
+8 CPU
+sudo ssh -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com
+sudo scp -i ~/your.pem ./processor.py centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+
+htop
+sudo iotop --only
+
+*HOW TO TRANSFER FILE FROM EC2 TO LOCAL MACHINE*
+scp -i hw1.pem ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:<name_of_file.txt> ./
+
+`docker exec -it` into the redis-server container and:
+redis-cli monitor
+
+"assignment3/docker_test"
+docker build .
+
+*GOOD*
+docker run <image>
+docker run -it --name test
+vs
+docker start <container>
+
+HOW TO NAME YOUR IMAGE
+`docker build .`
+`docker build -t nginx_image .` from https://www.howtoforge.com/tutorial/how-to-create-docker-images-with-dockerfile/
+
+HOW TO CREATE YOUR OWN PYTHON IMAGE (w/ command)
+# Dockerfile says FROM python:3.7-slim and to CMD `python test.py`, this Dockerfile gets used by `docker build -t test_image .` which creates a new image, featuring the CMD
+pwd
+big-data-processing/assignment3/docker_test
+docker build -t test_image .
+docker run -dti -p 8080:8080 --name test_container test_image
+HELLO EARTH
+
+YUP
+docker run -dti -p 8080:8080 --name test_container test_image /bin/bash
+^^ container stays running, but 'HELLO EARTH' doesn't log? This is because /bin/bash was overwriting it :/
+
+LESSON
+don't forget the /bin/bash or else it exists after finishing running the CMD
+`docker start` again and it keeps running, perhaps it's using the command /bin/bash again
+
+$ docker start -i ffbb57fc089f
+
+OBSERVATION
+When you do a Python Image and DON'T Pass a CMD or `docker run...<command>` then it starts Python in interactive mode, doesn't exist.
+we saw this in test_image_no_command
+
+
+```
+# docker network inspect bridge | grep IPv4
+redisClient = redis.StrictRedis(host='172.17.0.2',port=6379)
+```
+docker run -it --name dockeripv4 dockeripv4
+
+
+# for testing on local hostname=wcap
+python redis-client.py query1 --file file-input1.csv
+python redis-client.py query1 --file file-input2.csv
+python redis-client.py query1 --file file-input3.csv
+python redis-client.py query1 --file file-input4.csv
+
+SSH
+sudo ssh -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com
+SCP
+sudo scp -i ~/your.pem ./docker-compose.yaml centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./Dockerfile centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./redis-client.py centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./requirements.txt centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+
+
+HOW TO INSTALL DOCKER-COMPOSE ON LINUX (EC2)
+installed docker-compose on the ec2
+https://docs.docker.com/compose/install/
+
+HOW TO REMOVE A DOCKER IMAGE
+sudo docker image rm a1a26d327460
+
+GET THE CSV'S TO LOCAL
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input1.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input2.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input3.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input4.csv ./
+
+
+docker-compose up
+- then docker-compose down
+- then docker images, docker image rm <image_id>
+
+
+to run it once more
+`docker-compose run python-redis-1`
+but you'd have to re-build image if you had any code changes
+
+
+HOW TO REBUILD IMAGES
+docker-compose build
+docker-compose up
+^^ should only rebuild the python-redis clients,
+check by `docker images` and see when images last updated
+

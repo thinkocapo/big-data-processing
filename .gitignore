@@ -1,5 +1,4 @@
 *.docx
-commands.txt
 *.odt
 *.odt#
 *.odp
@@ -10,5 +9,5 @@ commands.txt
 /labs
 /playspace
 /screenshots
-commands.txt
 *.csv
+/assignment3/archive
