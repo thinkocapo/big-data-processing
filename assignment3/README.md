@@ -38,11 +38,11 @@ HGET 2019-09-14:02:BW count
 
 *ideally should end in a redis-cli monitor in the foreground, but I only saw `-d` detach option for sending all to background.  
 **need parameterize the selected query so it's like `docker-compose up <query1>`  
-
+## Problem 3 Bonus
 ## Problem 4 Instructions
 "security group is on the subnet and your ssh from your laptop is not allowed"
 1. ec2
 2. select Master node ec2
 3. view inbound rules > see your I.P. not in there. you'll see IP's of the subnet
 4. click SecurityGroup: ElasticMapReduce-master
-<!-- 5. Inbound Rules... -->
+5. Inbound Rules...Edit...add my IP

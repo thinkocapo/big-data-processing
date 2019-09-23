@@ -1,4 +1,4 @@
-REDIS REmote DIctionary Store
+REDIS Remote Dictionary Store
 ~100k operations/second on entry-level hardware.
 
 1. start redis server in 1st docker container

@@ -1,7 +1,6 @@
 # redisClient.saad(timestamp_hour, url)
         # SMEMBERS for timestamp_hour gives you all the URL's
 
-
 '''
 $ docker exec -it 0a1c3f190cdd bash
 root@0a1c3f190cdd:/data# redis-cli
@@ -24,8 +23,6 @@ root@0a1c3f190cdd:/data# redis-cli
 127.0.0.1:6379> 
 '''
 
-
-
 # Write to Redis
 # 2 python perations (if..not..in and url_map), 1 redis operation
 # if url not in url_map:
@@ -47,11 +44,45 @@ root@e0bad9f49ecd:/data# redis-cli
 127.0.0.1:6379> 
 '''
 
-
 # redis-cli monitor
-
-
-
 
 # ElasticMapReduce
  $ ssh -i ~/keypairs/assignment2.pem hadoop@ec2-18-216-238-231.us-east-2.compute.amazonaws.com
+
+
+# for testing on local hostname=wcap
+python redis-client.py query1 --file file-input1.csv
+python redis-client.py query1 --file file-input2.csv
+python redis-client.py query1 --file file-input3.csv
+python redis-client.py query1 --file file-input4.csv
+
+4:48p
+ssh...
+sudo ssh -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com
+scp...
+sudo scp -i ~/your.pem ./docker-compose.yaml centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./Dockerfile centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./redis-client.py centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/your.pem ./requirements.txt centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./
+
+
+GET THE CSV'S TO LOCAL
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input1.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input2.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input3.csv ./
+sudo scp -i ~/your.pem centos@ec2-<IP_AD_DRESS_HERE>.us-east-2.compute.amazonaws.com:./input_files/file-input4.csv ./
+
+
+docker-compose up
+- then docker-compose down
+- then docker images, docker image rm <image_id>
+
+TRY TO RUN IT ONCE MORE
+`docker-compose run python-redis-1`
+but you'd have to re-build image if you had any code changes
+
+HOW TO REBUILD IMAGES
+docker-compose build
+docker-compose up
+^^ should only rebuild the python-redis clients,
+check by `docker images` and see when images last updated

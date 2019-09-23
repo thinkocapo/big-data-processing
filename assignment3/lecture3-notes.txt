@@ -7,8 +7,6 @@ TRULY SCALE PROCESSING HORIZONTALLY:
 'all operations have to be idempotent'
 Hadoop!?
 
-
-
 idempotent - result the same no matter how many times you call it with same input
 atomic - counter incrementation
 
@@ -17,11 +15,10 @@ atomic - counter incrementation
 idempotent - like hadoop worker node, input. its thread-scope operation is self-contained.
 idempotnent/hadoop - has form of data partitioning: each process/thread has separate set od data
 
-"use state within 1 thread/process, instead of a count state in each multiple threads/processes"
+*FACT*
+"[hadoop] use state within 1 thread/process, instead of a count state in each multiple threads/processes [week2 multiprocessing]"
 "need to combine the threads later on, results of all the processes"
 ^ hadoop
-
-
 
 reducer good at de-dup'ing keys
 
@@ -30,25 +27,19 @@ different mappers but always same reducer
 can send it to multiple reducers too
 depends what the query is
 
-
-
-
 De-dup'ing can be for 100 events that have all same primary/parentKey, tallying up the results
-
-
 
 Job of your Collection Service to partition your data on-the-fly, e.g. by time, by hour as individual chunks, or jobId
 
 Is data immutable?
 'data still mutable inside the thread, but it's now
-Is processing algorith mincremental?
+Is processing algorithm incremental?
 Yes, It's incremental within thread scope but not across all apps/threads
-
 
 *FAAACCCCTTTT*
 In Lecture2 we could compute uniques because we had access to the entire data set at once!!!!!!!
 vertically scaled supported this.
-but if we had rea-ltime stream data then this would fail.
+but if we had real-time stream data then this would fail.
 State was recorded during the memory/lifetime of that thread.
 "use distributed cache with persistence to disk that allows re-loading of the previously stored state"
 ^ but pre-processing from scratch can be expensive. so maybe work with intermediate results...
@@ -56,12 +47,10 @@ State was recorded during the memory/lifetime of that thread.
 *don't want partial results sent to reducer..*
 ^ practically gets you back into the shared state discrepancy!!
 
-
 can store raw as well as pre-calculated data...re-aggregate them later on [given you don't have to do de-duping based on the information that was not stored]
 
 *WOAH*
-use messaging system like RabbitMQ or Kafka to pass data to reducer...
-
+Use messaging system like RabbitMQ or Kafka to pass data to reducer...
 
 5 REQUIREMENTS OF DISTRIBUTED/SCALABLE/(PARALLEL?) SYSTEM
 1 Scalability
@@ -76,7 +65,7 @@ Y-Scaling: Functional Decomposition (processing into chunks)
 
 ***YEEHAW***
 TraditionalParallele CPU-Intensive was multiple tasks on 1 machine (threads?)
-then Data-INtensive came and need multiple Nodes (as better for I/O, which we saw in HW ---> needed more CPU's for efficiency!!)
+then Data-Intensive came and need multiple Nodes (as better for I/O, which we saw in HW ---> needed more CPU's for efficiency!!)
 
 MAP - produces Key:Value pairs
 
@@ -104,12 +93,6 @@ converting the data you get as input into key:value pairs.
 #1+2 both typically done by Master (Spark) but in Hadoop its 2 Different Nodes
 'think of mappers as done, they know why data they've been given and how to produce a result'
 
-
-LEFT OFF AT:
-1:05:31
-Scaling of Data Processing - Data decomposition
-and budget at $56.27 on 09/18
-
 "Data Decomposition"
 can't afford to lose the chunk.
 latency 'the rate that you need' ingest as much as being sent to ingestion
@@ -130,7 +113,7 @@ or...
 MasterNode "CONTAINS" both JobTracker & NameNode
 
 ****COOL
-DOes data flow from tasktracer to datanode?? and its in same 'slave' instance so can access each other like that????
+Does data flow from tasktracer to datanode?? and its in same 'slave' instance so can access each other like that????
 
 
 Master nodes have metadata
@@ -161,7 +144,7 @@ Haddop Master Node is the only one you can connect to for all commands / metadat
 
 
 *MAKES SENSE*
-hdfs dfs -ls <--- is a different physical system (hdfs/datanode?) than if you run `ls` from that command-line
+hdfs dfs -ls <--- is a different physical system (it's hdfs/datanode) than if you run `ls` from that command-line
 `hdfs dfsadmin -report`
 -printTopology
 hdfs -version
@@ -177,6 +160,6 @@ hadoop dfs -ls
 
 VS
 
-jdfs dfs -ls
+hdfs dfs -ls
 1item
 hadoop.../apps/tez
