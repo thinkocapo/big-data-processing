@@ -15,6 +15,7 @@ services:
     image: postgres
     ports:
       - 5433:5433
+    # container_name: '' <--- optional. "Because Docker container names must be unique, you cannot scale a service beyond 1 container if you have specified a custom name. ""
   redis-server:
     image: redis
     ports: 
@@ -23,11 +24,26 @@ services:
     image: redis
     network_mode: bridge
     # command: redis-cli -h 172.17.0.2 <--- if I put this in, then the container won't stay running
+    # command: redis-cli -h redis-server <---- can also try putting container-name
     depends_on:
       - redis-server
+    # links:                 <-------- might fix it, according to example solution...
+      # - redis-server
   redis-client-2:
     image: redis
     network_mode: bridge
     # command: redis-cli -h 172.17.0.2 <--- if I put this in, then the container won't stay running
     depends_on:
       - redis-server
+
+
+
+# Interesting...
+# For docker run, --link is also deprecated and should be replaced by a custom network. 
+# https://stackoverflow.com/questions/35832095/difference-between-links-and-depends-on-in-docker-compose-yml
+
+
+
+# docker exec vs docker attach
+# https://stackoverflow.com/questions/30960686/difference-between-docker-attach-and-docker-exec
+# "exec is for running new command"

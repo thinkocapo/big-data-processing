@@ -53,6 +53,13 @@ we saw this in test_image_no_command
 
 
 ```
+# docker network ls
+shows available networks (bridge, host, none) and their id's (like 7b10e593df29)
+can specify a network for a container in docker-compose.yaml, may keep it running ("dependency")
+"Links are not required to enable services to communicate - by default, any service can reach any other service at that service’s name. "
+https://docs.docker.com/compose/networking/#links
+
+
 # docker network inspect bridge | grep IPv4
 redisClient = redis.StrictRedis(host='172.17.0.2',port=6379)
 ```
