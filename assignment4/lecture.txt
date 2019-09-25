@@ -1,0 +1,86 @@
+"agree. docker something i touch a few times a year. senior/architect."
+oh like Udemy???
+"graduate level"
+
+start 2:40p
+1 split can be read by 1 map job
+Mapper
+- makes "intermediate results"
+- and is buffered in mapper memory...?
+- mapper results go to stsdout
+
+'Combiner' (optional)
+- 'pre-aggregate' of the mapper's results
+- performs SORTING on the in-memory buffer data
+- reduces amount of data sent to Reducer
+'Partitioner' (optional)
+- when more than 1 reducer
+- when more than 1 reducer?
+- when mapper's memory buffer is full
+- "# of partitions is same as number of reduce tasks"
+- each partition written to its own part of disk
+
+
+Reducer
+- each reduce writes to its own local disk
+- gets its input from stdin
+
+"map > partitioner > sorting > reduce"
+
+CORRECT - SLIDE
+mapper > combiner > partitioner > shuffler
+
+
+
+Can new jobs be defined on the fly or do you have to re-deploy everything?
+
+QUESTIONS FOR US:
+WHAT TO STORE (CONTENT AND MODEL)
+WHERE TO STORE TO (THE ACTUAL DATA STORAGE SYSTEM)
+HOW TO STORE (FORMATS AND SERIALIZATION)
+HOW TO STORE (ALGORITHMS)
+
+WHERE TO STORE
+- What are the write patterns for your data?
+- What are the read patterns?
+- What are latency requirements for both?
+
+
+"Derived Data"
+
+*LESSON*
+Store the Raw Data as Master Data Set
+Don't Store the Derived Data as Master Data Set
+
+*GOOD*
+Unstructured vs Semantically Normalized data
+
+
+Immutable - Denormalized
+- good for historical analysis
+- efficient bulk processing
+
+
+Fact-based Model - Normalized
+- atomic, data can't be subdivided anymore
+- Normalized
+
+
+
+use a uuid for if timestamps overlap (are duplicates)
+
+
+
+
+MasterDatasets - Storage Options
+key-value storage systems:
+- keys are index
+- bulk operations not optimized
+- Cassandra, if you have the money for the size of your data
+distributed file system:
+- files are sequences of bytes
+- can conmpress
+- regular filesystem is on 1 server..
+- distributed filesystem is implemented over multiple nodes..
+-- can scale horizontally by adding more nodes
+- examples HDFS, S3
