@@ -56,10 +56,39 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a
 PROBLEM2 STEPS
 + ssh into slave nodes and give security permissions <-- looked like it was already done
 
-9:47 NEXT:
-- review all steps and...
-- write csv's to hdfs (review video, lab slides)
 
-- write my mapper + reducer py's <--- understand the lab ones first and model off of that
+
+
+12:27 NEXT:
++ figure out how mapper 'prints' or 'writes' to something the reducer can get by 'line in fileinput.input()''
+- write my mapper + reducer py's <--- all you need is print statements with \t involved
 - scp them to each slave node
-- figure out how to pass 4 csv's (from hdfs!?) all at once
+- figure out how to pass 4 csv's (from hdfs!?) all at once <---by -input s3://cscie88-amitathex/input/
+
+
+
+PROBLEM2 IN JAVA
+- is it worth re-writing out my mapper/reudcer in java? NO
+- just ask about differences instead
+- jar with 1 class, try it
+- could try just the wordcount example
+
+"""
+Hello, I have a few questions on producing my own 'jar' with mappers and reducers written in java.
+
+
+
+Is the count_jobs.jar contains only the HoursCounter_t class, which then has mapper and reducer subclasses in it, in HoursCounter_t.java?
+
+
+
+hadoop jar count_jobs.jar org.cscie88.hadoopmr.HoursCounter input_logs output_hr
+Or do I need a pom.xml and Maven to help me add dependenices for hadoop? The command 'hadoop' is already taking care of running hadoop for me, correct?
+
+
+
+When I was reading about uploading to S3 I found this hadoop package called S3A and you needed to include in in your Maven build, so I was thinking I had to use Maven. But it turned out this tool was not even necessary. https://hadoop.apache.org/docs/current/hadoop-aws/tools/hadoop-aws/index.html#Introducing_the_Hadoop_S3A_client.
+
+
+But if you need to add in additional features to Hadoop and you do that by adding in more specialized Jars, then is it still the same setup regardless of whether your mappers are in java vs python? After all the start of the command is 'hadoop jar' and its written in java. In the python example you call '/usr/lib/hadoop'. Can ssh into the Node and update config from there?
+"""
