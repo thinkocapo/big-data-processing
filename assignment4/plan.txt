@@ -29,13 +29,37 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a
 
 s3://inputfilesassignment4/file-input1.csv
 
-- run hadoop wordcount job
++ run hadoop wordcount job
 hadoop jar <name.jar> <class_in_jar> <input_file> <output_file> at the end.
-hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount https://inputfilesassignment4.s3.us-east-2.amazonaws.com/file-input1.csv output_wordcount.txt
-- find how to monitor the # of splits, map, reduce tasks for this job (review lab video if can't find it through console.aws.amazon.com GUI)
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv output_wordcount.txt
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3://inputfilesassignment4/file-input1.csv output_wordcount.txt
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv wordcount
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv s3a://inputfilesassignment4/wordcount
 
+YESSS
+[hadoop@ip-172-31-25-109 ~]$ hadoop fs -ls
+Found 2 items
+drwxr-xr-x   - hadoop hadoop          0 2019-09-26 03:46 output_wordcount.txt
+drwxr-xr-x   - hadoop hadoop          0 2019-09-26 03:57 output_wordcount2.txt
 
+[hadoop@ip-172-31-25-109 ~]$ hadoop fs -cat output_wordcount.txt/part-r-00001
+[hadoop@ip-172-31-25-109 ~]$ hadoop fs -cat output_wordcount.txt/part-r-00002
+[hadoop@ip-172-31-25-109 ~]$ hadoop fs -cat output_wordcount.txt/part-r-00003
+[hadoop@ip-172-31-25-109 ~]$ hadoop fs -cat output_wordcount.txt/part-r-00004
+
++ write it to S3
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv s3a://inputfilesassignment4/wordcount
++ find how to monitor the # of splits, map, reduce tasks for this job (review lab video if can't find it through console.aws.amazon.com GUI)
+[SCREENSHOTS OF LOGS]
 
 
 PROBLEM2 STEPS
-- ssh into slave nodes and give security permissions
++ ssh into slave nodes and give security permissions <-- looked like it was already done
+
+9:47 NEXT:
+- review all steps and...
+- write csv's to hdfs (review video, lab slides)
+
+- write my mapper + reducer py's <--- understand the lab ones first and model off of that
+- scp them to each slave node
+- figure out how to pass 4 csv's (from hdfs!?) all at once
