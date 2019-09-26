@@ -92,3 +92,13 @@ When I was reading about uploading to S3 I found this hadoop package called S3A 
 
 But if you need to add in additional features to Hadoop and you do that by adding in more specialized Jars, then is it still the same setup regardless of whether your mappers are in java vs python? After all the start of the command is 'hadoop jar' and its written in java. In the python example you call '/usr/lib/hadoop'. Can ssh into the Node and update config from there?
 """
+
+
+QUESTION - Python vs JAVA
+if just stdin/stdout then Scala would work same way?
+if python functionality added to appease them, then the heck with it.
+size of arrays
+data types, 'stdin/stdout' enough? no strong typing. escape chars, unicode, unsigned_int, maybe java better
+errors in ETL, which are more readable? i'd rather deal with java errors.
+adding more hadoop packages/functionality is still just by adding more java jars, and mapper/reducer can stay in python?
+what's more common in data world? is java that painful?
