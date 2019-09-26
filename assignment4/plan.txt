@@ -1,0 +1,41 @@
+--------------------- RESOURCES --------------------
+Hue
+think
+1A
+
+Technically what is the difference between s3n, s3a and s3?
+https://stackoverflow.com/questions/33356041/technically-what-is-the-difference-between-s3n-s3a-and-s3
+
+----------------------- PROBLEMS --------------------
+
+PROBLEM 1 STEPS
+1. Upload 4 input log files to S3 bucket inputfilesassignment4
++ file-input1.csv Object URL
+https://inputfilesassignment4.s3.us-east-2.amazonaws.com/file-input1.csv
++ with a folder it's shown in the URL:
+https://inputfilesassignment4.s3.us-east-2.amazonaws.com/wordcount/file-input1.csv
+
+2. Example wordcount job w/ s3 data
++ ssh into master node,
+ssh -i ~/assignment2.pem hadoop@ec2-18-218-82-247.us-east-2.compute.amazonaws.com
++ find /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar
+  + find the wordcount program 'bundled example' <--- assume its in the .jar
+  need put the wordcount mappers reducers on the slave nodes?
+
+- how to reference object URL or something like s3client.get(<name_of_file.csv)
+"In general, when specifying a path to S3, we will follow this required convention: `s3a://bucket-name/directory/`"
+...so trying:
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv output_wordcount.txt
+
+s3://inputfilesassignment4/file-input1.csv
+
+- run hadoop wordcount job
+hadoop jar <name.jar> <class_in_jar> <input_file> <output_file> at the end.
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount https://inputfilesassignment4.s3.us-east-2.amazonaws.com/file-input1.csv output_wordcount.txt
+- find how to monitor the # of splits, map, reduce tasks for this job (review lab video if can't find it through console.aws.amazon.com GUI)
+
+
+
+
+PROBLEM2 STEPS
+- ssh into slave nodes and give security permissions

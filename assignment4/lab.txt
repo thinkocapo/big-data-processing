@@ -1,0 +1,96 @@
+09/25/19
+
+CLSUTER:
+MapReduce on all below:
+YARN+HDFS on cluster
+
+YARN (Yet Another Resource Negotiator) for job scheduling
+manage:
+- batch
+- interactive
+- streaming
+cluster resource management
+
+
+Edge Nodes - HBase Proxy
+
+ResourceManager - talks to NodeManager - has Work Node
+
+Yarn - manage stream Spark workload as well as MapReduce workload. both are in NodeManager(s)
+
+see EMR Release Versions
+
+EMR Cluster (AWS view) > Resource Manager.
+
+
+INSTRUCTIONS:
+1
+m4.xlarge
+2
+click link for Hue, interface for interacting with your Cluster.
+last time, we logged into the cluster and ran commands.
+HUE is a UI to talk to Cluster
+3
+Query > Editor > query engine(s) for selection. hive-converts your syntax into a mapper/reducer, runs it for you.
+
+"you can use m4.large, not a problem"
+5:28p
+1
+ssh into the cluster
+mapper,reducer demo.py's + demo.csv
+2 How put data in the cluster
+hadoop fs -put demo.csv Inputfiles
+hadoop fs -ls / <-- root
+hadoop fs -ls Inputfiles
+hadoop fs -ls
+
+3 now go open this file in Hue and treat it through a 'sql'
+can go into default db and create a table,
+^ "but this is next week with Spark"
+
+...changing gears...
+
+4 simple_wc_mapper.py, 
+opens a file (fileinput.input() can read from a 'cat text.txt > ./simiple_wc_mapper.py') and reads each word and each line and writes it to an output file
+^ slide
+'cat demo.txt | mapper.py | sort | reducer.py' EXAMPLE, then let's run it on EMR Cluster. works fine until data too big
+need 'sort' for this to work. MapReduce framework will implement some sort of sort for us...
+...
+
+5.
+- scp'd demo.txt into hadoop shell
+- but need to load it into jdfs
+hadoop fs -put demo.txt demo.txt
+hadoop fs -ls /user/hadoop
+
+6.
+hadoop jar /usr... --file ... --mapper -- reduer --file demo.txt
+
+
+7. Security Group for the slave nodes:
+make sure your IP is added to it....
+this is so you can ssh into the slave nodes...
+
+Source Code needs to be on the Slaves...
+COMMANDS run from MASTER
+
+Any tips on seting up S3 - security groups, data structures, loading data into s3, connecting it to Hadoop. any gotcha's?
+Questions:
+1. hadoop command we run after ssh'ing into it? YES
+2. can pass S3 input and S3 output to example 'hadoop jar /usr/lib/hadoop/hadoop-streaming.jar'
+...
+
+source code needs to be on all 3 machines...
+
+
+Docker is not a good candidate for distributed computing
+
+
+
+hadoop fs -copyToLocal MyOutputfiles2
+
+
+NOTE - while the jobs are running you can try AWS.Console>ElasticMapreduce > 
+
+
+----------------------------------------- END LAB -----------------------------------------------------
