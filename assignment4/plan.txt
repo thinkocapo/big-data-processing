@@ -17,7 +17,7 @@ https://inputfilesassignment4.s3.us-east-2.amazonaws.com/wordcount/file-input1.c
 
 2. Example wordcount job w/ s3 data
 + ssh into master node,
-ssh -i ~/assignment2.pem hadoop@ec2-18-218-82-247.us-east-2.compute.amazonaws.com
+ssh -i ~/assignment2.pem hadoop@ec2-<ip_ad_dress_here>.us-east-2.compute.amazonaws.com
 + find /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar
   + find the wordcount program 'bundled example' <--- assume its in the .jar
   need put the wordcount mappers reducers on the slave nodes?
@@ -56,9 +56,12 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a
 PROBLEM2 STEPS
 + ssh into slave nodes and give security permissions <-- looked like it was already done
 + figure out how mapper 'prints' or 'writes' to something the reducer can get by 'line in fileinput.input()''
++ write my mapper + reducer py's, print statements with \t involved
 
-- write my mapper + reducer py's <--- all you need is print statements with \t involved
+
 - scp them to each slave node
+- scp them to master node? try without this...
+
 - figure out how to pass 4 csv's (from hdfs!?) all at once <---by -input s3://cscie88-amitathex/input/
 
 
