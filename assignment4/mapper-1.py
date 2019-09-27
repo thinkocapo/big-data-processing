@@ -45,7 +45,7 @@ for line_in in sys.stdin:
 
         # Output, stdout
         # print('%s\t%d' % (timestamp_hour_url, 1))
-        print('%s\t%d' % (timestamp_hour, 1))
+        print('%s\t%s' % (timestamp_hour, url))
 
 
     except ValueError as e:
