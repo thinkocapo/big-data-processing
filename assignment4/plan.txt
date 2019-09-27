@@ -102,3 +102,39 @@ data types, 'stdin/stdout' enough? no strong typing. escape chars, unicode, unsi
 errors in ETL, which are more readable? i'd rather deal with java errors.
 adding more hadoop packages/functionality is still just by adding more java jars, and mapper/reducer can stay in python?
 what's more common in data world? is java that painful?
+and....
+
+09/26
+Namenodes is bottleneck and 10-100 PB's data
+so use FSView, read HDFS Federation
+
+
+
+DATA QUALITY
+To enhance data quality, we identified two key areas for improvement. First, we want to avoid non-schema-conforming data when some of the upstream data stores do not mandatorily enforce or check data schema before storage (e.g., storing a key-value where the value is a JSON blob). This results in bad data entering our Hadoop ecosystem, thereby affecting all downstream users also relying on this data. To prevent an influx of bad data, we are transitioning all upstream data stores towards performing mandatory schema checks on data content and rejecting data entries if there are any issues (e.g., not confirming with the schema) with the data.
+
+
+The second area that we found problematic was the quality of the actual data content. While using schemas ensures that data contains correct data types, they do not check the actual data values (e.g., an integer as opposed to a positive number between [0,150]). To improve data quality, we are expanding our schema service to support semantic checks. These semantic checks (in other words, Uber-specific data types) allows us to add extra constraints on the actual data content beyond basic structural type checking.
+
+DATA EFFICIENCY
+Data efficiency
+To improve data efficiency, we are moving away from relying on dedicated hardware for any of our services and towards service dockerization. In addition, we are unifying all of our resource schedulers within and across our Hadoop ecosystem to bridge the gap between our Hadoop and non-data services across the company. This allows all jobs and services to be scheduled in a unified fashion regardless of the medium it will be executed in. As Uber grows, data locality will be a big concern for Hadoop applications, and a successful unified resource manager can bring together all existing schedulers (i.e., Yarn, Mesos, and Myriad).
+
+Python:
+/user/bin/lib/hadoop - there's config file, how to use additional jars?
+vs
+Java:
+
+maven pom.xml?
+
+as long as writes stdout , can use any lang? scala?
+
+hadoop jar /path/<my_custom_jar>.jar? vs config files? both?
+
+java vs python https://www.quora.com/Which-programming-language-is-good-to-drive-Hadoop-and-Spark-Java-Python-or-Scala
+
+
+
+https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/ViewFs.html ?
+
+
