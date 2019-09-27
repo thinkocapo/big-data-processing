@@ -55,12 +55,8 @@ hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a
 
 PROBLEM2 STEPS
 + ssh into slave nodes and give security permissions <-- looked like it was already done
-
-
-
-
-12:27 NEXT:
 + figure out how mapper 'prints' or 'writes' to something the reducer can get by 'line in fileinput.input()''
+
 - write my mapper + reducer py's <--- all you need is print statements with \t involved
 - scp them to each slave node
 - figure out how to pass 4 csv's (from hdfs!?) all at once <---by -input s3://cscie88-amitathex/input/
@@ -138,3 +134,4 @@ java vs python https://www.quora.com/Which-programming-language-is-good-to-drive
 https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/ViewFs.html ?
 
 
+How to 'restart' the cluster? can't ssh into it to run a command to do so, and don't see it in ec2's list?

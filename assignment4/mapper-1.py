@@ -1,40 +1,49 @@
-import argparse
+#!/usr/bin/python3
+# import argparse
 import csv
 import datetime
-import redis
 
+# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv s3a://inputfilesassignment4/wordcount
+'''
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -file ./mapper-1.py -mapper ./mapper-1.py -file ./reducer-1.py -reducer
+./reducer-1.py -input inputfilesassignment4/ -output wordcount1
+
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar \
+    -file ./mapper-1.py
+    -mapper ./mapper-1.py 
+    -file ./reducer-1.py 
+    -reducer ./reducer-1.py
+    -input s3a://inputfilesassignment4/
+    -output s3a://inputfilesassignment4/wc1
+'''
 
 field_names = ['uuid', 'timestamp', 'url', 'userId', 'country', 'ua_browser', 'ua_os', 'response_status', 'TTFB']
 
-def query1_unique_urls_per_hour(file_name):
-    print('\n~~~~~~~~~ query1_unique_urls_per_hour ~~~~~~~~~')
-    input_file = csv.DictReader(open(file_name), fieldnames=field_names)
-    url_map = {}
-    for row in input_file:
-        timestamp = row['timestamp']
-        url = row['url']
-        date = datetime.time()
-        try:
-            date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-        except ValueError: 
-            date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
-        timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
 
-        if redisClient.hget(timestamp_hour, url) == None:
-            redisClient.hset(timestamp_hour, url, 'true')
-            redisClient.hincrby(timestamp_hour, 'count', 1)
-        # NOT SURE WHY NONE OF THIS WOULD EXECUTE...
-        # with redisClient.pipeline() as pipe:
-        # pipe.watch(timestamp_hour)
-        # pipe = redisClient.pipeline()
-        # pipe.multi()
-        # if pipe.hget(timestamp_hour, url) == None:
-        #     print('\n {} \n'.format(timestamp_hour))
-        #     pipe.hset(timestamp_hour, url, 'true')
-        #     pipe.hincrby(timestamp_hour, 'count', 1)
-        # pipe.execute()
-    return
+# Unique URLs per Hour
+for line in sys.stdin:
+    # TRY THIS
+    # fields = line.split(",")
 
-query1_unique_urls_per_hour(file_name)
-print("\nMapper Process Completed")
+    # TRY THIS
+    # for col in line
+
+    timestamp = line[1]
+    url = line[2]
+    date = datetime.time()
+    
+    # Prepare a key in the form of <timestamp>:<hour>
+    try:
+        date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+    except ValueError: 
+        date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
+    timestamp_hour = '%s-%s-%s:%s' % (date.year, date.month, date.day, date.hour)
+
+    # Prepare a key in the form of <timestamp:hour>:<url>
+    timestamp_hour_url = '%s-%s' % (timestamp_hour, url)
+
+    print('%s\t%d' % (timestamp_hour_url, 1))
+
+
+# print("\nMapper-1 Process Completed")
 
