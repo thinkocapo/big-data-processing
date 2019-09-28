@@ -3,6 +3,7 @@
 import datetime
 import sys
 
+# testing
 # cat file-input1.csv | mapper-1.py | sort | reducer-1.py
 
 # Unique URLs per Hour
@@ -39,9 +40,6 @@ for line_in in sys.stdin:
         timestamp_hour = '%s-%s-%s-%s' % (date.year, month, day, hour)
         timestamp_hour_url = '%s_%s' % (timestamp_hour, url)
   
-        # was needed?
-        # print(timestamp_hour)
-
         # K,V Output as stdout in form <YYYY-MM-DD-HH_URL, 1>
         print('%s\t%d' % (timestamp_hour_url, 1))
 

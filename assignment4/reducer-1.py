@@ -36,7 +36,8 @@ for line in sys.stdin:
                 _dict = {}
                 _dict[timestampHour] = {}
                 _dict[timestampHour][url] = 1
-
+        
+        # Start working on the next timestamp and hour's range of lines in the csv
         current_timestampHour = timestampHour
 
     except ValueError as e:
