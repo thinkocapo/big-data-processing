@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-
+import csv
 import datetime
 import sys
 
+# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount s3a://inputfilesassignment4/file-input1.csv s3a://inputfilesassignment4/wordcount
 
 # Unique URLs per Hour
 for line_in in sys.stdin:
@@ -10,18 +11,23 @@ for line_in in sys.stdin:
     try:
         line = line_in.split(",")
 
+        # TRY THIS
+        # for col in line
+
+        # timestamp = line[1]
+        # url = line[2]
+
         timestamp = line[1]
         url = line[2]
 
         date = datetime.time()
         
-        # Prepare a Date object from parsed csv timestamp
+        # Prepare a key in the form of <timestamp>:<hour>
         try:
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
         except ValueError: 
             date = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')
 
-        # fix the zero's
         day = date.day
         if len(str(day)) == 1:
             day = '0{}'.format(day)
@@ -32,12 +38,14 @@ for line_in in sys.stdin:
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
 
-        # Prepare a key in form <timestamp>:<hour>
         timestamp_hour = '%s-%s-%s:%s' % (date.year, month, day, hour)
+
+        # Prepare a key
         timestamp_hour_url = '%s-%s' % (timestamp_hour, url)
 
-        # K,V Output as stdout
-        print('%s\t%d' % (timestamp_hour_url, 1))
+        # Output, stdout
+        # print('%s\t%d' % (timestamp_hour_url, 1))
+        print('%s\t%s' % (timestamp_hour, url))
 
 
     except ValueError as e:
