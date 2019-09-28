@@ -27,14 +27,3 @@ for line in sys.stdin:
     for timestampHour in timestampHour_dict:
         url_count = len(timestampHour_dict[timestampHour].keys())
         print("%s\t%d" % (timestampHour, url_count))
-
-
-# TRY THIS APPROACH AGAIN
-# if current_timestampHour_url:
-#     if timestampHour_url == current_timestampHour_url:
-#         current_count += int(count)
-#     else:
-#         # Output
-#         print ("%s\t%d" % (current_timestampHour_url, current_count))
-#         current_count = 1
-# current_timestampHour_url = timestampHour_url
