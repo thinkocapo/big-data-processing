@@ -111,3 +111,44 @@ docker-compose up
 ^^ should only rebuild the python-redis clients,
 check by `docker images` and see when images last updated
 
+
+
+
+'''
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -file ./mapper-1.py -mapper ./mapper-1.py -file ./reducer-1.py -reducer
+./reducer-1.py -input s3a://some/place -output s3a://some/place
+
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar \
+    -file ./mapper-1.py \
+    -mapper ./mapper-1.py \ 
+    -file ./reducer-1.py \
+    -reducer ./reducer-1.py \
+    -input s3a://some/place \
+    -output s3a://some/place/wc1
+'''
+
+# ASSIGNMENT 4
+HADOOP
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -Dmapred.reduce.tasks=1 -file ./mapper-1.py -mapper ./mapper-1.py -file ./reducer-1.py -reducer ./reducer-1.py -input s3a://some/place/wordcount/ -output s3a://some/place/wc15
+hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -Dmapred.reduce.tasks=1 -file ./mapper-1.py -mapper ./mapper-1.py -file ./reducer-1.py -reducer ./reducer-1.py -input s3a://some/place/wordcount/ -output s3a://some/place/wc19
+
+
+
+MASTER SSH
+sudo ssh -i ~/keypairs/assignment2.pem hadoop@ec2-<MASTER>.us-east-2.compute.amazonaws.com
+
+SLAVE SSH
+sudo ssh -i ~/keypairs/assignment2.pem hadoop@ec2-<SLAVE_1>.us-east-2.compute.amazonaws.com
+sudo ssh -i ~/keypairs/assignment2.pem hadoop@ec2-<SLAVE_2>.us-east-2.compute.amazonaws.com
+
+MASTER SCP
+sudo scp -i ~/keypairs/assignment2.pem *.py hadoop@ec2-<MASTER>.us-east-2.compute.amazonaws.com:./
+
+SLAVE SCP
+sudo scp -i ~/keypairs/assignment2.pem *.py hadoop@ec2-<SLAVE_1>.us-east-2.compute.amazonaws.com:./
+sudo scp -i ~/keypairs/assignment2.pem *.py hadoop@ec2-<SLAVE_1>.us-east-2.compute.amazonaws.com:./
+
+
+
+TESTING...
+cat file-input1.csv | ./mapper-1.py | sort | ./reducer-1.py
