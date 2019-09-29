@@ -1,5 +1,5 @@
-#!/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
-# /usr/bin/python3
+#!/usr/bin/python3
+# /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 
 import sys
 current_date_hour_country = None
