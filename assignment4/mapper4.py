@@ -4,7 +4,7 @@
 import datetime
 import sys
 
-# Query2: get count of unique visitors per URL per hour
+# Query4: unique_urls_by_country_by_hour_for_time_range
 import fileinput
 # for line_in in sys.stdin:
 for line in fileinput.input():
@@ -35,7 +35,7 @@ for line in fileinput.input():
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
 
-        # Prepare a key in form <timestamp>:<hour>
+        # Prepare a key in form <timestamp>:<hour>:<country>
         timestamp_hour = '%s-%s-%s-%s' % (date.year, month, day, hour)
         timestamp_hour_country = '%s_%s' % (timestamp_hour, country)
 
