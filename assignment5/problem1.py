@@ -4,24 +4,25 @@ import datetime
 from random import random
 from operator import add
 from pyspark import SparkContext
+'''
+parquetDF.groupBy('day:hour', 'country')\
+    .agg(countDistinct('url'))\
+    .orderBy('hour', 'country')\
+    .collect()
+'''
 
 '''
 sudo spark-submit --master yarn problem1.py
 '''
 if __name__ == "__main__":
-
     sc=SparkContext(master="local[4]")
 
-    # linesRDD = sc.textFile("s3a://inputfilesassignment4/wordcount/")
-    rdd_csv = sc.textFile("s3a://inputfilesassignment4/wordcount/")
-
+    rdd1 = sc.textFile("s3a://inputfilesassignment4/wordcount/")
 
     def mapper1(_line):
         line = _line.split(",")
-        
         timestamp = line[1]
         url = line[2]
-
         # Prepare a Date object from parsed csv timestamp
         date = datetime.time()
         try:
@@ -38,28 +39,26 @@ if __name__ == "__main__":
         hour = date.hour
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
-        # Prepare a key in form <timestamp>:<hour>
+        # Prepare a key in form <timestamp>:<hour>_<url>parquetDF.groupBy('day:hour', 'country')\
         timestamp_hour = '%s-%s-%s-%s' % (date.year, month, day, hour)
         timestamp_hour_url = '%s_%s' % (timestamp_hour, url)
-        return timestamp_hour_url
+        return (timestamp_hour, url)
 
     # MAP
-    rdd_csv_mapped = rdd_csv.map(mapper1)
-    print('\n ~~~~~~~~~~~ first {} \n'.format(rdd_csv_mapped.first()))
+    rdd2 = rdd1.map(mapper1)
+    print('\n ~~~~~~~~~~~ first {} \n'.format(rdd2.first()))
 
     # REDUCE
-    # def reducer1(string):
-    #     print('reducer')
+    # def reducer1(v1, v2):
+    #     print('reducer1')
 
-    # rdd_csv_reduced = rdd_csv_mapped.reduce(reducer1)
-    # print('\n ~~~~~~~~~~~ second {} '.format(rdd_csv_reduced.first()))
+    # groupByKey() ?
+    # reduceByKey() ?
+    # rdd3 = rdd2.reduce(reducer1) 
+    # print('\n ~~~~~~~~~~~ second {} '.format(rdd3.first()))
 
 
-    print('\n ~~~~~~~~~~~~ count is {} \n'.format(rdd_csv_mapped.count()))
-    
-    
-    rdd.collect()
-
+    rdd2.collect()
     sc.stop()
 
 
