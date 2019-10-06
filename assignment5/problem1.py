@@ -4,12 +4,7 @@ import datetime
 from random import random
 from operator import add
 from pyspark import SparkContext
-'''
-parquetDF.groupBy('day:hour', 'country')\
-    .agg(countDistinct('url'))\
-    .orderBy('hour', 'country')\
-    .collect()
-'''
+
 
 '''
 sudo spark-submit --master yarn problem1.py
@@ -46,20 +41,12 @@ if __name__ == "__main__":
 
     # MAP
     rdd2 = rdd1.map(mapper1)
-    print('\n ~~~~~~~~~~~ first {} \n'.format(rdd2.first()))
-
+    
     # REDUCE
-    # def reducer1(v1, v2):
-    #     print('reducer1')
+    rdd3 = rdd2.distinct().groupByKey().sortByKey()    
 
-    # groupByKey() ?
-    # reduceByKey() ?
-    # rdd3 = rdd2.reduce(reducer1) 
-    # print('\n ~~~~~~~~~~~ second {} '.format(rdd3.first()))
+    # print('\n ~~~~~~~~~~~ RDD4 {} \n'.format(rdd4.take(10)))
+    for obj1, obj2 in rdd3.collect():
+        print(obj1, len(obj2))
 
-
-    rdd2.collect()
     sc.stop()
-
-
-# sudo spark-submit --master yarn pi.py 5
