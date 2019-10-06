@@ -1,0 +1,41 @@
+[might need to set PYSPARK_ env variables]
+pyspark to pull up PySpark shell 3.7.3
+>>> sc
+<SparkContext...>
+
+
+PySpark Pi example, jupyter
+findspark
+pyspark
+
+
+
+
+COMMAND...
+spark-submit --master....
+
+
+// EMR
+spark-submit --master yarn pi.py 5
+
+
+CLUSTER software configuration
+* select SPARK
+m4.large
+
+master node is working as the driver
+
+"all this stuff, the slides , is trivial" <-- then why do we spend 52 minutes?
+
+
+RDD's > DataFrames and Datasets
+
+RDD - create, transform, action
+
+
+different types of RDD's
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. download pyspark? when ssh into, is it there

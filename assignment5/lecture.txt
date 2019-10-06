@@ -1,0 +1,110 @@
+What to store
+Where to store
+How to store - formats and serialization
+How to store - algorithms and operations
+
+object-converters (to disk) or disk serialization. "stored on disk OR the network"
+
+Benefits of Enforceable Schema:
+-
+
+HDFS allows storage of any data types (text files, binaries, images)
+*HDFS some formats are optimized though
+**Hadoop does not store indexes on data. "must read all the data to find what you need, there's no K,V indexes for instance"
+**SOlution to non-indexing:
+- partitioning - organizing into sub-directories
+- bucketing - hashing function to map data into specific buckets
+- denormalizing: organizing data into pre-joined (Pre-aggregated*) data sets to avoid joins
+- selective reads - Parquet example, a data format that allow selective reads of data
+
+--
+horizontal split is row group
+vertical is then the column (inside)
+Parquet binary format on disk...
+
+
+
+"log analytics one of the most important tasks in the big data world"
+"structure the data as closed to query criteria as possible"
+"partitingoing by time a good idea because often logs queried by time, but depends. are exceptions"
+"Don't have too many small files!"
+Compression - saves storage and network I/O, good for long-term/less frequent access
+
+Master Dataset Formats
+
+JSON/XML itself doesn't know when to split data into chunks for parallel processing by mappers
+BUT you can set these yourself!
+binary format cannot be split
+'container formats'
+
+Hadoop-specific file formats to support splittable compression
+SequenceFile format - binary storage on disk (less space than text) - only supported in java
+SequenceFile with compression
+SequenceFile without Compression
+
+SequenceFiles/Avro are container formats...
+
+
+"blocks good idea, for batch processing, so you don't have to read 1by1"
+example of 1000 html files, don't want a separate MapperTask for each, so block them together
+
+SERIALIZATION
+is for...
+1. storage
+or
+2. transmission over a network
+'Writable' interface for this, only available in java
+SERIALIZATION FRAMEWORKS
+Thrift, Protocol Buffers,
+
+Avro
+schema for writing file doesnt have to match schema for reading file
+
+sync marker
+
+Avro - complex data structures
+
+
+"most likely +2 storage types because you have so many kinds of data"
+
+"the most important criteria for compression formats is whether they are splittable or not"
+"any compression format can be made splittable though if used with container file formats"
+
+a few types of compression...
+Snappy, LZO
+
+
+
+
+Faster Ingestion/processing vs Faster Analytics
+
+
+BATCH PROCESSING is for produce results for your queries
+(because the queries are expensive to run (on more raw/open data?))
+
+- inadequacy for in-memory computationg
+
+
+
+
+
+
+## Spark
+in-memory primitives
+
+uses same resource manager underneath (hadoop YARN)
+
+Spark on top of Hadoop good because hadoop for storage
+
+DAG Direct Acyclic Graphs
+
+Spark creates a Dag for you...?
+"the engine itself creates those complex chains of steps from the applicatoin's logic"
+
+GOOD
+When to use persistence to disk again?
+"persistence to disk memory if can't fit in Spark computation memory"
+and to preserve and materilize the results of multi-stage operations
+good if you don't want to have to re-compute everything from scratch again...
+
+RDD' are immutable
