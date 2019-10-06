@@ -1,12 +1,9 @@
-from __future__ import print_function
 import sys
 import datetime
-from random import random
-from operator import add
 from pyspark import SparkContext
 
-
 '''
+Unique URLs per Hour
 sudo spark-submit --master yarn problem1.py
 '''
 if __name__ == "__main__":
@@ -35,8 +32,7 @@ if __name__ == "__main__":
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
         # Prepare a key in form <timestamp>:<hour>_<url>parquetDF.groupBy('day:hour', 'country')\
-        timestamp_hour = '%s-%s-%s-%s' % (date.year, month, day, hour)
-        timestamp_hour_url = '%s_%s' % (timestamp_hour, url)
+        timestamp_hour = '%s-%s-%s:%s' % (date.year, month, day, hour)
         return (timestamp_hour, url)
 
     # MAP
@@ -45,8 +41,8 @@ if __name__ == "__main__":
     # REDUCE
     rdd3 = rdd2.distinct().groupByKey().sortByKey()    
 
-    # print('\n ~~~~~~~~~~~ RDD4 {} \n'.format(rdd4.take(10)))
-    for obj1, obj2 in rdd3.collect():
-        print(obj1, len(obj2))
+    # Print output
+    for date_hour, urls_distinct in rdd3.collect():
+        print(date_hour, len(urls_distinct))
 
     sc.stop()
