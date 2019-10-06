@@ -5,6 +5,7 @@ from operator import add
 # from pyspark.sql import SparkSession # Spark SQL
 from pyspark import SparkContext
 
+# from pi.py jupyter example
 if __name__ == "__main__":
     """
         Usage: pi [partitions]
