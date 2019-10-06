@@ -10,9 +10,21 @@ if __name__ == "__main__":
     print(sc)
 
 
-    # csvRDD = parallelize(csvfile....)
-    # csvRDD.map/reduce()
+    linesRDD = sc.textFile("s3a://inputfilesassignment4/wordcount/")
+    rdd = sc.textFile("s3a://inputfilesassignment4/wordcount/")
+    print(len(rdd))
+    
 
+    def mapper(line):
+        print('line')
+
+    def reducer(string):
+        print('reducer')
+
+    rdd.map(mapper)
+    rdd.reduce(reducer)
+
+    rdd.collect()
 
     spark.stop()
 
