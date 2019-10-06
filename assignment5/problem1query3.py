@@ -3,8 +3,10 @@ import datetime
 from pyspark import SparkContext
 
 '''
-Unique URLs per Hour
-sudo spark-submit --master yarn problem1.py
+Unique Events per URL Hour per Date
+sudo spark-submit --master yarn problem1query1.py
+sudo spark-submit --master yarn problem1query2.py
+sudo spark-submit --master yarn problem1query3.py
 '''
 if __name__ == "__main__":
     sc=SparkContext(master="local[4]")
@@ -15,6 +17,7 @@ if __name__ == "__main__":
         line = _line.split(",")
         timestamp = line[1]
         url = line[2]
+        user = line[3]
         # Prepare a Date object from parsed csv timestamp
         date = datetime.time()
         try:
@@ -31,18 +34,22 @@ if __name__ == "__main__":
         hour = date.hour
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
-        # Prepare a key in form <timestamp>:<hour>_<url>parquetDF.groupBy('day:hour', 'country')\
-        timestamp_hour = '%s-%s-%s:%s' % (date.year, month, day, hour)
-        return (timestamp_hour, url)
+        # Prepare a key in form <timestamp>:<hour>_<url>
+        dateHour = '%s-%s-%s:%s' % (date.year, month, day, hour)
+        dateHour_url = '%s_%s' % (dateHour, url)
+        return (dateHour_url, 1)
 
     # MAP
     rdd2 = rdd1.map(mapper1)
     
     # REDUCE
-    rdd3 = rdd2.distinct().groupByKey().sortByKey()    
+    # rdd3 = rdd2.distinct().groupByKey().sortByKey()    
+    # rdd3 = rdd2.aggregateByKey()
+    rdd3 = rdd2.countByKey()
+    print('~~~~~~~~ rdd3 ~~~~~~~~~')
 
     # Print output
-    for date_hour, urls_distinct in rdd3.collect():
-        print(date_hour, len(urls_distinct))
+    for dateHour_url, count in rdd3.items():
+        print(dateHour_url, count)
 
     sc.stop()
