@@ -34,7 +34,7 @@ if __name__ == "__main__":
         hour = date.hour
         if len(str(hour)) == 1:
             hour = '0{}'.format(hour)
-        # Prepare a key in form <timestamp>:<hour>_<url>
+        # Prepare a Tuple in form (<dateHour>:<URL>, +1)
         dateHour = '%s-%s-%s:%s' % (date.year, month, day, hour)
         dateHour_url = '%s_%s' % (dateHour, url)
         return (dateHour_url, 1)
@@ -43,10 +43,7 @@ if __name__ == "__main__":
     rdd2 = rdd1.map(mapper1)
     
     # REDUCE
-    # rdd3 = rdd2.distinct().groupByKey().sortByKey()    
-    # rdd3 = rdd2.aggregateByKey()
     rdd3 = rdd2.countByKey()
-    print('~~~~~~~~ rdd3 ~~~~~~~~~')
 
     # Print output
     for dateHour_url, count in rdd3.items():
