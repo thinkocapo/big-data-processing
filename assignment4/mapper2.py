@@ -3,18 +3,14 @@
 import datetime
 import sys
 
-# testing
-# cat file-input1.csv | mapper-1.py | sort | reducer-1.py
-
 # Query2: get count of unique visitors per URL per hour
 import fileinput
 # for line_in in sys.stdin:
 for line in fileinput.input():
-    # IF parsing csv...
+
     try:
         # Prepare the timestamp and url in python
         line = line.split(",")
-        # line = line_in.split(",")
         timestamp = line[1]
         url = line[2]
         user = line[3]
