@@ -42,7 +42,7 @@ if __name__ == "__main__":
     rdd3 = rdd2.distinct().groupByKey().sortByKey()    
 
     # Print output
-    for dateHour, urls_distinct in rdd3.collect():
-        print(dateHour, len(urls_distinct))
+    # for dateHour, urls_distinct in rdd3.collect():
+    #     print(dateHour, len(urls_distinct))
 
     sc.stop()

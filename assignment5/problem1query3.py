@@ -45,8 +45,9 @@ if __name__ == "__main__":
     # REDUCE
     rdd3 = rdd2.countByKey()
 
-    # Print output
+    # Print output for answering homework's specified keys
     for dateHour_url, count in rdd3.items():
-        print(dateHour_url, count)
+        if '2019-09-12:02' in dateHour_url:
+            print(dateHour_url, count)
 
     sc.stop()

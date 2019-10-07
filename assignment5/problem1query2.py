@@ -44,8 +44,9 @@ if __name__ == "__main__":
     # REDUCE
     rdd3 = rdd2.distinct().groupByKey().sortByKey()    
 
-    # Print output
+    # Print output for answering homework's specified keys
     for dateHour_url, users_distinct in rdd3.collect():
-        print(dateHour_url, len(users_distinct))
+        if '2019-09-12:02' in dateHour_url:
+            print(dateHour_url, len(users_distinct))
 
     sc.stop()
