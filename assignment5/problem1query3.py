@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     rdd1 = sc.textFile("s3a://inputfilesassignment4/wordcount/")
 
-    def mapper1(_line):
+    def mapper3(_line):
         line = _line.split(",")
         timestamp = line[1]
         url = line[2]
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         return (dateHour_url, 1)
 
     # MAP
-    rdd2 = rdd1.map(mapper1)
+    rdd2 = rdd1.map(mapper3)
     
     # REDUCE
     rdd3 = rdd2.countByKey()
