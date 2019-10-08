@@ -15,15 +15,23 @@ if __name__ == "__main__":
         .getOrCreate()
 
     # Create a dataframe from the csv
-    df = spark.read.load("s3a://inputfilesassignment4/wordcount/", format="csv")
+    schema = StructType([
+        StructField('uniqueID', StringType(), True),
+        StructField('timestamp', TimestampType(), True),
+        StructField('url', StringType(), True),
+        StructField('user', StringType(), True),
+        StructField('country', StringType(), True),
+    ])
+    # ORIGINAL - works
+    # df = spark.read.load("s3a://inputfilesassignment4/wordcount/", format="csv").schema(schema)
+    df = spark.read.format(csv).schema(schema).load("s3a://inputfilesassignment4/wordcount/")
+    works
+    count = df.count()
+    print('\n~~~~~~~~~ count {}'.format(count))
+    first = df.head()
+    print('\n~~~~~~~~~ first {}'.format(first))
 
     # Write the datagrame as a parquet in HDFS
-    df.write.parquet('hdfs:///user/hadoop/parquet1')
+    df.write.parquet('hdfs:///user/hadoop/parquet2')
 
     sc.stop()
-
-    # works
-    # count = df.count()
-    # print('\n~~~~~~~~~ count {}'.format(count))
-    # first = df.head()
-    # print('\n~~~~~~~~~ first {}'.format(first))

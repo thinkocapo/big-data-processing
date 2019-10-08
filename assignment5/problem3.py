@@ -2,11 +2,6 @@
 P2 and P3 - data frames. 
 Since we did not mention it explicitly - you can use SQL as well, but try to use data frames to get a more versatile experience
 '''
-# parquetDF = ... read
-# parquetDF.groupBy('day:hour', 'country')\
-#     .agg(countDistinct('url'))\
-#     .orderBy('hour', 'country')\
-#     .collect()
 
 import sys
 import datetime
@@ -24,12 +19,20 @@ if __name__ == "__main__":
         .config("spark.some.config.option", "some-value") \
         .getOrCreate()
 
-    # # Create a dataframe from the csv
-    # df = spark.read.load("s3a://inputfilesassignment4/wordcount/", format="csv")
-    # # Write the datagrame as a parquet in HDFS
-    # df.write.parquet('hdfs:///user/hadoop/parquet1')
+    df_parquet_no_schema = spark.read.parquet('hdfs:///user/hadoop/parquet1')
+    print('11111111111')
+    parts = df_parquet_no_schema.rdd.map(lambda l: l.split(","))
+    # turn timestamp into day/hour
+    dateHour_country = parts.map(lambda p: Row(timestamp=p[1],url=p[2],user=p[3],country=p[4]))
+    df_parquet = spark.createDataFrame(dateHour_country)
+    print('22222222222')
+    df_parquet.groupBy('timestamp', 'country')\
+        .agg(countDistinct('url'))\
+        .orderBy('timestamp', 'country')\
+        .collect()
 
-    df_parquet = spark.read.load('hdfs:///user/hadoop/parquet1')
+    # ORIGINAL 
+    # df_parquet = spark.read.load('hdfs:///user/hadoop/parquet1')
     # works
     count = df_parquet.count()
     print('\n~~~~~~~~~ count {}'.format(count))
@@ -37,3 +40,10 @@ if __name__ == "__main__":
     print('\n~~~~~~~~~ first {}'.format(first))
 
     sc.stop()
+
+
+    # ORIGINAL
+    # df_parquet.groupBy('day:hour', 'country')\
+    #     .agg(countDistinct('url'))\
+    #     .orderBy('hour', 'country')\
+    #     .collect()
