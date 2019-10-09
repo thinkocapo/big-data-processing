@@ -1,0 +1,131 @@
+RDBMS's ACID can't be maintained when you scale horizontally
+- two many serers involved in one transaction.
+- any server can die or become separated due to network connectivity issues - "network partitioning"
+- ACID not guaranteed in distributed systems
+Atomicity, Consistency, I<, D<
+
+NOSQL has CAP properties
+- different availability/consistency behaviors than ACID
+- provided by NOSQL
+- CAP to deal with transactions
+Consistency - "can alwayy share the same view on the data"
+Availability - ..."will eventually respond"
+Partition-tolerance - all nodes continue working under partitions
+- no single system can offer all 3 of C.A.P.
+"if you lose connection to other nodes, do you decide to keep processing data or not?"
+A-vs-C tradeoff
+
+PACELC - 'an alternative CAP formulation'
+
+Conceptioual types:
+File-based, Key-Value, Graph DB's, Document/Lucene-based
+Time-Series - optimized for queries that are more time-related (e.g. starting with time instead of key). *Prometheus
+
+Key-Value
+* like redis, amazon dynamo, riak.
+*application logic is responsible for data interpretation*
+*no knowledge of the stored data structure , no data definition language, no schema*
+
+Document Store
+* can have nested structure
+* like Key-Value where the Value can be a JSON Document
+* provides secondary Indices on attributes in the Value store part (nested value structure). can execute queries like aggregation
+* can retrieve only parts of the document.
+* complex queries are not efficient
+
+Wide-Column Store <--- truly distributed (Hbase & Cassandra)
+defined:
+Row Key is a single value:
+rowKey + column(K,v) + column(K,v) + column(K,v)
+^^ the "column keys"
+^^ the "cell" is the value for the columnk keys
+*map of mapps
+* like Cassandra, Google BIgTable, HBase
+* columns could be stored on different servers*
+* rows are stored by their column families*
+WOW
+It's the Column Families that are co-located on the sam disk!!!!
+
+3 Kinds of Sharding - 
+
+
+Composite Key - a key with more than 1 field
+
+
+
+"shared-nothing instead of shared-disk"
+
+THE QUESTION
+"Consistency versus Availability"
+
+~~~~~~ BATCH VIEW ~~~~~~
+"stores pre-computed results of queries"
+"running batch processing on the full, historical, master dataset"
+Why? Gives us faster access to those queries later on.
+
+
+~~~~~ https://www.youtube.com/watch?v=8KGVFB3kVHQ ~~~~
+Columnar Database Explained
+"not billions of rows of data, but columns of data"
+
+CAP - Consistency, Availability, Partition-Tolerance
+
+K,V Store, Document Store, Wide-Column Store, 
+
+
+Functional<>ImplementationTechniques<>Non-Functional
+Techniques: Sharding, Replication, Storage Management, Query Processing
+
+*VOILA*
+Functional<enables>ImpelementationTechniques<enables>OperationalRequirements(Non-Functional)
+
+
+## Sharding
+RDBMS 'SHARDING'
+"shared-disk" because all db nodes still point to a central data repository
+("single-server mode")
+
+NOSQL 'SHARDING'
+shared-nothing 'share-nothing clusters based on commodity servers'
+architecture, meaning each system consists of many
+servers with private memory and private disks that are
+connected through a network. 
+
+
+TYPES OF SHARDING:
+Range-sharding, Hash-sharding, EntityGroup-sharding
+
+
+## Replication
+rdbms are single-server
+many NOSQL's run on clusters of low-end nodes.
+replication brings synchronization problem which has CA or latency tradeoffs
+
+### eager (synchronous)
+RDBMS ^^
+vs
+### lazy (asynchronous)
+NoSQL ^^
+
+Replicate the Master or not?
+
+
+For in-memory, do you replicate in-memory with more in-memory or persist/log to durable storage?
+
+GOODA
+random-writes vs sequential-writes...?
+HDD/SSD vs RAM
+
+## Query Processing
+lookup by pKey, index, filter queries...
+scanning within 1 partition/shard vs needing to gather-scatter across all..
+global indexes, secondary indexes
+
+
+bounded/unbounded size of data/stream
+
+
+LESSON
+RDBMSs provide an unmatched level of functionality
+● whereas NoSQL databases excel on the non-functional side through scalability, availability, low latency and/or high
+throughput. 
