@@ -1,0 +1,37 @@
+./bin/ ... hbase
+
+
+COMMANDS:
+list
+
+"versions are per column family" Marina
+"it is not per row because row is a collection of column families" Marina
+"not row level table level or db level, it's only for Column family"
+
+
+
+MER SETUP
+
+4 options, choose HBase
+Advanced Options > uncheck Hive and Hue, but checkoff Hadoop, HBase, Spark
+'Spot' instance is cheaper...›
+
+
+can `scp folder/*` to scp all files in the folder/
+
+scp'd his input (parquet) files? or can use csv's.
+then put these into HDFS
+```
+hadoop fs -mkdir input
+hadoop fs -put *.parquet input
+```
+spark-submit...?
+Question. Error:'ClassNotFound'...
+Probmel
+Solution
+
+You need the spark.driver.extraClassPath and spark.executor.extraClassPath
+
+Spark-HBase Connector (hortonworks)
+or
+HappyBase
