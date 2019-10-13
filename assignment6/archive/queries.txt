@@ -1,0 +1,73 @@
+scan 'vet_visit_hw6', {COLUMNS => ['reason'], LIMIT => 10, STARTROW => 'rowkey1'} ?
+scan 'vet_visit_hw6', {COLUMNS => 'pet_info:reason'} ?
+scan 'vet_visit_hw6', {ALL_METRICS => true} ?
+
+create 'vet_visit_hw6', 'client_info', 'pet_info'
+
+
+put 'vet_visit_hw6', 'rowkey1', 'client_info:last_name', 'smith'
+put 'vet_visit_hw6', 'rowkey1', 'pet_info:reason', 'redeye'
+put 'vet_visit_hw6', 'rowkey1', 'pet_info:reason', 'itch'
+alter 'vet_visit_hw6', NAME => 'pet_info', VERSIONS => 3
+
+...WORKS
+get 'vet_visit_hw6', 'rowkey1', {COLUMN => 'pet_info:reason', VERSIONS => 3}
+scan 'vet_visit_hw6', 'rowkey1', {COLUMN => 'pet_info:reason'}
+
+
+scan 'vet_visit_hw6', {COLUMNS => ['pet_info:reason'], LIMIT => 10}
+scan 'vet_visit_hw6', {COLUMNS => ['pet_info:reason'], VERSIONS => 10}
+
+~~~~~ PROBLEM2 ~~~~~~
+TABLE
+create 'query1', 'hr_00', 'hr_01', 'hr_02', 'hr_03', 'hr_04', 'hr_05', 'hr_06', 'hr_07', 'hr_08', 'hr_09', 'hr_10', 'hr_11', 'hr_12', 'hr_13', 'hr_14', 'hr_15', 'hr_16', 'hr_17', 'hr_18', 'hr_19', 'hr_20', 'hr_21', 'hr_22', 'hr_23'
+
+query1
+put 'query1', '2019-09-12', 'hr_00:unique_urls', '100'
+put 'query1', '2019-09-12', 'hr_01:unique_urls', '80'
+put 'query1', '2019-09-12', 'hr_10:unique_urls', '155'
+
+scan 'query1', { COLUMNS => ['hr_00:unique_urls'], LIMIT => 10}
+
+TABLE
+create 'query2_and_3', 'hr_00', 'hr_01', 'hr_02', 'hr_03', 'hr_04', 'hr_05', 'hr_06', 'hr_07', 'hr_08', 'hr_09', 'hr_10', 'hr_11', 'hr_12', 'hr_13', 'hr_14', 'hr_15', 'hr_16', 'hr_17', 'hr_18', 'hr_19', 'hr_20', 'hr_21', 'hr_22', 'hr_23'
+
+query2_and_3
+put 'query2_and_3', '2019-09-12_02_url1', 'hr_00:unique_visitors', '5'
+put 'query2_and_3', '2019-09-12_02_url2', 'hr_00:unique_visitors', '2'
+put 'query2_and_3', '2019-09-12_04_url3', 'hr_10:unique_visitors', '8'
+query2_and_3
+put 'query2_and_3', '2019-09-12_02_url1', 'hr_00:total_clicks', '7'
+put 'query2_and_3', '2019-09-12_02_url2', 'hr_00:total_clicks', '4'
+put 'query2_and_3', '2019-09-12_04_url3', 'hr_10:total_clicks', '10'
+
+scan 'query2_and_3', { COLUMNS => ['hr_00:unique_visitors', 'hr_00:total_clicks'], LIMIT => 10}
+get 'query2_and_3', '2019-09-12_02_url1', {COLUMN => 'hr_00:unique_visitors', VERSIONS => 1}
+get 'query2_and_3', '2019-09-12_02_url1', {COLUMN => 'hr_00:total_clicks', VERSIONS => 1}
+
+
+
+
+FIXXX
+
+query2_and_3
+put 'query2_and_3', '2019-09-12_url1', 'hr_00:unique_visitors', '5'
+put 'query2_and_3', '2019-09-12_url2', 'hr_00:unique_visitors', '2'
+put 'query2_and_3', '2019-09-12_url3', 'hr_10:unique_visitors', '8'
+query2_and_3
+put 'query2_and_3', '2019-09-12_url1', 'hr_00:total_clicks', '7'
+put 'query2_and_3', '2019-09-12_url2', 'hr_00:total_clicks', '4'
+put 'query2_and_3', '2019-09-12_url3', 'hr_10:total_clicks', '10'
+
+get 'query2_and_3', '2019-09-12_url1', {COLUMN => 'hr_00:unique_visitors', VERSIONS => 1}
+get 'query2_and_3', '2019-09-12_url1', {COLUMN => 'hr_00:total_clicks', VERSIONS => 1}
+
+query4
+create 'query4', 'br', 'au', 'us', 've'
+put 'query4', '2019-09-12_00', 'br:unique_urls', '3'
+put 'query4', '2019-09-12_01', 'br:unique_urls', '8'
+put 'query4', '2019-09-16_01', 'br:unique_urls', '4'
+put 'query4', '2019-09-13_10', 'au:unique_urls', '2'
+
+scan 'query4', { COLUMNS => ['br:unique_urls'], LIMIT => 10}
+get 'query4', '2019-09-12_00', {COLUMN => 'br:unique_urls', VERSIONS => 1}

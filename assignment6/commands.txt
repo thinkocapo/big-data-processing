@@ -1,0 +1,8 @@
+ssh to master node
+https://hbase.apache.org/book.html#getting_started
+
+sudo hbase shell
+hbase(main):003:0>
+
+hbase -help
+
