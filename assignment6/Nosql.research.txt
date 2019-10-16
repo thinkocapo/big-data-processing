@@ -212,6 +212,89 @@ Object model is in memory representation of data. In Parquet it is possible to c
 
 
 
+------------------------
+comparing-database-types-How Databases Evolved to Meet Different Needs _ Prisma.pdf
+
+"FLATFILE"
+The simplest way to manage data on a computer outside of an application is to store it in a basic file format. The first solutions for data management used this approach and it is still a popular option for storing small amounts of information without heavy requirements.
+The first flat file databases represented information in regular, machine parse-able structures within files. Data is stored in plain text, which limits the type of content that can be represented within the database itself. 
+
+"HIERARCHICAL"
+This simple relationship mapping provides users with the ability to establish relationships between items in a tree structure. This is very useful for certain types of data, but does not allow for complex relationship management. Furthermore, the meaning of the parent-child relationship is implicit. One parent-child connection could be between a customer and their orders, while another might represent an employee and the equipment they have been allocated. The structure of the data itself does not distinguish between these relationships.
+
+Hierarchical databases are the beginning of a movement towards thinking about data management in more complex terms. The trajectory of database management systems that were developed afterwards continues this trend.
 
 
+"NETWORK DATABASES"
+"entries can have more than one parent" so more complex relationships
+the 'network' refers to connections between different data entries (not connections between different computers or software)
+represented by a generic graph instead of a tree.
+"the meeting of graph was defined by a schema"
+Network databases were a huge leap forward in terms of flexibility and the ability to map connections between information. However, they were still limited by the same access patterns and design mindset of hierarchical databases
+
+"RELATIONAL DATABASES" RDBMS
+tables
+'while SQL is not a part of the relational system, it is often a fundamental part of working with these databases.'
+'Because relational databases work off of a schema, it can be more challenging to alter the structure of data after it is in the system. 
+However, the schema also helps enforce the integrity of the data, making sure values match the expected formats, and that required information is included.'
+
+YESSS
+If key-value stores appear simple, it's because they are. But that simplicity is often an asset in the kinds of scenarios where they are most often deployed. Key-value stores are often used to store configuration data, state information, and any data that might be represented by a dictionary or hash in a programming language. Key-value stores provide fast, low-complexity access to this type of data
+
+COOOLLLLL
+One of the most popular uses for key-value databases are to store configuration values and application variables and flags for websites and web applications. Programs can check the key-value store, which is usually very fast, for their configuration when they start. This allows you to alter the runtime behavior of your services by changing the data in the key-value store. Applications can also be configured to recheck periodically or to
+ https://www.prisma.io/blog/comparison-of-database-models-1iz9u29nwn37 9/20
+9/24/2019 Comparing Database Types: How Database Types Evolved to Meet Different Needs | Prisma
+restart when they see changes. These configuration stores are often persisted to disk periodically to prevent loss of data in the event of a system crash.
+Examples: Redis, memcached, etcd
+
+
+Graph databases: mapping relationships by focusing on how connections between data are meaningful
+...
+ graph databases establish connections using the concepts of nodes, edges, and properties.
+
+At a glance, graph databases appear similar to earlier network databases
+
+'instead of relationships between tables' its about 'managing relationships themselves'
+
+
+For example, querying for the connection between two users of a social media site in a relational database is likely to require multiple table joins and therefore be rather resource intensive. This same query would be straightforward in a graph database that directly maps connections. The focus of graph databases is to make working this type of data intuitive and powerful.
+• Neo4j, Titan
+
+
+
+Instead of tables, column-family databases have structures called column families.
+column-family store, column-family database
+
+YESS
+With this design, each row in a column family defines its own schema. That schema can be easily modified because it only affects that single row of data. Each row can have different numbers of columns with different types of data. Sometimes it helps to think of column family databases as key-value databases where each key (row identifier) returns a dictionary of arbitrary attributes and their values (the column names and their values).
+
+
+1
+Column-family databases are good when working with applications that requires great performance for row-based operations and highly scalability.
+2
+ Since all of the data and metadata for an entry is accessible with a single row identifier, no computationally expensive joins are required to find and pull the information. 
+3
+The database system also typically makes sure all of the data in a row is collocated on the same machine in a cluster, simplifying data sharding and scaling.
+
+
+WARNN....
+"However, column-family databases do not work well in all scenarios. If you have highly relational data that requires joins, this is not the right type of database for your application. Column-family databases are firmly oriented around row-based operations. This means that aggregate queries like summing, averaging, and other analytics- oriented processes can be difficult or impossible. This can have a great impact on how you design your applications and what types of usage patterns you can use."
+
+
+
+ The goal is to offer greater scalability than relational databases and greater consistency guarantees than NoSQL alternatives.
+...
+ They achieve this by sacrificing certain amounts of availability in the event of a networking partition.
+
+ *GOLD RULE / QUESTION*
+ "It asserts that in the event of a network partition, a distributed database can choose either to remain available or remain consistent, but it cannot do both. "
+
+
+For instance, splitting data sets into smaller ranges called shards can minimize the amount of data that is unavailable during partitions.
+
+
+??????????????
+Because of these qualities, NewSQL databases are best suited for use cases with high volumes of relational data in distributed, cloud-like environments.
+While NewSQL databases offer most of the familiar features of conventional relational databases, there are some important differences that prevent it from being a one-to- one replacement. NewSQL systems are typically less flexible and generalized than their more conventional relational counterparts. They also usually only offer a subset of full SQL and relational features, which means that they might not be able to handle certain kinds of usage. Many NewSQL implementations also store a large part of or their entire dataset in the computer's main memory. This improves performance at the cost of greater risk to unpersisted changes.
 
