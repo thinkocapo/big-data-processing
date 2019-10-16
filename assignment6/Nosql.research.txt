@@ -298,3 +298,6 @@ For instance, splitting data sets into smaller ranges called shards can minimize
 Because of these qualities, NewSQL databases are best suited for use cases with high volumes of relational data in distributed, cloud-like environments.
 While NewSQL databases offer most of the familiar features of conventional relational databases, there are some important differences that prevent it from being a one-to- one replacement. NewSQL systems are typically less flexible and generalized than their more conventional relational counterparts. They also usually only offer a subset of full SQL and relational features, which means that they might not be able to handle certain kinds of usage. Many NewSQL implementations also store a large part of or their entire dataset in the computer's main memory. This improves performance at the cost of greater risk to unpersisted changes.
 
+
+
+
