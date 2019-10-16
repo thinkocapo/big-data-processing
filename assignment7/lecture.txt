@@ -1,0 +1,12 @@
+COLLECTION TIER
+
+push-vs-pull
+
+
+Is data source looking for response from Collection Service?
+Data Sourece <> Collection Service <> Target
+
+
+"Data source success can depend on Collection Service giving back that ackwnoledgement"
+
+
