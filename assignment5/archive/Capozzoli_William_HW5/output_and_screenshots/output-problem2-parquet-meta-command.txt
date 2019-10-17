@@ -1,0 +1,113 @@
+[hadoop@ip-172-31-27-205 ~]$ hadoop jar parquet-tools-1.10.1.jar meta hdfs:///user/hadoop/parquet1
+19/10/07 04:13:27 INFO hadoop.ParquetFileReader: Initiating action with parallelism: 5
+19/10/07 04:13:27 INFO hadoop.ParquetFileReader: reading another 4 footers
+19/10/07 04:13:27 INFO hadoop.ParquetFileReader: Initiating action with parallelism: 5
+file:        hdfs://ip-172-31-27-205.us-east-2.compute.internal:8020/user/hadoop/parquet1/part-00000-65f20ddd-cb68-4d79-8503-3b5046009caf-c000.snappy.parquet 
+creator:     parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1) 
+extra:       org.apache.spark.sql.parquet.row.metadata = {"type":"struct","fields":[{"name":"_c0","type":"string","nullable":true,"metadata":{}},{"name":"_c1","type":"string","nullable":true,"metadata":{}},{"name":"_c2","type":"string","nullable":true,"metadata":{}},{"name":"_c3","type":"string","nullable":true,"metadata":{}},{"name":"_c4","type":"string","nullable":true,"metadata":{}},{"name":"_c5","type":"string","nullable":true,"metadata":{}},{"name":"_c6","type":"string","nullable":true,"metadata":{}},{"name":"_c7","type":"string","nullable":true,"metadata":{}},{"name":"_c8","type":"string","nullable":true,"metadata":{}}]} 
+
+file schema: spark_schema 
+--------------------------------------------------------------------------------
+_c0:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c1:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c2:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c3:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c4:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c5:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c6:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c7:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c8:         OPTIONAL BINARY O:UTF8 R:0 D:1
+
+row group 1: RC:10000 TS:771706 OFFSET:4 
+--------------------------------------------------------------------------------
+_c0:          BINARY SNAPPY DO:0 FPO:4 SZ:325594/360103/1.11 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 0000991c1d8648538ae889961779da48, max: ffffa8de9c084391aba14bcb6e88f420, num_nulls: 0]
+_c1:          BINARY SNAPPY DO:0 FPO:325598 SZ:65860/278483/4.23 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 2019-09-12T00:00:25.920Z, max: 2019-09-15T00:00:00Z, num_nulls: 0]
+_c2:          BINARY SNAPPY DO:0 FPO:391458 SZ:11104/16299/1.47 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: http://example.com/?url=001, max: http://example.com/?url=199, num_nulls: 0]
+_c3:          BINARY SNAPPY DO:0 FPO:402562 SZ:9269/10030/1.08 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: user-001, max: user-099, num_nulls: 0]
+_c4:          BINARY SNAPPY DO:0 FPO:411831 SZ:11099/11574/1.04 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: AD, max: ZW, num_nulls: 0]
+_c5:          BINARY SNAPPY DO:0 FPO:422930 SZ:3893/3887/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Chrome, max: Safari, num_nulls: 0]
+_c6:          BINARY SNAPPY DO:0 FPO:426823 SZ:3886/3880/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Android, max: windows, num_nulls: 0]
+_c7:          BINARY SNAPPY DO:0 FPO:430709 SZ:7872/8020/1.02 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 100, max: 599, num_nulls: 0]
+_c8:          BINARY SNAPPY DO:0 FPO:438581 SZ:47046/79430/1.69 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 0.0001, max: 0.9999, num_nulls: 0]
+file:        hdfs://ip-172-31-27-205.us-east-2.compute.internal:8020/user/hadoop/parquet1/part-00001-65f20ddd-cb68-4d79-8503-3b5046009caf-c000.snappy.parquet 
+creator:     parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1) 
+extra:       org.apache.spark.sql.parquet.row.metadata = {"type":"struct","fields":[{"name":"_c0","type":"string","nullable":true,"metadata":{}},{"name":"_c1","type":"string","nullable":true,"metadata":{}},{"name":"_c2","type":"string","nullable":true,"metadata":{}},{"name":"_c3","type":"string","nullable":true,"metadata":{}},{"name":"_c4","type":"string","nullable":true,"metadata":{}},{"name":"_c5","type":"string","nullable":true,"metadata":{}},{"name":"_c6","type":"string","nullable":true,"metadata":{}},{"name":"_c7","type":"string","nullable":true,"metadata":{}},{"name":"_c8","type":"string","nullable":true,"metadata":{}}]} 
+
+file schema: spark_schema 
+--------------------------------------------------------------------------------
+_c0:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c1:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c2:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c3:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c4:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c5:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c6:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c7:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c8:         OPTIONAL BINARY O:UTF8 R:0 D:1
+
+row group 1: RC:10000 TS:771446 OFFSET:4 
+--------------------------------------------------------------------------------
+_c0:          BINARY SNAPPY DO:0 FPO:4 SZ:325292/360103/1.11 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 0000859384bd43f29474514e811c5970, max: fffb101512c5420bb3daccb11db5a99b, num_nulls: 0]
+_c1:          BINARY SNAPPY DO:0 FPO:325296 SZ:65860/278483/4.23 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 2019-09-12T00:00:25.920Z, max: 2019-09-15T00:00:00Z, num_nulls: 0]
+_c2:          BINARY SNAPPY DO:0 FPO:391156 SZ:11135/16299/1.46 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: http://example.com/?url=001, max: http://example.com/?url=199, num_nulls: 0]
+_c3:          BINARY SNAPPY DO:0 FPO:402291 SZ:9260/10030/1.08 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: user-001, max: user-099, num_nulls: 0]
+_c4:          BINARY SNAPPY DO:0 FPO:411551 SZ:11091/11574/1.04 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: AD, max: ZW, num_nulls: 0]
+_c5:          BINARY SNAPPY DO:0 FPO:422642 SZ:3893/3887/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Chrome, max: Safari, num_nulls: 0]
+_c6:          BINARY SNAPPY DO:0 FPO:426535 SZ:3886/3880/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Android, max: windows, num_nulls: 0]
+_c7:          BINARY SNAPPY DO:0 FPO:430421 SZ:7872/8020/1.02 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 100, max: 599, num_nulls: 0]
+_c8:          BINARY SNAPPY DO:0 FPO:438293 SZ:46831/79170/1.69 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 0.0001, max: 0.9999, num_nulls: 0]
+file:        hdfs://ip-172-31-27-205.us-east-2.compute.internal:8020/user/hadoop/parquet1/part-00002-65f20ddd-cb68-4d79-8503-3b5046009caf-c000.snappy.parquet 
+creator:     parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1) 
+extra:       org.apache.spark.sql.parquet.row.metadata = {"type":"struct","fields":[{"name":"_c0","type":"string","nullable":true,"metadata":{}},{"name":"_c1","type":"string","nullable":true,"metadata":{}},{"name":"_c2","type":"string","nullable":true,"metadata":{}},{"name":"_c3","type":"string","nullable":true,"metadata":{}},{"name":"_c4","type":"string","nullable":true,"metadata":{}},{"name":"_c5","type":"string","nullable":true,"metadata":{}},{"name":"_c6","type":"string","nullable":true,"metadata":{}},{"name":"_c7","type":"string","nullable":true,"metadata":{}},{"name":"_c8","type":"string","nullable":true,"metadata":{}}]} 
+
+file schema: spark_schema 
+--------------------------------------------------------------------------------
+_c0:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c1:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c2:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c3:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c4:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c5:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c6:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c7:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c8:         OPTIONAL BINARY O:UTF8 R:0 D:1
+
+row group 1: RC:10000 TS:771476 OFFSET:4 
+--------------------------------------------------------------------------------
+_c0:          BINARY SNAPPY DO:0 FPO:4 SZ:325588/360103/1.11 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 0008ca6962b94f37ba2bfe89d3e87a7d, max: fff0d05f830f43e78666a62036fca421, num_nulls: 0]
+_c1:          BINARY SNAPPY DO:0 FPO:325592 SZ:65860/278483/4.23 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 2019-09-12T00:00:25.920Z, max: 2019-09-15T00:00:00Z, num_nulls: 0]
+_c2:          BINARY SNAPPY DO:0 FPO:391452 SZ:11115/16299/1.47 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: http://example.com/?url=001, max: http://example.com/?url=199, num_nulls: 0]
+_c3:          BINARY SNAPPY DO:0 FPO:402567 SZ:9262/10030/1.08 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: user-001, max: user-099, num_nulls: 0]
+_c4:          BINARY SNAPPY DO:0 FPO:411829 SZ:11094/11574/1.04 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: AD, max: ZW, num_nulls: 0]
+_c5:          BINARY SNAPPY DO:0 FPO:422923 SZ:3893/3887/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Chrome, max: Safari, num_nulls: 0]
+_c6:          BINARY SNAPPY DO:0 FPO:426816 SZ:3886/3880/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Android, max: windows, num_nulls: 0]
+_c7:          BINARY SNAPPY DO:0 FPO:430702 SZ:7856/8020/1.02 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 100, max: 599, num_nulls: 0]
+_c8:          BINARY SNAPPY DO:0 FPO:438558 SZ:46972/79200/1.69 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 0.0002, max: 1.0000, num_nulls: 0]
+file:        hdfs://ip-172-31-27-205.us-east-2.compute.internal:8020/user/hadoop/parquet1/part-00003-65f20ddd-cb68-4d79-8503-3b5046009caf-c000.snappy.parquet 
+creator:     parquet-mr version 1.10.1 (build a89df8f9932b6ef6633d06069e50c9b7970bebd1) 
+extra:       org.apache.spark.sql.parquet.row.metadata = {"type":"struct","fields":[{"name":"_c0","type":"string","nullable":true,"metadata":{}},{"name":"_c1","type":"string","nullable":true,"metadata":{}},{"name":"_c2","type":"string","nullable":true,"metadata":{}},{"name":"_c3","type":"string","nullable":true,"metadata":{}},{"name":"_c4","type":"string","nullable":true,"metadata":{}},{"name":"_c5","type":"string","nullable":true,"metadata":{}},{"name":"_c6","type":"string","nullable":true,"metadata":{}},{"name":"_c7","type":"string","nullable":true,"metadata":{}},{"name":"_c8","type":"string","nullable":true,"metadata":{}}]} 
+
+file schema: spark_schema 
+--------------------------------------------------------------------------------
+_c0:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c1:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c2:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c3:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c4:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c5:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c6:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c7:         OPTIONAL BINARY O:UTF8 R:0 D:1
+_c8:         OPTIONAL BINARY O:UTF8 R:0 D:1
+
+row group 1: RC:10000 TS:772106 OFFSET:4 
+--------------------------------------------------------------------------------
+_c0:          BINARY SNAPPY DO:0 FPO:4 SZ:325525/360103/1.11 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 000685ee56744941b5a646d7e5662c82, max: fff8094d1f8247469cfcace364e6a2a2, num_nulls: 0]
+_c1:          BINARY SNAPPY DO:0 FPO:325529 SZ:65860/278483/4.23 VC:10000 ENC:BIT_PACKED,RLE,PLAIN ST:[min: 2019-09-12T00:00:25.920Z, max: 2019-09-15T00:00:00Z, num_nulls: 0]
+_c2:          BINARY SNAPPY DO:0 FPO:391389 SZ:11113/16299/1.47 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: http://example.com/?url=001, max: http://example.com/?url=199, num_nulls: 0]
+_c3:          BINARY SNAPPY DO:0 FPO:402502 SZ:9262/10030/1.08 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: user-001, max: user-099, num_nulls: 0]
+_c4:          BINARY SNAPPY DO:0 FPO:411764 SZ:11091/11574/1.04 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: AD, max: ZW, num_nulls: 0]
+_c5:          BINARY SNAPPY DO:0 FPO:422855 SZ:3894/3887/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Chrome, max: Safari, num_nulls: 0]
+_c6:          BINARY SNAPPY DO:0 FPO:426749 SZ:3886/3880/1.00 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: Android, max: windows, num_nulls: 0]
+_c7:          BINARY SNAPPY DO:0 FPO:430635 SZ:7869/8020/1.02 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 100, max: 599, num_nulls: 0]
+_c8:          BINARY SNAPPY DO:0 FPO:438504 SZ:47184/79830/1.69 VC:10000 ENC:PLAIN_DICTIONARY,BIT_PACKED,RLE ST:[min: 0.0001, max: 0.9999, num_nulls: 0]
+[hadoop@ip-172-31-27-205 ~]$ 

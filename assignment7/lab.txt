@@ -1,0 +1,26 @@
+COLLECTION TIER LAB
+Flume "move large amounts of data from MANY DIFFERENT SOURCES to a CENTRALIZED DATA STORE"
+
+flume vs elasticSearch vs logstash https://discuss.elastic.co/t/logstash-flume-vs-elasticsearch/9880
+
+
+Flume Event is header+byte_payload
+
+Agent - a jvm process - hosts all the flume components (source/channel/sink/)
+
+
+*to see size in MB*
+ls -altrh
+*to see wordcount*
+wc -l directory/*
+
+*BENEFIT*
+"consolidated everyting from the source into a single file in the sink"
+
+
+
+
+- don't rely on defaults - specify your own dir's
+- /channel directories have .meta files in /file-channel-temp/data-dir
+
+

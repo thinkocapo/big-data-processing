@@ -1,0 +1,47 @@
+COLLECTION TIER
+
+PUSH VS PULL
+
+Is data source looking for response from Collection Service?
+sync vs async
+Data Sourece <> Collection Service <> Target
+
+"Data source success can depend on Collection Service giving back that ackwnoledgement"
+
+PULL PATTERN would mean pulling data from databases. 
+Example collector services - ETL tools, Scoop, Kafka connectors.
+'data collection service knows about data source'
+*Collection Service has control over how much data it can "swallow" in one Pull*
+*in this case the Data Source is not-aware OF the Collection Service*
+DataSource must maintain good record of all historical data
+Collection Service requests it based on time-based criteria, or partition identifier, 
+data in DataSource must be index.
+
+PUSH PATTERN
+Collection Service doesn't have to know much about the Data Source
+DataSource decides how much data goes to CollectionService
+Data source can be very lean - not keeping all historical data
+DataSource must define the connection TO the collection service
+web requests, IOT devices, examples.
+*If the Collection Service goes down, then data is lost!*
+DataSourece doesn't-care if Collection Tier even processes it correctly or not
+
+vs.
+STREAMING DATA COLLECTION
+example data osources: Meetup, Tweeter Streams, Stocks (IEX) platform
+Example Collector Services - Flume (via TCP source), Streaming systems (Spark streaming, Flink)
+
+example - DataSource[Meetup] <streams..to> you the Collection Service
+PUSH - all it knows is your TCP endpoints...
+PULL - Data Source a priori knowledge (a list of) who is allowed to take data from it
+
+"if your Collection Service goes down, it's not going to bring down Twitter that you're consuming from"
+
+
+PUSH
+Failures of the ds do affect the collection service
+Failures of the collection services do not affect the data sources
+
+
+10/16/19
+LEFT OFF AT... 26:00
