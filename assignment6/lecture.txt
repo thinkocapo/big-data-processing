@@ -129,3 +129,14 @@ LESSON
 RDBMSs provide an unmatched level of functionality
 ● whereas NoSQL databases excel on the non-functional side through scalability, availability, low latency and/or high
 throughput. 
+
+
+
+HBase
+range-sharding
+region server. memcache (in-memory) to HFiles (has column families)
+sometimes i/o to Mapreduce hadoop jobs
+
+CLASSIFICATION - Sharding, Replication, Storage Management, Query Processing
+no indexing
+no lookup other than by key
