@@ -102,7 +102,30 @@ write data into 'buckets' in HDFS
 
 *avro source to hdfs sink*
 
-
+-------
+fan-in
+vs
+fan-out
 -------
 https://www.youtube.com/watch?v=8IKxf98h65Y
 hi-throughput low-latency 
+
+
+
+
+'vanilla logging' lousy in highly-concurrent systems
+vanilla logging: hilariously bad in highly-concurrent many-tiered systems (too much interference * many hosts + access problems)
+Dapper or Zipkin.... - debugging a concurrent process across many machines
+
+
+
+DISTRIBUTED TRACING
+*is a log of concurrent activities, potentially integrated from many places.*
+'cant ask a developer to instrument it everywhere....' no developer overhead.
+"must have a way to integrate with execution queues, closures and so forth"
+"zero code footprint in vanilla function calls"
+tracing with a queue...
+'put work in a queue, find when its running later'
+
+go channel - execution system. tracing has to account for it, the channel needs better params for tracking...
+'before something is queued in a channel, and once it's dequeued'
