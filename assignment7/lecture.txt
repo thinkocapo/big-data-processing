@@ -43,5 +43,66 @@ Failures of the ds do affect the collection service
 Failures of the collection services do not affect the data sources
 
 
-10/16/19
-LEFT OFF AT... 26:00
+FLUME - Fan-in
+data locality. colocated writes on the same node between Flume/HDFS
+4 agents collecting from hundreds of web serbers - can make bigger files for write to HDFS
+
+airflow - workflow orchestration frameworks to help manage ^^ pipelines and flows
+
+FLUME - Fan-out
+Splitting on INgest - for disaster recovery....?
+Flume Agent -> hdfs and also -> hdfs DR(disaster recovery)
+Partitioning on Ingest - 
+"topologies"
+Multi-Agent pipeline
+?
+
+Flume Properties Files:
+.capacity how many events can be stored in channel
+'how many flume can read when its pulling from its source' .transactionCapacity
+these only work for .type = memory
+
+
+.type = logger <--- very useful for debugging
+*alawys use a logger so you can debug any problem you're having*
+
+can define multiple sinks a1.sinks = loggerSink, secondSink, thirdSink
+Batch Size (also transactionCapacity for channels, for example) of 1 pull
+"how many network transfers going to happen"
+
+
+
+
+Different sources have different thread models - 
+
+3 TYPES OF SOURCES TO POOL FROM
+FILE, AVRO, SPOOLDIR
+'place files to be ingested into a "spooling" directory on disk' e.g. logs from apps, FTP transfers. flume can keep reading them as they arrive.
+
+CHANNELS
+memory vs file based channel.
+MEMORY CHANNEL: best performance but potential for data loss when agent goes down. RAM Limitation.
+"connect more sources into same memory channel, so you can bundle events/data into there (e.g. once an hour event)"
+Capacity - max # events that cane be stored. exceed this and the events are lost. non-durable, non-reliaable.
+FILES CHANNEL: 
+durable
+less performant
+periodic checkpoints
+configure file channel to use multiple disks (separate directories)
+SINKS:
+transactional
+one sink polls one channel only
+"events will stay in the channel until the transaction is fully completed by the sink"
+sometimes sink too slow
+
+'yo'uoll have as many sinks as you think you need buckets'
+
+SINKS: HDFS SINKS
+write data into 'buckets' in HDFS
+
+*avro source to hdfs sink*
+
+
+-------
+https://www.youtube.com/watch?v=8IKxf98h65Y
+hi-throughput low-latency 
