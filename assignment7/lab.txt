@@ -23,4 +23,58 @@ wc -l directory/*
 - don't rely on defaults - specify your own dir's
 - /channel directories have .meta files in /file-channel-temp/data-dir
 
+LOCATIONS
+/home/centos/flume/apache-flume-1.9.0-bin
+vs
+/home/centos/hw7/
+vs
 
+
+/home/centos/flume/apache-flume-1.9.0-bin/bin
+/home/centos/flume/apache-flume-1.9.0-bin/conf/log4j.properties”
+
+6:54p
+Logs will go: log4j 
+“/home/centos/flume/apache-flume-1.9.0-bin/conf/log4j.properties”
+/home/centos/flume/apache-flume-1.9.0-bin/logs as specified by log4j.properties ^^ './ meant relative to apache-flume-1.9.0-bin/ and not apache-flume-1.9.0-bin/conf'
+
+log
+apache-flume-1.9.0-bin/logs/flume.log
+
+agent conf
+/home/centos/hw7/conf
+
+sink
+/home/centos/hw7/p1_sink
+
+source
+/home/centos/hw7/p1_source
+
+
+# from ~/flume/apache-flume-1.9.0-bin GOOD
+./bin/flume-ng agent -n a1 -c conf -f /home/centos/flume/hw7/config
+
+
+
+
+NOPE...
+JAVA_HOME=/usr/bin/java
+YUP...
+[centos@ip-172-31-29-119 apache-flume-1.9.0-bin]$ java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home'
+    java.home = /usr/java/jdk1.8.0_161/jre
+
+
+7:19P WORKED!!!!
+'conf' has log4j in it. its like flume config
+hw7/conf is like the 'agent' config.
+makese sense.
+
+./bin/flume-ng agent -n a1 -c conf -f /home/centos/hw7/conf
+
+
+" - locate Flume log file -"
+/home/centos/flume/apache-flume-1.9.0-bin/logs
+
+
+7:24p FIRST SUCCESSFULL RUN DONE - flume.log looks good
+apache-flume-1.9.0-bin/logs/flume.log
