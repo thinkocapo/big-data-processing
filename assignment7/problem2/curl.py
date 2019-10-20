@@ -6,10 +6,9 @@ import time
 # Argument Parser
 prog = "assignment3"
 parser = argparse.ArgumentParser(prog=prog)
-parser.add_argument("rate", type=str, help="rate, interval")
+parser.add_argument("rate", type=str, help="rate/interval, of x times per second")
 args = parser.parse_args()
 
-# Using your curl python example, in the interest of time, getting all problems done:
 # Writes to DEVNULL because we don't actually need the response. Flume will get it from log file via 'tail
 def main():
     rate = int(args.rate)
@@ -24,8 +23,6 @@ def main():
             if count % rate == 0:
                 print('count {} \n'.format(count))
             time.sleep(wait_time)
-
-
 
 if __name__ == '__main__':
     main()
