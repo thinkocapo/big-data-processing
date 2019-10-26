@@ -1,6 +1,8 @@
 bin/zookeper-server-start.sh config/zookerper.properties at 4:20p
 
 1 download kafka files, don't have to install them. it's bin (see shell scripts)
+directory called kafka_2.11-2.2.1
+
 2 start zookeper 
 3 verify zookeepr is running - nc -vz localhost 2181 is zookeeper port
 4 start kafka
@@ -12,6 +14,29 @@ kafka runs in 9092
 nv -vc localhost 9092
 
 'kafka ships with zookepr, it was in same kafka_2.11-2.2.1/bin/zookeepr... directory
+"always start KAFKA first THEN ZOOKEEPER"
+
+ps -eaf grep | java
+sudo kill -9 25073
+
+^^ kafka is now stopped.
+
+5 START KAFKA CLUSTER
+
+
+6 11:53
+.yaml
+ports: - "2181:2181" don't realy need because we're executing things inside of the container on kafka, don't need to expose it
+'environment variables that container exposes'
+`HOSTNAME_COMMAND
+PORTS: - 9092 "makes it run on 9092, but does not expose it" "don't try expose it 9092:9092 because all nodes will be listening on 9092"
+
+'one more containre to run the python example...'
+python-example: depends_on: -fafka -zookeeper
+'volumes: - "./python:/python" makes my machine's code available to the d containers....'
+
+
+
 
 
 
