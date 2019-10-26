@@ -15,7 +15,7 @@ kafka runs in 9092
 nv -vc localhost 9092
 
 'kafka ships with zookepr, it was in same kafka_2.11-2.2.1/bin/zookeepr... directory
-"always start KAFKA first THEN ZOOKEEPER"
+"always stop KAFKA first THEN ZOOKEEPER"
 
 ps -eaf grep | java
 sudo kill -9 25073
@@ -42,6 +42,7 @@ python-example: depends_on: -fafka -zookeeper
 docker-compose -f kafka-docker-compose.yaml up -d
 docker ps -a
 (see 1 zookeepr, 1 kafka node, 1 python container)
+
 '3 node cluster using teh scale option in docker-compose'
 docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3
 *WOOOAHH* so `--scale kafka=3` makes 3 of them
@@ -87,5 +88,43 @@ kafka-console-consumer.sh --broker-list localhost:9092 --topic will_topic --prop
 
 "consumer and producers don't have to be on same machine as Kafka Server/Nodes/CLuser, as long as have binaries and port of the Cluster you can point to that"
 
+kafka-console-producer.sh \
+  --broker-list localhost:9092 \
+  --topic will_topic \
+  --property "parse.key=true" \
+  --property "key.separator=:"
 
 
+
+*"These kafka-console* shell scripts are just for out-of-the-box"*
+
+
+# does not jus talk to 1 machine, talks to all [represented]
+producer = KafkaProducer(bootstrap_servers='kafka:9092')
+
+
+
+
+
+
+
+
+*HOW TO STOP ALL IN OPERATION*
+docker-compose -f kafka-docker-compose.yaml down -d
+11:01a put the consumer producer py's in /python so .yaml's VOLUMEs will find them, put to container
+
+*HOW TO START AGAIN*
+docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3
+
+*DON'T FORGET KAFKA-TOPIC*
+kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 5 --topic test_topic
+
+*GET INTO PYTHON IMAGE CONTAINER - producer*
+ $ docker exec -it assignment8_python-example_1 /bin/sh
+python /python/python-producer.py
+
+*GET INTO PYTHON CONTAINER - CONSUMER*
+ $ docker exec -it assignment8_python-example_1 python ./python/python-consumer.py
+
+
+47:minute
