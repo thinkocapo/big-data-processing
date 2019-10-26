@@ -1,0 +1,18 @@
+bin/zookeper-server-start.sh config/zookerper.properties at 4:20p
+
+1 download kafka files, don't have to install them. it's bin (see shell scripts)
+2 start zookeper 
+3 verify zookeepr is running - nc -vz localhost 2181 is zookeeper port
+4 start kafka
+bin/kafaka-server-start.sh config/server.properties 7:04p
+^^is one-node cluster
+log activity in oboth panes
+
+kafka runs in 9092
+nv -vc localhost 9092
+
+'kafka ships with zookepr, it was in same kafka_2.11-2.2.1/bin/zookeepr... directory
+
+
+
+
