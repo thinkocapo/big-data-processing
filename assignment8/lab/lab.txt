@@ -1,4 +1,5 @@
 bin/zookeper-server-start.sh config/zookerper.properties at 4:20p
+****LOCAL RUN ******
 
 1 download kafka files, don't have to install them. it's bin (see shell scripts)
 directory called kafka_2.11-2.2.1
@@ -23,6 +24,7 @@ sudo kill -9 25073
 
 5 START KAFKA CLUSTER
 
+****SWITCH TO DOCKER******
 
 6 11:53
 .yaml
@@ -35,9 +37,26 @@ PORTS: - 9092 "makes it run on 9092, but does not expose it" "don't try expose i
 python-example: depends_on: -fafka -zookeeper
 'volumes: - "./python:/python" makes my machine's code available to the d containers....'
 
+7 start docker...
+# single-node kafka cluster
+docker-compose -f kafka-docker-compose.yaml up -d
+docker ps -a
+(see 1 zookeepr, 1 kafka node, 1 python container)
+'3 node cluster using teh scale option in docker-compose'
+docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3
+*WOOOAHH* so `--scale kafka=3` makes 3 of them
+docker ps -a
+(see 3 kafkas running)
+
+8 18:29 connect to a running Kafka container
+docker exec -it <NAME of container> bash
+"it didnt matter which node we exec'd (connected) to"
+
+9 let's try create a topic
+kafka-topics.sh
 
 
 
 
 
-
+20:22
