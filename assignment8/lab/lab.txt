@@ -60,3 +60,32 @@ kafka-topics.sh
 
 
 20:22
+bash-4.4# cd /opt/kafka/bin
+connect-distributed.sh               kafka-consumer-perf-test.sh          kafka-reassign-partitions.sh         kafka-verifiable-producer.sh
+connect-standalone.sh                kafka-delegation-tokens.sh           kafka-replica-verification.sh        trogdor.sh
+kafka-acls.sh                        kafka-delete-records.sh              kafka-run-class.sh                   windows
+kafka-broker-api-versions.sh         kafka-dump-log.sh                    kafka-server-start.sh                zookeeper-security-migration.sh
+kafka-configs.sh                     kafka-log-dirs.sh                    kafka-server-stop.sh                 zookeeper-server-start.sh
+kafka-console-consumer.sh            kafka-mirror-maker.sh                kafka-streams-application-reset.sh   zookeeper-server-stop.sh
+kafka-console-producer.sh            kafka-preferred-replica-election.sh  kafka-topics.sh                      zookeeper-shell.sh
+kafka-consumer-groups.sh             kafka-producer-perf-test.sh          kafka-verifiable-consumer.sh
+
+22:26
+--describe <topic name optional>
+
+"The Producer specifies the ackwnoedlgement e.g. 'at least from 2 machines'"
+
+
+
+kafka-console-consumer.sh --broker-list localhost:9092 --topic will_topic --property "parse.key=true" --property "key.separator=:"
+ ?
+
+ kafka-console-consumer.sh --bottstrap-server localhost:9092 --topic will_topic
+
+
+
+
+"consumer and producers don't have to be on same machine as Kafka Server/Nodes/CLuser, as long as have binaries and port of the Cluster you can point to that"
+
+
+
