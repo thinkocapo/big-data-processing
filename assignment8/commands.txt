@@ -1,0 +1,100 @@
+0. ssh into it t2.xlarge
+sudo ssh -i ~/keypairs/hw1.pem centos@ec2-18-191-210-25.us-east-2.compute.amazonaws.com
+
+1. scp the kafka-docker-compose.yaml into it
+2. check if docker is there
+[centos@ip-172-31-7-212 ~]$ sudo docker version
+Client:
+ Version:	17.12.0-ce
+ API version:	1.35
+ Go version:	go1.9.2
+ Git commit:	c97c6d6
+ Built:	Wed Dec 27 20:10:14 2017
+ OS/Arch:	linux/amd64
+
+Server:
+ Engine:
+  Version:	17.12.0-ce
+  API version:	1.35 (minimum version 1.12)
+  Go version:	go1.9.2
+  Git commit:	c97c6d6
+  Built:	Wed Dec 27 20:12:46 2017
+  OS/Arch:	linux/amd64
+  Experimental:	false
+
+3.A install docker PRE-INSTALLED
+3.B install docker-compose
+[centos@ip-172-31-7-212 ~]$ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   617    0   617    0     0   2395      0 --:--:-- --:--:-- --:--:--  2400
+100 15.4M  100 15.4M    0     0  18.3M      0 --:--:-- --:--:-- --:--:-- 18.3M
+[centos@ip-172-31-7-212 ~]$ sudo chmod +x /usr/local/bin/docker-compose
+[centos@ip-172-31-7-212 ~]$ which docker-compose
+/usr/local/bin/docker-compose
+[centos@ip-172-31-7-212 ~]$ 
+
+3.C. fix `sudo docker-compose: command not found`
+[centos@ip-172-31-7-212 ~]$ dockerd
+unable to configure the Docker daemon with file /etc/docker/daemon.json: open /etc/docker/daemon.json: permission denied
+[centos@ip-172-31-7-212 ~]$ sudo dockerd
+Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid
+[centos@ip-172-31-7-212 ~]$ docker ps
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.35/containers/json: dial unix /var/run/docker.sock: connect: permission denied
+[centos@ip-172-31-7-212 ~]$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[centos@ip-172-31-7-212 ~]$ sudo docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3
+sudo: docker-compose: command not found
+[centos@ip-172-31-7-212 ~]$ which docker-compose
+/usr/local/bin/docker-compose
+[centos@ip-172-31-7-212 ~]$ docker-compose --version
+docker-compose version 1.24.1, build 4667896b
+[centos@ip-172-31-7-212 ~]$ which docker
+/usr/bin/docker
+[centos@ip-172-31-7-212 ~]$ PATH=$PATH:/usr/bin/docker
+[centos@ip-172-31-7-212 ~]$ echo $PATH | grep docker
+/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/centos/.local/bin:/home/centos/bin:/usr/bin/docker
+[centos@ip-172-31-7-212 ~]$ sudo docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3
+...SUCCESS
+
+
+
+4.A run `sudo docker-compose -f kafka-docker-compose.yaml up -d --scale kafka=3`
+4.B `docker ps` make sure all 5 containers are there and healthy
+4. can start running kafka python-producer.py
+errors...so install python3 and pip install kafka-python
+AH-HA it's `python3.6` Not `python3`
+`python3.6 python-producer.py`
+4.C change PORT in python-producer.py that kafka is running on...
+see assignment8 instructions...
+
+5. make sure python-consumer.py works (EC2)
+NOPE...
+
+6. stop python-producer.py
+[NEVER WORKED]
+
+7. configure flume properties file
+8. 'sink to Kafka
+7. run flume
+8. curl.py
+
+centos_python-example_1
+or
+centos_kafka_1 2 3
+or
+centos_zookeeper_1
+
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                                        NAMES
+d923a4a4bf79        python:2.7.16-alpine3.10        "sleep 5000"             2 minutes ago       Up 2 minutes                                                     centos_python-example_1
+eb32e57bf2a5        wurstmeister/kafka:2.12-2.3.0   "start-kafka.sh"         2 minutes ago       Up 2 minutes        0.0.0.0:32770->9092/tcp                      centos_kafka_3
+b697acfb48ac        wurstmeister/kafka:2.12-2.3.0   "start-kafka.sh"         2 minutes ago       Up 2 minutes        0.0.0.0:32769->9092/tcp                      centos_kafka_2
+e1f92be191c2        wurstmeister/kafka:2.12-2.3.0   "start-kafka.sh"         2 minutes ago       Up 2 minutes        0.0.0.0:32768->9092/tcp                      centos_kafka_1
+4342113a48d6        zookeeper:3.4.9                 "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes        2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   centos_zookeeper_1
+
+sudo docker exec -it centos_python-example_1 bin/sh
+sudo docker exec -it centos_python-example_1 bin/sh python3.6 python/python-producer.py
+
+
+
+sudo docker cp python-producer.py 6035974ce876:/python/python-producer.py

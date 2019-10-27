@@ -128,3 +128,134 @@ python /python/python-producer.py
 
 
 47:minute
+
+
+kafka server poroperties in /opt/kafka/config/server.properties
+# has the broker.id
+# this gets shown by the --describe command
+# log.dirs
+log.dirs=/kafka/kafka-logs-a866c90bc301
+
+or
+bash-4.4# cd /opt/kafka/config/
+bash-4.4# cat server.properties | grep .dir
+# A comma separated list of directories under which to store log files
+log.dirs=/kafka/kafka-logs-a866c90bc301
+
+
+58:minute
+/opt/kafka/config/server.properties
+advertised.host.name=172.27.0.4
+^^ import if machines outside the private network trying to access it. should always be a public IP
+
+/opt/kafka/config/log4j.properties dictates where the log files go
+/opt/kafka/bin/zookeeper-shell.sh
+
+/zookeeper-shell.sh zookeeper:2181
+ls /
+ls /brokers/ids
+# shows [1003, 1002, 1001]  "3 [kafka] nodes in the Cluster]"
+*"and the IP address of each of those 3 is in that broker"*
+
+get /brokers/ids/1001
+{"listener_security_protocol_map":{"PLAINTEXT":"PLAINTEXT"},"endpoints":["PLAINTEXT://172.24.0.3:9092"],"jmx_port":-1,"host":"172.24.0.3","timestamp":"1572115711206","port":9092,"version":4}
+
+
+get /brokers/ids/1002
+{"listener_security_protocol_map":{"PLAINTEXT":"PLAINTEXT"},"endpoints":["PLAINTEXT://172.24.0.4:9092"],"jmx_port":-1,"host":"172.24.0.4","timestamp":"1572115712153","port":9092,"version":4}
+
+^^IP 172.24.0.4 comes from server.properties
+
+1 client talks to node
+2 ndoe talks to zookeeper to get names/IPs of all other nodes
+3 sends it back to client
+
+
+
+
+1:04:00
+when producer produces message
+it ends up in:
+/kafka/kafka-logs-a866c90bc301
+and in here...
+00000000.log file is binary but has the messages...
+each of these is a different partition for the test_topic"
+kafka-run-class.sh kafka.tools.DumpLogSegments --files /kafka/kafka-logs-a866c90bc301/test_topic-0/00000000000000000000.log --print-data-log --deep-iteration | less
+vs
+kafka-run-class.sh kafka.tools.DumpLogSegments --files /kafka/kafka-logs-a866c90bc301/test_topic-1/00000000000000000000.log --print-data-log --deep-iteration | less
+vs
+
+the actual payload data [log] not the application log
+is why we see 'key:5 payload: 5'
+FINALLYyyy
+"key:5 is mapped to this partition, that's why all with '5' go to this partition"...
+
+
+1:12:19
+List all the Consumer Groups
+bash-4.4# kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+consumer-1
+
+bash-4.4# kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group consumer-1 --describe
+
+Consumer group 'consumer-1' has no active members.
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+consumer-1      test_topic      0          18              18              0               -               -               -
+consumer-1      test_topic      4          63              63              0               -               -               -
+consumer-1      test_topic      2          25              25              0               -               -               -
+consumer-1      test_topic      1          61              61              0               -               -               -
+consumer-1      test_topic      3          110             110             0               -               -               -
+
+SO....
+
+start up a python-consumer.py again from python container and re-execute:
+bash-4.4# kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group consumer-1 --describe
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                             HOST            CLIENT-ID
+consumer-1      test_topic      0          18              18              0               kafka-python-1.3.5-8ef9ad9d-afb7-49b5-be1c-b00c47428b63 /172.24.0.6     kafka-python-1.3.5
+consumer-1      test_topic      4          63              63              0               kafka-python-1.3.5-8ef9ad9d-afb7-49b5-be1c-b00c47428b63 /172.24.0.6     kafka-python-1.3.5
+consumer-1      test_topic      2          25              25              0               kafka-python-1.3.5-8ef9ad9d-afb7-49b5-be1c-b00c47428b63 /172.24.0.6     kafka-python-1.3.5
+consumer-1      test_topic      1          61              61              0               kafka-python-1.3.5-8ef9ad9d-afb7-49b5-be1c-b00c47428b63 /172.24.0.6     kafka-python-1.3.5
+consumer-1      test_topic      3          110             110             0               kafka-python-1.3.5-8ef9ad9d-afb7-49b5-be1c-b00c47428b63 /172.24.0.6     kafka-python-1.3.5
+bash-4.4# 
+:)
+^^ host is same because it's only 1 consumer python we're running
+
+
+"LOG-END-OFFSET tells you Where the Producers are - how many messages produced and are available in Kafka"
+"CURRENT-OFFSET is the specific consumer we started, it has 'consumed until this offset...'
+271 272 LAG Of 1 means its only consumed 271
+"if Lag is 0 then we know consumer has consumed all of the messages"
+"* can find slow consumers this way *" ;)
+
+1:15:07
+GROUP Is consumer-1 because 1 consumer consuming from all partitions
+w/ client-id kafka-python-1.3.5 too
+
+
+
+docker exec -it assignment8_python-example_1 python python/python-producer.py
+docker exec -it assignment8_python-example_1 python python/python-consumer.py
+
+
+
+
+
+"use two different consumerGroupings and they'll work off of different offsets"
+
+1:28:43
+asks about Flume. nothing to show.
+Q&A time
+
+
+
+9:30p
+bash-4.4# kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 2 --topic problem2
+Created topic problem2.
+
+
+1 put the index.html in there
+2 copy back in my apache flume config file
+3 python curl to web server
+4. start a consumer (first update the python-consumer.py) <---- 9:33p HERE
+5. flume reads that and 'sinks it to Kafka...(which is already running-docker container, don't need start a producer)
