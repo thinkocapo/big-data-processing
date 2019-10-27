@@ -62,7 +62,7 @@ JAVA_HOME=/usr/bin/java
 YUP...
 [centos@ip-172-31-29-119 apache-flume-1.9.0-bin]$ java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home'
     java.home = /usr/java/jdk1.8.0_161/jre
-
+export JAVA_HOME=/usr/java/jdk1.8.0_161/jre
 
 CONFIG NOTE
 'conf' has log4j in it. its like flume config and hw7/conf is like the 'agent' config.
@@ -74,3 +74,7 @@ RUN FLUME AGENT
 7:24p FIRST SUCCESSFULL RUN DONE - the flume.log looks good
 FLUME LOG
 /home/centos/flume/apache-flume-1.9.0-bin/logs
+
+
+
+sudo JAVA_HOME=/usr/java/jdk1.8.0_161/jre ./bin/flume-ng agent -n a1 -c conf -f /home/centos/conf.properties

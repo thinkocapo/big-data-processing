@@ -74,9 +74,18 @@ NOPE...
 6. stop python-producer.py
 [NEVER WORKED]
 
-7. configure flume properties file
-8. 'sink to Kafka
-7. run flume
+7. index.html to /var/www on ec2
+
+
+8. configure flume properties file
+9. w/ 'sink to Kafka
+10. ./bin/flume-ng agent -n a1 -c conf -f /home/centos/hw7/conf
+
+
+
+<<<< 11:29P here
+11. curl.py to assignment8
+10. run  flume
 8. curl.py
 
 centos_python-example_1
@@ -98,3 +107,21 @@ sudo docker exec -it centos_python-example_1 bin/sh python3.6 python/python-prod
 
 
 sudo docker cp python-producer.py 6035974ce876:/python/python-producer.py
+
+
+./bin/flume-ng agent -n a1 -c conf -f /home/centos/flume/hw7/config
+
+
+[centos@ip-172-31-7-212 apache-flume-1.9.0-bin]$ export JAVA_HOME=/usr/java/jdk1.8.0_161/jre
+[centos@ip-172-31-7-212 apache-flume-1.9.0-bin]$ echo $JAVA_HOME 
+/usr/java/jdk1.8.0_161/jre
+
+
+
+
+sudo JAVA_HOME=/usr/java/jdk1.8.0_161/jre ./bin/flume-ng agent -n a1 -c conf -f /home/centos/conf1
+and
+vi /home/centos/conf1
+
+
+1:26a SUBMIT WHAT I GOT
