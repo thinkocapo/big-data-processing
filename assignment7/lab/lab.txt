@@ -78,3 +78,5 @@ FLUME LOG
 
 
 sudo JAVA_HOME=/usr/java/jdk1.8.0_161/jre ./bin/flume-ng agent -n a1 -c conf -f /home/centos/conf.properties
+
+sudo docker cp python-producer.py a74dfb87570d:/python/python-producer.py

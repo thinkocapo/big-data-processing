@@ -124,4 +124,14 @@ and
 vi /home/centos/conf1
 
 
-1:26a SUBMIT WHAT I GOT
+UUID Interceptor
+https://flume.apache.org/FlumeUserGuide.html#uuid-interceptor
+
+Kafka Sink
+https://flume.apache.org/FlumeUserGuide.html#kafka-sink
+
+
+kafka-run-class.sh kafka.tools.DumpLogSegments --files /kafka/kafka-logs-a1476fc6b5b8/problem2-0/00000000000000000000.log --print-data-log --deep-iteration | less
+
+
+ -Dflume.root.logger=INFO,console ?????
