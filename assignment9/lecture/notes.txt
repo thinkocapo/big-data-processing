@@ -1,1 +1,3 @@
 The reason streaming processing is so fast is because it analyzes the data before it hits the disk
+
+at-rest vs in-flight data
