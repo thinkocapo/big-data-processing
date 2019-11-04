@@ -28,3 +28,19 @@ KAFKA ZOOKEE ec2-X-X-X-X.us-west-1.compute.amazonaws.com
 
 cd /app/kafka/kafka_2.12-2.3.1
 ./bin/kafka-topics.sh --create --zookeeper <pri_vate_ip_address>:2181 --replication-factor 1 --partitions 2 --topic hw9events
+
+
+12:16a
+./bin/kafka-console.consumer.sh --bootstrap-server <PRIVATE_IP_OF_BROKER>:9092 --topic hw9events
+
+12:29a
+./bin/kafka-console-producer.sh --broker-list  <PRIVATE_IP_OF_BROKER>:9092 --topic hw9events
+
+
+12:41A
+NEW EC2 for producer.java:
+sudo ssh -i ~/keypairs ec2-user@<t2_micro_ec2>.us-west-1.compute.amazonaws.com
+
+sudo scp -i ~/keypairs WebblogsKafkaProducer-jar-with-dependencies.jar ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
+sudo scp -i ~/keypairs WeblogsKafkaProducer.java ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
+java -cp WebblogsKafkaProducer-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer hw9events <T2_MICRO_EC2_IP>:9092
