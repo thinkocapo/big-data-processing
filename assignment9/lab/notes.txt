@@ -1,0 +1,18 @@
+aws kinesis
+
+
+
+for EVents you need dependency that implements those sources
+
+handling offsets - needed for production.
+
+1 process in spark 2 commit the offset "offset data store" WOW
+
+"committing the offset"
+"you dont have to commmit the offset right away, because maybe you avhne to enrich the data, query external db, do something else"
+Message Offset Data Store
+cloudera article on 'offset management'
+
+
+
+can run Manish's java kafka produce

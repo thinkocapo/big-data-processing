@@ -6,7 +6,15 @@ from pyspark.streaming.kafka import KafkaUtils
 
 import os
 
+#
+# python - pass the 0.8
+# class functions + attributes could be different?
+# 0.10 has SSL / TLS support
 
+
+
+
+# --packages org.apache.spark:spark-streaming-kafka...
 
 if __name__ == "__main__":
     # Create Spark Context

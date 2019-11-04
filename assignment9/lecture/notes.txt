@@ -1,3 +1,26 @@
 The reason streaming processing is so fast is because it analyzes the data before it hits the disk
 
 at-rest vs in-flight data
+
+
+time-window vs rolling sum
+
+sensor
+
+tumbling windows - like window but aggregate a count within each window
+'trigger policy' "no more than 5 cars [within window]"
+
+discretize stream into non-overlapping windows
+'eviction'
+
+?
+sliding windows - policies are all based on time. eviction defined by the window length.
+trigger defined by the sliding window
+"tumbling window with sliding..."
+
+'watermark'
+incremental algorithms instead of batch algorithms
+
+
+Hyperloglog for cardinality, probabilistic
+(HLL)
