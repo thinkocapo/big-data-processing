@@ -14,5 +14,20 @@ Message Offset Data Store
 cloudera article on 'offset management'
 
 
+setup aws env in the cloud
+
+1 (do second, sends to Kafka Cluster)
+EC2 for kafka producer
+2 (do first)
+EC2 (2) by Kafka Cluster - CloudFormation - Zookeeper + Broker
+3 (do third)
+EC2's by Spark emr CLUSTER - spark streaming consumer
+
+#3
+#EC2 for kafka producer
+
+
+
+
 
 can run Manish's java kafka produce
