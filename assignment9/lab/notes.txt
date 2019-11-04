@@ -1,11 +1,6 @@
 aws kinesis
-
-
-
-for EVents you need dependency that implements those sources
-
+for Events you need dependency that implements those sources
 handling offsets - needed for production.
-
 1 process in spark 2 commit the offset "offset data store" WOW
 
 "committing the offset"
@@ -13,13 +8,18 @@ handling offsets - needed for production.
 Message Offset Data Store
 cloudera article on 'offset management'
 
-
-setup aws env in the cloud
-
+## AWS EC2 SETUP 
+PROBLEM1
 1 (do second, sends to Kafka Cluster)
 EC2 for kafka producer
+
 2 (do first)
 EC2 (2) by Kafka Cluster - CloudFormation - Zookeeper + Broker
+- new htopic hw9events
+- 2jobs, 1second batch duration prints
+- 1st job # clicks, 1stbatch=10clicks 2ndbatch=2 runningTotal=12, remember the 'state' between batches
+- 2nd job *hint* work with a unique function that saves state
+
 3 (do third)
 EC2's by Spark emr CLUSTER - spark streaming consumer
 
@@ -27,7 +27,77 @@ EC2's by Spark emr CLUSTER - spark streaming consumer
 #EC2 for kafka producer
 
 
+PROBLEM2
+it will be windowed count.
+1 second batch duration
++
+5 second window
 
+*Tumbling* - sliding window and duration is the same...
 
 
 can run Manish's java kafka produce
+
+
+PROBLEM3 HYPERLOGLOG
+"Unique Users per 30 seconds"
+2 approaches
+1. spark aggreation (mapreduce)
+2. HyperLogLog algorithm
+mix up the "accuracy settings" for HLL
+(spark console, compare 1. with 2.)
+
+the last 2 bullet points in problem3
+??
+
+
+
+
+
+PROBLEM4
+see lecture, it's covered there
+
+
+
+----------------
+BEFORE ALL THIS, PROVISION SERVICES APPROPRIARTELY 
+
+it was 2 separate commands?
+
+terminal1
+bin/zookeeper-server-start.sh config/zookeeper.properties
+terminal2
+bin/kafka-server-start.sh config/server.properties
+
+
+terminal3 (consumer) (*will become spark streaming EMR consumer*)
+bin/kafka-console-consumer.sh -btoostrap-server localhost:9093 --topic test --proeperty print.key=true
+terminal3 (spark streaming EMR consumer)
+~/opt/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0 $SparkStreamingConsumer.py localhost:9092 topicName <---localhost:9092 is the kafka broker URL that python accepts
+
+terminal4 (producer, java)
+java -cp lab9-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer mytopic kafkabrokerIP:9092
+
+localhost:4040/jobs 
+# console => streamingTab for metrics...
+# metrics, Scheduling Delay and Processing Time <= could ScreenFLow this and present
+
+"Processing Time should not be higher than the Time Interval" (batch interval?)
+"if so, then you need to optimize your processing time"
+
+
+
+Q.Antying I have to update in the CLoudFOrmation template?
+A. ?
+A. KeyPair name
+1. Create stack (CF)
+2. Upload template file (or S3)
+3. .json
+4. lab9 (name)
+5. then AWS GUI > shows some params based on CF script/template
+6. create
+
+
+
+
+#advertised.listeners=PLAINTEXT://your.host.name:9092 "what it does is it kind of replaces your.host.name. with $Public IP from GET command previous line?"

@@ -1,0 +1,27 @@
+"Type":"AWS::EC2::KeyPair::KeyName", 
+I'M DOING 
+Type":"AWS::EC2::KeyPair::hw1",
+but ^ failed 'Unable to, External Values' so reverting to normal one
+10:42p
+next screen with lab9 name, asks for KeyName. done.
+
+10:41p
+lab9 is the name
+
+10:50p
+looks like where it's hosting my template (SetupKafka-AWS-PublicSubnets.json)
+https://s3.us-east-2.amazonaws.com/cf-templates-1avazg83bnwg-us-east-2/2019308Ick-SetupKafka-AWS-PublicSubnets.json
+
+
+10:53
+ERROR
+"Template error: Unable to get mapping for AmiId::us-east-2::AMI"
+
+11:20p
+switched to US West (N. California), it's working. user sug'd US East (Virginia) as well.
+11:24P
+COMPLETE or _IN_PROGRESS
+
+11:25p
+KAFKA BROKER ec2-X-X-X-X.us-west-1.compute.amazonaws.com
+KAFKA ZOOKEE ec2-X-X-X-X.us-west-1.compute.amazonaws.com

@@ -16,6 +16,11 @@ import os
 
 # --packages org.apache.spark:spark-streaming-kafka...
 
+'''
+by default takes from latest offset, in KafkaUtils.createDirectStream w kafkaParams
+'''
+
+
 if __name__ == "__main__":
     # Create Spark Context
     sc = SparkContext(appName="PythonStreamingDirectKafkaCount")

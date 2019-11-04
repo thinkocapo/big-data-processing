@@ -68,6 +68,7 @@ public class SparkStreamConsumer {
         kafkaParams.put("value.deserializer", StringDeserializer.class);
         kafkaParams.put("group.id", "use_a_separate_group_id_for_each_stream");
         kafkaParams.put("auto.offset.reset", "latest");
+        // only available in v0.10, not 0.8
         kafkaParams.put("enable.auto.commit", true);
   //      kafkaParams.put("spark.streaming.kafka.consumer.cache.enabled","false");
 
