@@ -61,27 +61,31 @@ see lecture, it's covered there
 
 ----------------
 BEFORE ALL THIS, PROVISION SERVICES APPROPRIARTELY 
-
 it was 2 separate commands?
-
 terminal1
 bin/zookeeper-server-start.sh config/zookeeper.properties
 terminal2
 bin/kafka-server-start.sh config/server.properties
 
+TEST RUN 
+#terminal3 (consumer) (*will be replaced by spark streaming EMR consumer*)
+#bin/kafka-console-consumer.sh -btoostrap-server localhost:9093 --topic test --proeperty print.key=true
 
-terminal3 (consumer) (*will become spark streaming EMR consumer*)
-bin/kafka-console-consumer.sh -btoostrap-server localhost:9093 --topic test --proeperty print.key=true
+YES 1
 terminal3 (spark streaming EMR consumer)
 ~/opt/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0 $SparkStreamingConsumer.py localhost:9092 topicName <---localhost:9092 is the kafka broker URL that python accepts
 
-terminal4 (producer, java)
-java -cp lab9-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer mytopic kafkabrokerIP:9092
+doing python instead of this
+#terminal4 (producer, java)
+#java -cp lab9-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer mytopic kafkabrokerIP:9092
 
+YES 2
 localhost:4040/jobs 
 # console => streamingTab for metrics...
 # metrics, Scheduling Delay and Processing Time <= could ScreenFLow this and present
 
+
+------------------------------------
 "Processing Time should not be higher than the Time Interval" (batch interval?)
 "if so, then you need to optimize your processing time"
 

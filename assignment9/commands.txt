@@ -41,6 +41,18 @@ cd /app/kafka/kafka_2.12-2.3.1
 NEW EC2 for producer.java:
 sudo ssh -i ~/keypairs ec2-user@<t2_micro_ec2>.us-west-1.compute.amazonaws.com
 
-sudo scp -i ~/keypairs WebblogsKafkaProducer-jar-with-dependencies.jar ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
-sudo scp -i ~/keypairs WeblogsKafkaProducer.java ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
-java -cp WebblogsKafkaProducer-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer hw9events <T2_MICRO_EC2_IP>:9092
+#sudo scp -i ~/keypairs WebblogsKafkaProducer-jar-with-dependencies.jar ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
+#sudo scp -i ~/keypairs WeblogsKafkaProducer.java ec2-user@<T2_MICRO_EC2>.us-west-1.compute.amazonaws.com:./
+#java -cp WebblogsKafkaProducer-jar-with-dependencies.jar edu.harvard.e88.lab9.WeblogsKafkaProducer hw9events <T2_MICRO_EC2_IP>:9092
+scp...python producer.py
+
+
+11:03p
+EC2 Cloud Formation
+[running, no need consumer]
+
+T2 EC2
+python producer.py
+
+EMR EC2:
+~/opt/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0 $SparkStreamingConsumer.py localhost:9092 topicName <---localhost:9092 is the kafka broker URL that python accepts
