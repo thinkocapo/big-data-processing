@@ -56,3 +56,11 @@ python producer.py
 
 EMR EC2:
 ~/opt/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.0.0 $SparkStreamingConsumer.py localhost:9092 topicName <---localhost:9092 is the kafka broker URL that python accepts
+
+
+11/5
+ec2 t2 micro - producer.py with 1 to 100 events per second
+>to<
+ec2 kafka cluster (zookeeper+broker) - created topic on this. didn't have to run anyting else..?
+>to<
+ec2 emr Master - spark-submit consumer.py
