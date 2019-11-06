@@ -22,6 +22,7 @@ by default takes from latest offset, in KafkaUtils.createDirectStream w kafkaPar
 
 
 if __name__ == "__main__":
+    print('000000000000000000')
     # Create Spark Context
     sc = SparkContext(appName="PythonStreamingDirectKafkaCount")
     ssc = StreamingContext(sc, 2)
@@ -30,6 +31,9 @@ if __name__ == "__main__":
 
     print(brokers)
     print(topic)
+
+    print('1111111111111111111')
+
 
     sc.setLogLevel("WARN")
 
