@@ -64,3 +64,31 @@ ec2 t2 micro - producer.py with 1 to 100 events per second
 ec2 kafka cluster (zookeeper+broker) - created topic on this. didn't have to run anyting else..?
 >to<
 ec2 emr Master - spark-submit consumer.py
+
+
+
+
+
+by default takes from latest offset, in KafkaUtils.createDirectStream w kafkaParams  
+https://spark.apache.org/docs/latest/streaming-programming-guide.html updateStateByKey *example*  
+https://spark.apache.org/docs/2.1.0/api/python/pyspark.streaming.html  
+rolling count
+
+
+
+'''
+by default takes from latest offset, in KafkaUtils.createDirectStream w kafkaParams
+'''
+
+'''
++configure your Spark Streaming job to read data from the "hw9events" Kafka topic,
++with the batch window of 1 sec
++implement a job that :
+    +counts the number of clicks per URL per batch and prints the results after each batch
+        counts the running total of clicks per URL and prints the results after each batch as well
+
+DOCUMENTATION
+https://spark.apache.org/docs/latest/streaming-programming-guide.html updateStateByKey *example*
+https://spark.apache.org/docs/2.1.0/api/python/pyspark.streaming.html
+rolling count
+'''

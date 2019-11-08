@@ -18,7 +18,7 @@ while var == 1 :
 
 
     producer.send('hw9events' ,value=value, key=str(num) )
-    time.sleep(1/20)
+    time.sleep(0.25)
 
 # from assignment8
 # producer.send('hw9events', value=bytes(str(num), 'utf-8'), key=bytes(str(num), 'utf-8'))
