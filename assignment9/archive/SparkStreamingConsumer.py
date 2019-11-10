@@ -38,8 +38,10 @@ if __name__ == "__main__":
     lines = kafkaStream.map(lambda x: x[1])
     # executes/prints once-per-batch
     clicks = lines.map(parse_log_line)\
-        .updateStateByKey(updateFunc, initialRDD=initialStateRDD)
-        # .reduceByKey(lambda a, b: a + b)
+        .window(lambda a, b: a + b, 5,5) # failed
+        # .reduceByKeyAndWindow(lambda a, b: a + b, 5,5) # failed
+        # .updateStateByKey(updateFunc, initialRDD=initialStateRDD) #problem2
+        # .reduceByKey(lambda a, b: a + b) #problem1
 
     # executes after ssc.start()
     clicks.pprint()
