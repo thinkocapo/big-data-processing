@@ -27,25 +27,31 @@ if __name__ == "__main__":
     def parse_log_line(line):
         # (uuid, timestamp, url, user, region, browser, platform, cd, ttf) = line.strip().split(",")
         (uuid, timestamp, url, user) = line.strip().split(",")
-        return (url, 1)
+        return (user, 1)
 
     # RDD with initial state (key, value) pairs
-    initialStateRDD = sc.parallelize([(u' url1', 0), (u' url2', 0)])
+    initialStateRDD = sc.parallelize([(u' user1', 0), (u' user2', 0)])
 
-    def updateFunc(new_values, last_sum):
-        return sum(new_values) + (last_sum or 0)
 
-    lines = kafkaStream.map(lambda x: x[1])
-    # executes/prints once-per-batch
-    clicks = lines.map(parse_log_line)\
-        .window(lambda a, b: a + b, 5,5) # failed
-        # .reduceByKeyAndWindow(lambda a, b: a + b, 5,5) # failed
-        # .updateStateByKey(updateFunc, initialRDD=initialStateRDD) #problem2
-        # .reduceByKey(lambda a, b: a + b) #problem1
+    dStream = kafkaStream.map(lambda x: x[1])
+    # problem3
+    urls = dStream.map(parse_log_line)
+
+        # .groupByKey()\
+        # .countByValue()
+        # .countApproxDistinct()
+        # .reduceByKeyAndWindow(lambda x, y: x + y, lambda x, y: x - y, 30, 30)\
 
     # executes after ssc.start()
-    clicks.pprint()
+    urls.foreachRDD(lambda rdd: rdd.countApproxDistinct())
+    # urls.pprint()
 
+    # .reduceByKeyAndWindow(lambda x, y: x + y, lambda x, y: x - y, 5, 5) # problem2
+    # .window(5,5) #problem2
+    # .updateStateByKey(updateFunc, initialRDD=initialStateRDD) #problem2 prob wrong
+    # .reduceByKey(lambda a, b: a + b) #problem1
+    # def updateFunc(new_values, last_sum):
+    #     return sum(new_values) + (last_sum or 0)
 
     # Start the computation
     ssc.start()
